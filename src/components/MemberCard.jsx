@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 
 const MemberCard = ({ name, position, bio, image, socialMedia, birthDate, hobby, favoriteColor, memberColor, stats }) => {
   const [isFlipped, setIsFlipped] = useState(false);
@@ -207,26 +208,22 @@ const MemberCard = ({ name, position, bio, image, socialMedia, birthDate, hobby,
                   </div>
                 </div>
               )}
+              
+              {/* Link to Full Profile */}
+              <div className="mt-6 text-center">
+                <Link 
+                  to={`/members/${name.toLowerCase().replace(' ', '-')}`}
+                  className="shimmer-btn inline-block px-6 py-2 bg-gradient-to-r from-pink-500 to-orange-400 text-white rounded-full font-bold uppercase tracking-widest text-xs shadow-md hover:shadow-lg transition-transform hover:-translate-y-1"
+                >
+                  Lihat Profil Lengkap
+                </Link>
+              </div>
+
             </div>
           </div>
         </div>
       </div>
 
-      {/* Custom styles for 3D flip */}
-      <style jsx>{`
-        .perspective-1000 {
-          perspective: 1000px;
-        }
-        .transform-style-3d {
-          transform-style: preserve-3d;
-        }
-        .backface-hidden {
-          backface-visibility: hidden;
-        }
-        .rotate-y-180 {
-          transform: rotateY(180deg);
-        }
-      `}</style>
     </div>
   );
 };

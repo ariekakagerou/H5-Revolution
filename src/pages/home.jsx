@@ -1,384 +1,332 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import MemberCard from "../components/MemberCard";
 import EventCard from "../components/EventCard";
+import { FaChevronRight, FaPlay, FaCalendarAlt, FaMusic, FaArrowRight, FaHeart, FaStar, FaChevronLeft } from "react-icons/fa";
+import SEO from "../components/SEO";
+
+const CalendarSection = () => {
+  const [currentDate, setCurrentDate] = useState(new Date(2025, 3)); // Star at April 2025
+  
+  const daysInMonth = (year, month) => new Date(year, month + 1, 0).getDate();
+  const firstDayOfMonth = (year, month) => new Date(year, month, 1).getDay();
+
+  const prevMonth = () => setCurrentDate(new Date(currentDate.getFullYear(), currentDate.getMonth() - 1));
+  const nextMonth = () => setCurrentDate(new Date(currentDate.getFullYear(), currentDate.getMonth() + 1));
+
+  const monthNames = ["JANUARY", "FEBRUARY", "MARCH", "APRIL", "MAY", "JUNE", "JULY", "AUGUST", "SEPTEMBER", "OCTOBER", "NOVEMBER", "DECEMBER"];
+  
+  const year = currentDate.getFullYear();
+  const month = currentDate.getMonth();
+  const numDays = daysInMonth(year, month);
+  const startDay = firstDayOfMonth(year, month);
+
+  // Mock events (keyed by YYYY-MM-DD)
+  const events = {
+    "2025-03-14": { type: 'Theater', color: 'bg-pink-500' },
+    "2025-03-15": { type: 'Special', color: 'bg-orange-400' },
+    "2025-03-17": { type: 'Theater', color: 'bg-pink-500' },
+    "2025-03-19": { type: 'Event', color: 'bg-yellow-400' },
+    "2025-03-20": { type: 'Special', color: 'bg-orange-400' },
+    "2025-03-25": { type: 'Theater', color: 'bg-pink-500' },
+    "2025-03-26": { type: 'Event', color: 'bg-yellow-400' },
+    "2025-03-30": { type: 'Theater', color: 'bg-pink-500' }
+  };
+
+  return (
+    <section className="py-20 px-6 max-w-7xl mx-auto">
+      <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
+         <div className="flex flex-col items-center md:items-start text-center md:text-left w-full md:w-auto">
+            <div className="flex items-center gap-4 mb-2">
+               <button onClick={prevMonth} className="w-10 h-10 rounded-full border border-slate-100 flex items-center justify-center text-slate-400 hover:text-pink-500 hover:bg-pink-50 transition-all"><FaChevronLeft size={12} /></button>
+               <h2 className="text-3xl md:text-5xl font-black text-slate-800 uppercase tracking-tighter">
+                  {monthNames[month]} <span className="text-pink-500">{year}</span>
+               </h2>
+               <button onClick={nextMonth} className="w-10 h-10 rounded-full border border-slate-100 flex items-center justify-center text-slate-400 hover:text-pink-500 hover:bg-pink-50 transition-all"><FaChevronRight size={12} /></button>
+            </div>
+            <p className="text-gray-400 font-bold uppercase tracking-[0.4em] text-[10px]">H5-REVOLUTION THEATER PROGRAM</p>
+         </div>
+         <div className="hidden md:flex items-center gap-6 text-[10px] font-black uppercase tracking-widest text-slate-300">
+            <span className="flex items-center gap-2"><div className="w-2 h-2 rounded-full bg-pink-500" /> Theater</span>
+            <span className="flex items-center gap-2"><div className="w-2 h-2 rounded-full bg-orange-400" /> Special</span>
+            <span className="flex items-center gap-2"><div className="w-2 h-2 rounded-full bg-yellow-400" /> Event</span>
+         </div>
+      </div>
+
+      <div className="bg-white rounded-[3rem] p-4 md:p-10 border border-slate-100 shadow-2xl relative overflow-hidden">
+         <div className="grid grid-cols-7 mb-6 border-b border-slate-50 pb-6">
+            {['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'].map(day => (
+              <div key={day} className="text-center text-[10px] md:text-xs font-black text-slate-400 uppercase tracking-widest">{day}</div>
+            ))}
+         </div>
+
+         <div className="grid grid-cols-7 gap-1 md:gap-4">
+            {Array.from({ length: startDay }).map((_, i) => (
+              <div key={`empty-${i}`} className="aspect-square bg-slate-50/20 rounded-2xl md:rounded-[2rem]" />
+            ))}
+
+            {Array.from({ length: numDays }).map((_, i) => {
+              const dateVal = i + 1;
+              const dateStr = `${year}-${month.toString().padStart(2, '0')}-${dateVal.toString().padStart(2, '0')}`;
+              const event = events[dateStr];
+
+              return (
+                <div key={i} className={`relative aspect-square rounded-2xl md:rounded-[2rem] border transition-all flex items-center justify-center group/cell cursor-pointer ${
+                  event ? 'border-pink-100 bg-pink-50/10 hover:bg-white hover:shadow-xl' : 'border-slate-50 bg-white hover:border-slate-200 shadow-sm'
+                }`}>
+                   <span className={`text-base md:text-2xl font-black font-outfit ${event ? 'text-pink-600' : 'text-slate-300'}`}>
+                      {dateVal}
+                   </span>
+                   {event && (
+                      <div className={`absolute bottom-2 md:bottom-4 left-1/2 -translate-x-1/2 w-1.5 h-1.5 md:w-2 md:h-2 rounded-full ${event.color} shadow-lg`} />
+                   )}
+                   {event && (
+                     <div className="absolute bottom-full mb-2 left-1/2 -translate-x-1/2 hidden md:group-hover/cell:block z-50">
+                        <div className="bg-slate-900 text-white text-[8px] font-black uppercase tracking-widest px-3 py-1 rounded-full whitespace-nowrap shadow-xl">
+                           H5-R {event.type}
+                        </div>
+                     </div>
+                   )}
+                </div>
+              );
+            })}
+         </div>
+      </div>
+    </section>
+  );
+};
 
 const Home = () => {
-  // Sample data
+  const [scrollY, setScrollY] = useState(0);
+
+  useEffect(() => {
+    const handleScroll = () => setScrollY(window.scrollY);
+    window.addEventListener("scroll", handleScroll, { passive: true });
+    return () => window.removeEventListener("scroll", handleScroll);
+  }, []);
+
   const sampleMembers = [
     {
       name: "Yuki Tanaka",
       position: "Leader & Main Vocalist",
       bio: "Passionate performer with 5 years of experience in J-Pop industry.",
-      socialMedia: {
-        twitter: "#",
-        instagram: "#",
-        youtube: "#"
-      }
+      socialMedia: { twitter: "#", instagram: "#", youtube: "#" }
     },
     {
       name: "Sakura Yamamoto",
       position: "Main Dancer",
       bio: "Professional dancer specializing in contemporary and hip-hop styles.",
-      socialMedia: {
-        twitter: "#",
-        instagram: "#"
-      }
+      socialMedia: { twitter: "#", instagram: "#" }
     },
     {
       name: "Mika Sato",
       position: "Vocalist",
       bio: "Rising star with a unique voice and charming personality.",
-      socialMedia: {
-        instagram: "#",
-        youtube: "#"
-      }
-    }
-  ];
-
-  const sampleEvents = [
-    {
-      title: "H5-Revolution Summer Festival 2024",
-      date: "2024-07-15",
-      location: "Tokyo Dome, Japan",
-    },
-    {
-      title: "Fan Meeting & Showcase",
-      date: "2024-08-20",
-      location: "Shibuya Hall, Tokyo",
-    },
-    {
-      title: "Special Live Performance",
-      date: "2024-09-10",
-      location: "Osaka Castle Hall",
+      socialMedia: { instagram: "#", youtube: "#" }
     }
   ];
 
   const latestNews = [
-    {
-      date: "09/12",
-      title: "Amane Kisumi Health Condition Report",
-      isNew: true
-    },
-    {
-      date: "09/10",
-      title: "#2J2 LAST TOUR 'Pages of You' Official Goods | Sales Start 9/14 (Sun) 20:00~",
-      isNew: true
-    },
-    {
-      date: "08/16",
-      title: "[Unreleased Items] Birthday Memorial Goods | Sales Start 8/17 (Sun) 20:00~",
-      isNew: false
-    }
+    { date: "09/12", title: "Amane Kisumi Health Condition Report", isNew: true },
+    { date: "09/10", title: "#2J2 LAST TOUR 'Pages of You' Official Goods | Sales Start 9/14 (Sun) 20:00~", isNew: true },
+    { date: "08/16", title: "[Unreleased Items] Birthday Memorial Goods | Sales Start 8/17 (Sun) 20:00~", isNew: false }
   ];
 
   const livePhotos = [
-    {
-      date: "2025.08.16",
-      title: "#2J2 Live Series 'version up.31' Amane Kisumi Birthday Festival @Kawaguchi Insensity Hall"
-    },
-    {
-      date: "2025.08.09",
-      title: "#2J2 Live Series 'version up.30' @Zouk Tokyo"
-    },
-    {
-      date: "2025.05.16",
-      title: "#2J2 Live Series 'version up.28' Everyone's Happy Festival 2025 MAKE SOME NOISE! @Daikanyama UNIT"
-    },
-    {
-      date: "2025.04.25",
-      title: "#2J2 Live Series 'version up.27' @Zouk Tokyo"
-    },
-    {
-      date: "2025.02.12",
-      title: "#2J2 presents #2J2 Day ~Respect! Spotify O-EAST"
-    }
-  ];
-
-  const scheduleEvents = [
-    { date: "31", title: "Admired Band x Imahaki Band", color: "purple", month: "August" },
-    { date: "1", title: "Admired Band Festival", color: "blue" },
-    { date: "7", title: "Afternoon Tea x Imahaki Band", color: "blue" },
-    { date: "8", title: "Afternoon Tea x Imahaki Band", color: "blue" },
-    { date: "9", title: "Afternoon Tea x Imahaki Band", color: "blue" },
-    { date: "14", title: "Admired Band Live #2J2 Day", color: "red" },
-    { date: "15", title: "Afternoon Tea x Imahaki Band SPAM", color: "blue" },
-    { date: "16", title: "Admired Band x Imahaki Band", color: "red" }
-  ];
-
-  const discography = [
-    {
-      title: "Revolution Beat",
-      type: "Single",
-      releaseDate: "2024-06-01",
-      image: "/api/placeholder/300/300"
-    },
-    {
-      title: "Shining Stars",
-      type: "Album",
-      releaseDate: "2024-03-15",
-      image: "/api/placeholder/300/300"
-    },
-    {
-      title: "Dreams Come True",
-      type: "Single",
-      releaseDate: "2024-01-20",
-      image: "/api/placeholder/300/300"
-    }
+    { date: "2025.08.16", title: "Amane Kisumi Birthday Festival @Kawaguchi Insensity Hall" },
+    { date: "2025.08.09", title: "#2J2 Live Series 'version up.30' @Zouk Tokyo" },
+    { date: "2025.05.16", title: "Everyone's Happy Festival 2025 MAKE SOME NOISE! @Daikanyama UNIT" },
+    { date: "2025.04.25", title: "#2J2 Live Series 'version up.27' @Zouk Tokyo" },
+    { date: "2025.02.12", title: "#2J2 presents #2J2 Day ~Respect! Spotify O-EAST" }
   ];
 
   return (
-    <div className="min-h-screen">
-      {/* Banner Section */}
-      <section className="relative h-screen bg-cover bg-center bg-no-repeat" style={{backgroundImage: "url('/images/h5-revolution-banner.jpg')"}}>
+    <div className="min-h-screen bg-white w-full overflow-hidden text-gray-800">
+      <SEO title="Home" description="Welcome to the official website of H5-Revolution. Experience the revolution in idol entertainment." />
+      
+      {/* ─── Hero Banner Section ──────────────────────────────── */}
+      <section className="relative min-h-[100svh] md:h-screen md:min-h-[600px] md:max-h-[1080px] w-full flex flex-col items-center justify-start md:justify-center overflow-hidden bg-white pb-24 md:pb-0">
+        
+        {/* Colorful Abstract Orbs (Behind Banner) */}
+        <div className="absolute inset-0 z-0 overflow-hidden">
+           <div className="absolute top-10 left-10 w-[80vw] h-[80vw] md:w-[60vw] md:h-[60vw] bg-pink-300/30 rounded-full blur-[60px] md:blur-[100px] mix-blend-multiply animate-orb"></div>
+           <div className="absolute bottom-10 right-10 w-[70vw] h-[70vw] md:w-[50vw] md:h-[50vw] bg-cyan-300/30 rounded-full blur-[60px] md:blur-[100px] mix-blend-multiply animate-orb" style={{ animationDelay: '-3s' }}></div>
+           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[60vw] h-[60vw] md:w-[40vw] md:h-[40vw] bg-yellow-300/30 rounded-full blur-[60px] md:blur-[100px] mix-blend-multiply animate-orb" style={{ animationDelay: '-6s' }}></div>
+        </div>
+
+        {/* Mobile Banner */}
+        <div className="w-full md:hidden relative pt-[80px] z-10">
+          <img 
+            src="/images/h5-revolution-banner.jpg" 
+            alt="H5-Revolution Banner" 
+            className="w-full h-auto object-contain shadow-xl shadow-pink-200" 
+          />
+        </div>
+
+        {/* Desktop Banner Layer with bright gradient overlay */}
+        <div 
+          className="hidden md:block absolute inset-0 z-10 bg-center bg-cover bg-no-repeat" 
+          style={{backgroundImage: "url('/images/h5-revolution-banner.jpg')"}}
+        >
+          {/* A soft bright gradient from bottom to make text legible but keep the bright feel */}
+          <div className="absolute inset-0 bg-gradient-to-t from-white via-white/40 to-transparent"></div>
+          {/* Side colorful washes */}
+          <div className="absolute inset-0 bg-gradient-to-r from-pink-500/10 to-cyan-500/10"></div>
+        </div>
+        
+        {/* Fun Overlay Pattern */}
+        <div className="absolute inset-x-0 bottom-0 h-64 bg-[url('https://transparenttextures.com/patterns/cubes.png')] opacity-10 pointer-events-none z-10 mix-blend-overlay"></div>
+
+        <div className="relative z-20 text-center px-6 mt-8 md:mt-20 flex-1 md:flex-none flex flex-col justify-center animate-fade-up w-full max-w-5xl mx-auto">
+          <div className="inline-block mb-6 px-5 py-2 rounded-full border border-pink-200 bg-white/60 backdrop-blur-md mx-auto shadow-sm">
+            <span className="text-pink-500 text-[10px] md:text-sm font-bold tracking-[0.2em] uppercase flex items-center gap-2">
+              <FaHeart className="text-pink-400" /> The New Era Begins
+            </span>
+          </div>
+          <h1 className="text-4xl sm:text-6xl md:text-8xl lg:text-9xl font-black text-transparent bg-clip-text bg-gradient-to-r from-pink-500 via-orange-400 to-yellow-400 tracking-tighter mb-4 drop-shadow-sm font-outfit uppercase break-words leading-none">
+            REVOLUTION
+          </h1>
+          <p className="text-gray-600 text-[10px] sm:text-sm md:text-xl md:tracking-[0.5em] tracking-[0.2em] mb-12 uppercase font-bold bg-white/30 backdrop-blur-sm mx-auto px-4 py-1 rounded-lg">
+            We are H5 Official Group
+          </p>
+
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
+             <button className="shimmer-btn w-full sm:w-auto px-10 py-4 bg-gradient-to-r from-pink-500 to-orange-400 text-white font-black tracking-widest text-sm rounded-full hover:scale-105 hover:shadow-xl hover:shadow-pink-300/50 transition-all duration-300 uppercase">
+                Watch New MV
+             </button>
+             <button className="w-full sm:w-auto px-10 py-4 bg-white/80 backdrop-blur-md text-pink-500 border-2 border-pink-100 font-black tracking-widest text-sm rounded-full hover:bg-pink-50 hover:border-pink-300 transition-all duration-300 flex items-center justify-center gap-2 uppercase group shadow-md shadow-pink-100">
+                Discover More
+                <FaArrowRight className="group-hover:translate-x-1 transition-transform" />
+             </button>
+          </div>
+        </div>
       </section>
 
-      {/* Latest News - Style like Image 1 */}
-      <section className="py-16 px-4 bg-black text-white">
-        <div className="max-w-4xl mx-auto">
-          <div className="bg-gray-100 rounded-lg p-8">
-            <h2 className="text-2xl font-bold text-center text-black mb-8 tracking-wider">
-              INFORMATION
+      {/* ─── Ticker Tape ──────────────────────────────────────── */}
+      <div className="w-full bg-gradient-to-r from-pink-400 via-yellow-400 to-cyan-400 py-3 overflow-hidden flex whitespace-nowrap z-20 relative shadow-inner">
+        <div className="animate-marquee flex gap-8 items-center">
+            {[...Array(6)].map((_, i) => (
+              <React.Fragment key={i}>
+                <span className="text-white font-black text-sm tracking-widest uppercase text-shadow-sm">H5-Revolution First Tour 2025</span>
+                <FaStar className="text-yellow-200 text-xs animate-spin-slow" />
+                <span className="text-white font-black text-sm tracking-widest uppercase text-shadow-sm">Tickets On Sale Now</span>
+                <FaStar className="text-yellow-200 text-xs animate-spin-slow" />
+              </React.Fragment>
+            ))}
+        </div>
+      </div>
+
+      {/* ─── Information / News ───────────────────────────────── */}
+      <section className="py-24 px-4 sm:px-6 lg:px-8 relative bg-slate-50">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-left mb-12">
+            <h2 className="text-4xl md:text-5xl font-black text-gray-800 uppercase tracking-tight mb-2">
+              <span className="text-pink-500">LATEST</span> INFO
             </h2>
-            <div className="space-y-4">
+            <div className="w-20 h-2 bg-gradient-to-r from-pink-400 to-orange-400 rounded-full"></div>
+          </div>
+
+          <div className="grid lg:grid-cols-3 gap-8">
+            <div className="lg:col-span-2 space-y-4">
               {latestNews.map((news, index) => (
-                <div key={index} className="flex items-center justify-between py-3 border-b border-gray-200 last:border-b-0">
-                  <div className="flex items-center space-x-4">
+                <div key={index} className="group bg-white p-6 rounded-2xl flex flex-col sm:flex-row sm:items-center gap-4 border border-gray-100 shadow-sm hover:shadow-xl hover:shadow-pink-100 hover:border-pink-200 transition-all duration-300">
+                  <div className="flex items-center gap-3 w-32 shrink-0">
+                    <span className="text-orange-400 font-mono font-bold">{news.date}</span>
                     {news.isNew && (
-                      <span className="bg-red-500 text-white text-xs font-bold px-2 py-1 rounded">
-                        NEW
+                      <span className="bg-pink-500 text-white text-[10px] font-black px-2 py-0.5 rounded uppercase tracking-wider shadow-sm shadow-pink-200">
+                        New
                       </span>
                     )}
-                    <span className="text-black font-medium">{news.date}</span>
-                    <span className="text-black">{news.title}</span>
                   </div>
+                  <h3 className="text-gray-700 group-hover:text-pink-600 font-bold text-sm md:text-base transition-colors flex-1 line-clamp-2">
+                    {news.title}
+                  </h3>
+                  <FaChevronRight className="hidden sm:block text-pink-300 group-hover:text-pink-500 group-hover:translate-x-1 transition-all" />
                 </div>
               ))}
+              <div className="pt-4">
+                 <button className="text-orange-500 text-sm font-bold tracking-widest uppercase hover:text-pink-500 flex items-center gap-2 group transition-colors">
+                   View All News <FaArrowRight className="group-hover:translate-x-1 transition-transform" />
+                 </button>
+              </div>
             </div>
-            <div className="text-center mt-8">
-              <button className="bg-gray-800 text-white px-6 py-2 rounded-full text-sm font-medium hover:bg-gray-700 transition duration-300">
-                VIEW ALL
-              </button>
-            </div>
-          </div>
-        </div>
-      </section>
 
-      {/* Live Photos - Style like Image 2 */}
-      <section className="py-16 px-4 bg-gradient-to-b from-yellow-200 to-yellow-300">
-        <div className="max-w-7xl mx-auto">
-          <div className="text-center mb-8">
-            <img src="/api/placeholder/100/50" alt="live photo" className="mx-auto mb-4" />
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-5 gap-6 mb-8">
-            {livePhotos.map((photo, index) => (
-              <div key={index} className="relative">
-                <div className="bg-white rounded-lg overflow-hidden shadow-lg">
-                  <div className="h-32 bg-gradient-to-br from-gray-200 to-gray-300 flex items-center justify-center">
-                    <span className="text-gray-500">Photo</span>
+            {/* Featured Box */}
+            <div className="bg-gradient-to-br from-pink-400 to-orange-400 p-1 rounded-2xl transition-all shadow-lg shadow-pink-200 group relative overflow-hidden hidden lg:block">
+               <div className="absolute inset-0 bg-[url('https://transparenttextures.com/patterns/stardust.png')] opacity-30 mix-blend-overlay"></div>
+               <div className="h-full bg-white/10 backdrop-blur-sm rounded-xl p-8 relative z-10 flex flex-col justify-center items-center text-center">
+                  <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center mb-6 group-hover:scale-110 shadow-lg transition-all duration-500">
+                     <FaCalendarAlt className="text-3xl text-pink-500 group-hover:text-orange-500 transition-colors" />
                   </div>
-                  <div className="absolute top-2 left-2">
-                    <span className="bg-orange-500 text-white text-xs font-bold px-2 py-1 rounded">
-                      LIVE
-                    </span>
-                    <span className="text-xs font-bold ml-1">{photo.date}</span>
-                  </div>
-                  <div className="p-3 bg-gray-800 text-white">
-                    <p className="text-xs leading-tight">{photo.title}</p>
-                  </div>
-                </div>
-              </div>
-            ))}
-          </div>
-          <div className="text-center">
-            <button className="bg-gray-800 text-white px-6 py-2 rounded-full text-sm font-medium hover:bg-gray-700 transition duration-300">
-              MORE
-            </button>
-          </div>
-        </div>
-      </section>
-
-      {/* Schedule - Style like Image 3 */}
-      <section className="py-16 px-4 bg-white">
-        <div className="max-w-4xl mx-auto">
-          <div className="bg-gray-50 rounded-lg p-6">
-            <div className="flex justify-between items-center mb-6">
-              <button className="text-gray-400 hover:text-gray-600">&lt;</button>
-              <h2 className="text-xl font-bold text-gray-800">September 2025</h2>
-              <button className="text-gray-400 hover:text-gray-600">&gt;</button>
-            </div>
-            
-            {/* Schedule List */}
-            <div className="mb-8">
-              <h3 className="text-lg font-semibold text-gray-800 mb-4">Upcoming Events</h3>
-              <div className="space-y-3">
-                {scheduleEvents.map((event, index) => (
-                  <div key={index} className="flex items-center space-x-3 p-3 bg-white rounded-lg shadow-sm">
-                    <div className={`
-                      w-12 h-12 rounded-full flex items-center justify-center text-white font-bold text-sm
-                      ${event.color === 'purple' ? 'bg-purple-500' : 
-                        event.color === 'blue' ? 'bg-blue-400' : 
-                        event.color === 'red' ? 'bg-red-500' : 'bg-gray-400'}
-                    `}>
-                      {event.date}
-                    </div>
-                    <div className="flex-1">
-                      <p className="font-medium text-gray-800">{event.title}</p>
-                      {event.month && (
-                        <p className="text-sm text-gray-500">{event.month}</p>
-                      )}
-                    </div>
-                  </div>
-                ))}
-              </div>
-            </div>
-            
-            <div className="grid grid-cols-7 gap-2 mb-4">
-              <div className="text-center text-sm text-gray-500 p-2">Sun</div>
-              <div className="text-center text-sm text-gray-500 p-2">Mon</div>
-              <div className="text-center text-sm text-gray-500 p-2">Tue</div>
-              <div className="text-center text-sm text-gray-500 p-2">Wed</div>
-              <div className="text-center text-sm text-gray-500 p-2">Thu</div>
-              <div className="text-center text-sm text-gray-500 p-2">Fri</div>
-              <div className="text-center text-sm text-gray-500 p-2">Sat</div>
-            </div>
-
-            <div className="grid grid-cols-7 gap-2">
-              {/* Calendar days with events */}
-              <div className="h-20 p-1 border border-gray-200">
-                <span className="text-sm text-gray-400">31</span>
-                <div className="bg-purple-500 text-white text-xs p-1 rounded mt-1">
-                  Admired Band x Imahaki Band
-                </div>
-              </div>
-              <div className="h-20 p-1 border border-gray-200">
-                <span className="text-sm">1</span>
-                <div className="bg-blue-400 text-white text-xs p-1 rounded mt-1">
-                  Admired Band Festival
-                </div>
-              </div>
-              <div className="h-20 p-1 border border-gray-200">
-                <span className="text-sm">2</span>
-              </div>
-              <div className="h-20 p-1 border border-gray-200">
-                <span className="text-sm">3</span>
-              </div>
-              <div className="h-20 p-1 border border-gray-200">
-                <span className="text-sm">4</span>
-              </div>
-              <div className="h-20 p-1 border border-gray-200">
-                <span className="text-sm">5</span>
-              </div>
-              <div className="h-20 p-1 border border-gray-200">
-                <span className="text-sm">6</span>
-                <div className="bg-red-500 text-white text-xs p-1 rounded mt-1">
-                  Admired Band Live #2J2
-                </div>
-              </div>
-              {/* Continue with more calendar days */}
-              <div className="h-20 p-1 border border-gray-200">
-                <span className="text-sm">7</span>
-                <div className="bg-blue-400 text-white text-xs p-1 rounded mt-1">
-                  Afternoon Tea x Imahaki Band
-                </div>
-              </div>
-              <div className="h-20 p-1 border border-gray-200">
-                <span className="text-sm">8</span>
-              </div>
-              <div className="h-20 p-1 border border-gray-200">
-                <span className="text-sm">9</span>
-                <div className="bg-blue-400 text-white text-xs p-1 rounded mt-1">
-                  Afternoon Tea x Imahaki Band
-                </div>
-              </div>
-              {/* Add remaining days */}
-              {Array.from({length: 20}, (_, i) => (
-                <div key={i + 10} className="h-20 p-1 border border-gray-200">
-                  <span className="text-sm">{i + 10}</span>
-                </div>
-              ))}
-            </div>
-
-            <div className="text-xs text-gray-500 mt-4">
-              * Time is Japan Standard Time (GMT+09:00). Times may vary according to timezone.
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* News Section */}
-      <section className="py-16 px-4 bg-gray-50">
-        <div className="max-w-7xl mx-auto">
-          <h2 className="text-3xl font-bold text-center text-gray-800 mb-12">
-            Latest News
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            <div className="bg-white rounded-lg p-6 shadow-lg">
-              <p className="text-yellow-600 text-sm font-semibold mb-2">2024-09-15</p>
-              <h3 className="text-xl font-bold mb-3">New Single 'Golden Dreams' Release</h3>
-              <p className="text-gray-600">Our highly anticipated new single will be available on all streaming platforms starting October 1st!</p>
-            </div>
-            <div className="bg-white rounded-lg p-6 shadow-lg">
-              <p className="text-yellow-600 text-sm font-semibold mb-2">2024-09-10</p>
-              <h3 className="text-xl font-bold mb-3">Osaka Concert Sold Out!</h3>
-              <p className="text-gray-600">Thank you fans! Our Osaka Castle Hall performance is completely sold out.</p>
-            </div>
-            <div className="bg-white rounded-lg p-6 shadow-lg">
-              <p className="text-yellow-600 text-sm font-semibold mb-2">2024-09-05</p>
-              <h3 className="text-xl font-bold mb-3">TV Appearance on Music Station</h3>
-              <p className="text-gray-600">Catch us live on Music Station this Friday performing 'Revolution Beat'.</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Featured Members */}
-      <section className="py-16 px-4 bg-white">
-        <div className="max-w-7xl mx-auto">
-          <h2 className="text-3xl font-bold text-center text-gray-800 mb-4">
-            Featured Members
-          </h2>
-          <p className="text-center text-gray-600 mb-12">
-            Meet the talented individuals who make up H5-Revolution
-          </p>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {sampleMembers.map((member, index) => (
-              <MemberCard key={index} {...member} />
-            ))}
-          </div>
-          <div className="text-center mt-8">
-            <button className="bg-yellow-300 text-black font-bold px-8 py-3 rounded-full hover:bg-yellow-400 transition duration-300">
-              View All Members
-            </button>
-          </div>
-        </div>
-      </section>
-
-      {/* Discography */}
-      <section className="py-16 px-4 bg-gray-50">
-        <div className="max-w-7xl mx-auto">
-          <h2 className="text-3xl font-bold text-center text-gray-800 mb-4">
-            Discography
-          </h2>
-          <p className="text-center text-gray-600 mb-12">
-            Our musical journey through singles and albums
-          </p>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-            {discography.map((release, index) => (
-              <div key={index} className="bg-white rounded-lg overflow-hidden hover:shadow-lg transition duration-300">
-                <div className="h-64 bg-gradient-to-br from-yellow-200 to-yellow-300 flex items-center justify-center">
-                  <div className="text-center">
-                    <div className="w-16 h-16 bg-black rounded-full flex items-center justify-center mb-4 mx-auto">
-                      <span className="text-yellow-300 text-2xl">♪</span>
-                    </div>
-                    <p className="text-gray-700 font-semibold">{release.type}</p>
-                  </div>
-                </div>
-                <div className="p-6">
-                  <h3 className="text-xl font-bold text-gray-800 mb-2">{release.title}</h3>
-                  <p className="text-gray-600 mb-4">{release.releaseDate}</p>
-                  <button className="text-yellow-600 hover:text-yellow-700 font-semibold">
-                    Listen Now →
+                  <h3 className="text-white text-xl font-bold mb-2 drop-shadow-sm">Upcoming Showcase</h3>
+                  <p className="text-pink-50 text-sm mb-6 drop-shadow-sm font-medium">Join our exclusive fan meeting event in Tokyo.</p>
+                  <button className="shimmer-btn px-6 py-2 bg-white text-pink-500 hover:text-orange-500 rounded-full text-xs font-bold tracking-widest uppercase transition-all shadow-md mt-auto">
+                    Register
                   </button>
+               </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ─── Monthly Activity Calendar ─────────────────────────── */}
+      <CalendarSection />
+
+      {/* ─── Members Highlight ───────────────────────────────── */}
+      <section className="py-24 px-4 sm:px-6 lg:px-8 bg-white relative overflow-hidden">
+        {/* Glow effect */}
+        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-gradient-to-bl from-cyan-100 to-transparent rounded-full blur-[80px] pointer-events-none"></div>
+        <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-gradient-to-tr from-pink-100 to-transparent rounded-full blur-[80px] pointer-events-none"></div>
+
+        <div className="max-w-7xl mx-auto relative z-10">
+          <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
+            <div className="text-left">
+              <h2 className="text-4xl md:text-6xl font-black text-gray-800 uppercase tracking-tight mb-2">
+                MEET THE <br className="hidden md:block"/> <span className="text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-cyan-500">MEMBERS</span>
+              </h2>
+            </div>
+            <Link to="/members" className="w-fit text-cyan-600 hover:text-pink-500 text-sm font-bold tracking-widest uppercase flex items-center gap-2 group transition-colors">
+              Explore Profiles <FaArrowRight className="group-hover:translate-x-1 transition-transform" />
+            </Link>
+          </div>
+
+          <div className="flex overflow-x-auto gap-6 pb-8 snap-x no-scrollbar md:grid md:grid-cols-2 lg:grid-cols-3 md:gap-8 box-content">
+            {sampleMembers.map((member, index) => (
+              <div key={index} className="min-w-[280px] sm:min-w-[320px] md:min-w-0 snap-center transform hover:-translate-y-2 transition-transform duration-300">
+                <MemberCard {...member} />
+              </div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ─── Live Photos Gallery ──────────────────────────────── */}
+      <section className="py-24 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-pink-50 to-white relative">
+        <div className="max-w-7xl mx-auto">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-black text-gray-800 uppercase tracking-tight mb-4">
+              LIVE <span className="text-cyan-500">MOMENTS</span>
+            </h2>
+            <p className="text-gray-500 font-bold tracking-wide">Capturing the energy of H5-Revolution</p>
+          </div>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
+            {livePhotos.map((photo, index) => (
+              <div key={index} className={`group relative rounded-2xl overflow-hidden aspect-[4/5] sm:aspect-auto sm:h-72 cursor-pointer shadow-sm hover:shadow-xl hover:shadow-cyan-100 transition-all duration-300 ${index === 0 || index === 2 ? 'lg:col-span-2' : ''}`}>
+                <div className="absolute inset-0 bg-gray-100">
+                   {/* Placeholder for real images */}
+                   <div className="w-full h-full bg-gradient-to-br from-pink-100 to-cyan-100 flex items-center justify-center">
+                     <FaHeart className="text-white/50 text-4xl group-hover:scale-125 transition-transform duration-500" />
+                   </div>
+                </div>
+                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-80 group-hover:opacity-100 transition-opacity duration-300" />
+                
+                <div className="absolute bottom-0 left-0 right-0 p-5 translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
+                   <div className="inline-block bg-pink-500 text-white text-[10px] font-black px-2 py-1 rounded mb-2 uppercase shadow-sm">
+                     LIVE
+                   </div>
+                   <p className="text-cyan-300 font-mono text-xs mb-1">{photo.date}</p>
+                   <h3 className="text-white font-bold text-sm line-clamp-2">{photo.title}</h3>
                 </div>
               </div>
             ))}
@@ -386,76 +334,32 @@ const Home = () => {
         </div>
       </section>
 
-      {/* Latest Videos */}
-      <section className="py-16 px-4 bg-gradient-to-r from-gray-900 to-black text-white">
-        <div className="max-w-7xl mx-auto">
-          <h2 className="text-3xl font-bold text-center text-yellow-300 mb-12">
-            Latest Videos
+      {/* ─── Fan Club Call to Action ───────────────────────────── */}
+      <section className="py-32 px-4 relative overflow-hidden bg-white">
+        <div className="absolute inset-0 bg-gradient-to-br from-orange-100 via-pink-100 to-cyan-100 opacity-50"></div>
+        <div className="absolute inset-0 bg-[url('https://transparenttextures.com/patterns/stardust.png')] opacity-30 mix-blend-multiply"></div>
+        <div className="max-w-4xl mx-auto relative z-10 text-center">
+          <div className="w-20 h-20 bg-white rounded-full flex items-center justify-center mx-auto mb-8 shadow-xl shadow-pink-200 hover:scale-110 transition-transform duration-500 border border-pink-100">
+             <FaMusic className="text-3xl text-pink-500" />
+          </div>
+          <h2 className="text-5xl md:text-7xl font-black text-gray-800 uppercase tracking-tighter mb-6">
+            Join the <br/> <span className="text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-orange-400">Revolution</span>
           </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-            <div className="bg-gray-800 rounded-lg overflow-hidden">
-              <div className="h-64 bg-gradient-to-br from-yellow-400 to-yellow-600 flex items-center justify-center">
-                <div className="text-center">
-                  <div className="w-20 h-20 bg-black bg-opacity-50 rounded-full flex items-center justify-center mb-4 mx-auto">
-                    <span className="text-yellow-300 text-3xl">▶</span>
-                  </div>
-                  <p className="text-black font-bold">Music Video</p>
-                </div>
-              </div>
-              <div className="p-6">
-                <h3 className="text-xl font-bold mb-2">Revolution Beat - Official MV</h3>
-                <p className="text-gray-400">Our latest music video featuring dynamic choreography and stunning visuals.</p>
-              </div>
-            </div>
-            <div className="bg-gray-800 rounded-lg overflow-hidden">
-              <div className="h-64 bg-gradient-to-br from-yellow-400 to-yellow-600 flex items-center justify-center">
-                <div className="text-center">
-                  <div className="w-20 h-20 bg-black bg-opacity-50 rounded-full flex items-center justify-center mb-4 mx-auto">
-                    <span className="text-yellow-300 text-3xl">▶</span>
-                  </div>
-                  <p className="text-black font-bold">Behind the Scenes</p>
-                </div>
-              </div>
-              <div className="p-6">
-                <h3 className="text-xl font-bold mb-2">Making of Summer Festival</h3>
-                <p className="text-gray-400">Exclusive behind-the-scenes footage from our summer festival preparation.</p>
-              </div>
-            </div>
+          <p className="text-gray-600 text-lg md:text-xl font-bold mb-12 max-w-2xl mx-auto">
+            Become an official member. Get exclusive access to behind-the-scenes content, early ticket sales, and special merchandise.
+          </p>
+          
+          <div className="flex flex-col sm:flex-row justify-center items-center gap-6">
+            <button className="shimmer-btn w-full sm:w-auto px-10 py-5 bg-gradient-to-r from-pink-500 to-orange-400 text-white font-black tracking-widest text-sm rounded-full hover:scale-105 shadow-xl shadow-pink-200 transition-all duration-300 uppercase">
+              Join Fan Club
+            </button>
+            <Link to="/shop" className="w-full sm:w-auto px-10 py-5 bg-white text-pink-500 font-black tracking-widest text-sm rounded-full border border-pink-200 hover:bg-pink-50 hover:shadow-lg transition-all duration-300 uppercase text-center text-nowrap">
+              Visit Store
+            </Link>
           </div>
         </div>
       </section>
 
-      {/* Fan Club */}
-      <section className="py-16 px-4 bg-gradient-to-r from-yellow-300 to-yellow-400">
-        <div className="max-w-4xl mx-auto text-center">
-          <h2 className="text-3xl font-bold text-black mb-4">Join the Revolution!</h2>
-          <p className="text-gray-800 text-lg mb-8">
-            Be part of our journey and experience the revolution in idol entertainment.
-          </p>
-          <div className="flex flex-col sm:flex-row gap-4 justify-center mb-8">
-            <button className="bg-black text-yellow-300 font-bold px-8 py-4 rounded-full hover:bg-gray-800 transition duration-300">
-              Official Fan Club
-            </button>
-            <button className="border-2 border-black text-black font-bold px-8 py-4 rounded-full hover:bg-black hover:text-yellow-300 transition duration-300">
-              Merchandise Store
-            </button>
-          </div>
-          
-          <div className="bg-white bg-opacity-90 rounded-lg p-8 max-w-md mx-auto">
-            <h3 className="text-xl font-bold text-gray-800 mb-4">Newsletter Subscription</h3>
-            <div className="flex flex-col space-y-4">
-              <input 
-                type="email" 
-                placeholder="Enter your email" 
-                className="px-4 py-3 rounded-full border border-gray-300 focus:outline-none focus:ring-2 focus:ring-yellow-400"
-              />
-              <button className="bg-black text-yellow-300 font-bold px-6 py-3 rounded-full hover:bg-gray-800 transition duration-300">
-                Subscribe
-              </button>
-            </div>
-          </div>
-        </div>
-      </section>
     </div>
   );
 };

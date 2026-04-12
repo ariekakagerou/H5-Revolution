@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
+import SEO from "../components/SEO";
 
 const MemberCard = ({ member, isActive, onClick }) => {
   const getMemberColorGradient = (color) => {
@@ -25,9 +27,9 @@ const MemberCard = ({ member, isActive, onClick }) => {
 
   return (
     <div 
-      className={`relative cursor-pointer transition-all duration-700 ease-out w-64 h-96 transform-gpu perspective-1000 ${
+      className={`relative cursor-pointer transition-all duration-700 ease-out w-full max-w-[280px] aspect-[2/3] transform-gpu perspective-1000 ${
         isActive 
-          ? 'scale-110 rotate-y-12 -translate-y-4 z-20' 
+          ? 'scale-105 md:scale-110 rotate-y-12 -translate-y-4 z-20' 
           : 'hover:scale-105 hover:rotate-y-6 hover:-translate-y-2 hover:z-10'
       }`}
       onClick={() => onClick(member)}
@@ -370,38 +372,57 @@ const MemberModal = ({ member, onClose }) => {
               </div>
             </div>
             
-            <div className="bg-gray-50 rounded-xl p-6">
-              <h3 className="text-2xl font-bold text-gray-800 mb-4 flex items-center">
-                <div 
-                  className="w-3 h-3 rounded-full mr-3"
-                  style={{
-                    backgroundColor: 
-                      member.memberColor === 'Golden Yellow' ? '#F59E0B' :
-                      member.memberColor === 'Cherry Blossom Pink' ? '#EC4899' :
-                      member.memberColor === 'Sky Blue' ? '#3B82F6' :
-                      member.memberColor === 'Electric Purple' ? '#8B5CF6' :
-                      member.memberColor === 'Mint Green' ? '#10B981' : '#6B7280'
-                  }}
-                />
-                Favorites
-              </h3>
-              <div className="bg-white p-6 rounded-lg shadow-sm">
-                <div className="space-y-3 text-base">
-                  <div className="flex items-center">
-                    <span className="font-semibold text-gray-700 w-20">Food:</span> 
-                    <span className="text-gray-600">{member.favorites.food}</span>
-                  </div>
-                  <div className="flex items-center">
-                    <span className="font-semibold text-gray-700 w-20">Color:</span> 
-                    <span className="text-gray-600">{member.favorites.color}</span>
-                  </div>
-                  <div className="flex items-center">
-                    <span className="font-semibold text-gray-700 w-20">Hobby:</span> 
-                    <span className="text-gray-600">{member.favorites.hobby}</span>
+              <div className="bg-gray-50 rounded-xl p-6">
+                <h3 className="text-2xl font-bold text-gray-800 mb-4 flex items-center">
+                  <div 
+                    className="w-3 h-3 rounded-full mr-3"
+                    style={{
+                      backgroundColor: 
+                        member.memberColor === 'Golden Yellow' ? '#F59E0B' :
+                        member.memberColor === 'Cherry Blossom Pink' ? '#EC4899' :
+                        member.memberColor === 'Sky Blue' ? '#3B82F6' :
+                        member.memberColor === 'Electric Purple' ? '#8B5CF6' :
+                        member.memberColor === 'Mint Green' ? '#10B981' : '#6B7280'
+                    }}
+                  />
+                  Favorites
+                </h3>
+                <div className="bg-white p-6 rounded-lg shadow-sm">
+                  <div className="space-y-3 text-base">
+                    <div className="flex items-center">
+                      <span className="font-semibold text-gray-700 w-20">Food:</span> 
+                      <span className="text-gray-600">{member.favorites.food}</span>
+                    </div>
+                    <div className="flex items-center">
+                      <span className="font-semibold text-gray-700 w-20">Color:</span> 
+                      <span className="text-gray-600">{member.favorites.color}</span>
+                    </div>
+                    <div className="flex items-center">
+                      <span className="font-semibold text-gray-700 w-20">Hobby:</span> 
+                      <span className="text-gray-600">{member.favorites.hobby}</span>
+                    </div>
                   </div>
                 </div>
               </div>
-            </div>
+              
+              {/* Full Profile Link Button */}
+              <div className="mt-8 text-center pt-8 border-t border-gray-100 flex justify-center">
+                <Link 
+                  to={`/members/${member.name.toLowerCase().replace(' ', '-')}`}
+                  style={{
+                    background: `linear-gradient(135deg, ${
+                      member.memberColor === 'Golden Yellow' ? '#F59E0B, #FCD34D' :
+                      member.memberColor === 'Cherry Blossom Pink' ? '#EC4899, #F472B6' :
+                      member.memberColor === 'Sky Blue' ? '#3B82F6, #60A5FA' :
+                      member.memberColor === 'Electric Purple' ? '#8B5CF6, #A78BFA' :
+                      member.memberColor === 'Mint Green' ? '#10B981, #6EE7B7' : '#6B7280, #9CA3AF'
+                    })`
+                  }}
+                  className="inline-flex items-center px-10 py-4 rounded-full text-white font-black tracking-widest text-sm uppercase shadow-xl hover:shadow-2xl transition-all duration-300 hover:-translate-y-1"
+                >
+                  Lihat Profil Lengkap Peluang Baru →
+                </Link>
+              </div>
           </div>
         </div>
       </div>
@@ -518,7 +539,8 @@ const Members = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-white relative overflow-hidden">
+    <div className="min-h-screen bg-white relative overflow-hidden font-inter">
+      <SEO title="Members Profile" description="Meet the talented members of H5-Revolution." />
       {/* Background decorative elements */}
       <div className="absolute inset-0 pointer-events-none">
         <div className="absolute top-20 left-10 w-32 h-32 bg-gradient-to-br from-yellow-100 to-yellow-200 rounded-full opacity-20 animate-pulse" />
@@ -547,7 +569,7 @@ const Members = () => {
         </div>
 
         {/* Member Cards Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-8 mb-12 max-w-7xl">
+        <div className="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5 gap-4 md:gap-8 mb-12 max-w-7xl px-4 md:px-0">
           {members.map((member, index) => (
             <MemberCard
               key={index}
