@@ -20,8 +20,8 @@ export const ThemeProvider = ({ children }) => {
       root.classList.add("light");
       root.classList.remove("dark");
       root.setAttribute("data-theme", "light");
-      document.body.style.backgroundColor = "#faf8fc";
-      document.body.style.color = "#1a1228";
+      document.body.style.backgroundColor = "#fffdf0";
+      document.body.style.color = "#0f0f0f";
     }
     localStorage.setItem("h5_theme", theme);
   }, [theme]);

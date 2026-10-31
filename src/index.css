@@ -256,37 +256,49 @@
   50% { opacity: 0.2; transform: scale(0.6); }
 }
 
-/* ─── Light Mode Styles & Color Inversion ──────────────── */
-html.light body {
-  background-color: #faf8fc !important;
-  color: #1e1133 !important;
+/* ─── Light Mode Styles — Yellow/White/Black Theme ─────── */
+
+/* Selection highlight */
+html.light ::selection {
+  background: rgba(251, 191, 36, 0.35) !important;
+  color: #0f0f0f !important;
 }
 
+/* Scrollbar */
 html.light ::-webkit-scrollbar-track {
-  background: #f1ecf6;
+  background: #f5f0d0;
+}
+html.light ::-webkit-scrollbar-thumb {
+  background: linear-gradient(to bottom, #fbbf24, #f59e0b) !important;
 }
 
-/* Base Light Mode Card & Container Adaptations */
+/* Body */
+html.light body {
+  background-color: #fffdf0 !important;
+  color: #0f0f0f !important;
+}
+
+/* Base dark backgrounds → warm white/yellow */
 html.light .bg-\[\#0f0a1e\],
 html.light [style*="background: #0f0a1e"],
 html.light [style*="background-color: #0f0a1e"],
 html.light [style*="background: rgb(15, 10, 30)"] {
-  background-color: #faf8fc !important;
-  color: #1e1133 !important;
+  background-color: #fffdf0 !important;
+  color: #0f0f0f !important;
 }
 
 html.light .bg-\[\#070412\] {
-  background-color: #f5f0fa !important;
+  background-color: #fffae8 !important;
 }
 
 html.light .bg-\[\#0a0614\] {
   background-color: #ffffff !important;
-  border-top-color: rgba(236, 72, 153, 0.15) !important;
+  border-top-color: rgba(251, 191, 36, 0.4) !important;
 }
 
 html.light .bg-\[\#0b0616\]\/90 {
-  background-color: rgba(250, 244, 253, 0.95) !important;
-  border-color: rgba(236, 72, 153, 0.15) !important;
+  background-color: rgba(255, 253, 240, 0.97) !important;
+  border-color: rgba(251, 191, 36, 0.3) !important;
 }
 
 html.light .bg-\[\#12082a\],
@@ -298,33 +310,51 @@ html.light .bg-\[\#140b2e\]\/90,
 html.light .bg-\[\#160a2c\]\/80,
 html.light .bg-\[\#160a2e\] {
   background-color: #ffffff !important;
-  border-color: rgba(236, 72, 153, 0.15) !important;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.04) !important;
+  border-color: rgba(251, 191, 36, 0.3) !important;
+  box-shadow: 0 4px 20px rgba(251, 191, 36, 0.08) !important;
 }
 
+/* Glass cards → frosted yellow-white */
 html.light .glass-dark {
-  background: rgba(255, 255, 255, 0.9) !important;
-  border: 1px solid rgba(236, 72, 153, 0.18) !important;
-  box-shadow: 0 10px 30px rgba(236, 72, 153, 0.08) !important;
+  background: rgba(255, 255, 255, 0.92) !important;
+  border: 1px solid rgba(251, 191, 36, 0.4) !important;
+  box-shadow: 0 10px 30px rgba(251, 191, 36, 0.15) !important;
 }
 
 html.light .glass-idol {
-  background: rgba(255, 255, 255, 0.95) !important;
-  border: 1px solid rgba(236, 72, 153, 0.18) !important;
-  box-shadow: 0 12px 40px rgba(236, 72, 153, 0.1) !important;
+  background: rgba(255, 253, 240, 0.97) !important;
+  border: 1px solid rgba(251, 191, 36, 0.4) !important;
+  box-shadow: 0 12px 40px rgba(251, 191, 36, 0.18) !important;
 }
 
-/* Text adaptations in light mode */
-html.light .text-white {
-  color: #1a0f2b !important;
+html.light .glass {
+  background: rgba(255, 255, 255, 0.75) !important;
+  border: 1px solid rgba(251, 191, 36, 0.25) !important;
 }
-html.light .text-white\/80 { color: rgba(26, 15, 43, 0.85) !important; }
-html.light .text-white\/70 { color: rgba(26, 15, 43, 0.75) !important; }
-html.light .text-white\/60 { color: rgba(26, 15, 43, 0.65) !important; }
-html.light .text-white\/50 { color: rgba(26, 15, 43, 0.55) !important; }
-html.light .text-white\/40 { color: rgba(26, 15, 43, 0.45) !important; }
-html.light .text-white\/30 { color: rgba(26, 15, 43, 0.35) !important; }
-html.light .text-white\/20 { color: rgba(26, 15, 43, 0.25) !important; }
+
+/* Text adaptations → black */
+html.light .text-white {
+  color: #0f0f0f !important;
+}
+html.light .text-white\/80 { color: rgba(15, 15, 15, 0.85) !important; }
+html.light .text-white\/70 { color: rgba(15, 15, 15, 0.75) !important; }
+html.light .text-white\/60 { color: rgba(15, 15, 15, 0.65) !important; }
+html.light .text-white\/50 { color: rgba(15, 15, 15, 0.55) !important; }
+html.light .text-white\/40 { color: rgba(15, 15, 15, 0.45) !important; }
+html.light .text-white\/30 { color: rgba(15, 15, 15, 0.35) !important; }
+html.light .text-white\/20 { color: rgba(15, 15, 15, 0.25) !important; }
+
+/* Section headings & accent text → yellow gold */
+html.light .text-pink-400,
+html.light .text-pink-300,
+html.light .text-pink-500 {
+  color: #d97706 !important;
+}
+html.light .text-orange-400,
+html.light .text-orange-300,
+html.light .text-orange-500 {
+  color: #f59e0b !important;
+}
 
 /* Keep White Text on Gradient Buttons & Badges */
 html.light .shimmer-btn,
@@ -338,21 +368,86 @@ html.light .badge-idol * {
   color: #ffffff !important;
 }
 
-/* Border adaptations in light mode */
-html.light .border-white\/10 {
-  border-color: rgba(236, 72, 153, 0.15) !important;
-}
-html.light .border-white\/5 {
-  border-color: rgba(236, 72, 153, 0.08) !important;
-}
-html.light .border-white\/20 {
-  border-color: rgba(236, 72, 153, 0.2) !important;
+/* Override gradient buttons to yellow-black palette */
+html.light .shimmer-btn,
+html.light .bg-gradient-to-r.from-pink-500,
+html.light .bg-gradient-to-r.from-pink-600 {
+  background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 50%, #d97706 100%) !important;
+  border-color: #f59e0b !important;
 }
 
-/* Background pill adaptations */
+/* Border adaptations → yellow */
+html.light .border-white\/10 {
+  border-color: rgba(251, 191, 36, 0.2) !important;
+}
+html.light .border-white\/5 {
+  border-color: rgba(251, 191, 36, 0.12) !important;
+}
+html.light .border-white\/20 {
+  border-color: rgba(251, 191, 36, 0.3) !important;
+}
+html.light .border-pink-500\/20,
+html.light .border-pink-500\/30 {
+  border-color: rgba(251, 191, 36, 0.35) !important;
+}
+
+/* Background pill/subtle areas → soft yellow */
 html.light .bg-white\/5,
 html.light .bg-white\/\[0\.04\],
 html.light .bg-white\/\[0\.03\],
 html.light .bg-white\/\[0\.02\] {
-  background-color: rgba(236, 72, 153, 0.05) !important;
+  background-color: rgba(251, 191, 36, 0.07) !important;
+}
+
+/* Badge idol in light → yellow style */
+html.light .badge-idol {
+  border-color: rgba(251, 191, 36, 0.5) !important;
+  background: rgba(251, 191, 36, 0.15) !important;
+  color: #92400e !important;
+}
+html.light .badge-idol * {
+  color: #92400e !important;
+}
+
+/* Glow text in light → yellow glow */
+html.light .text-idol-glow {
+  text-shadow: 0 0 20px rgba(251, 191, 36, 0.7), 0 0 40px rgba(251, 191, 36, 0.35) !important;
+}
+
+/* Divider in light → yellow */
+html.light .idol-divider {
+  background: linear-gradient(90deg, transparent, rgba(251, 191, 36, 0.5), rgba(245, 158, 11, 0.5), transparent) !important;
+}
+
+/* Header nav in light → white with yellow accent */
+html.light header,
+html.light nav {
+  background: rgba(255, 255, 255, 0.95) !important;
+  border-bottom-color: rgba(251, 191, 36, 0.3) !important;
+}
+
+/* Footer in light → black with yellow accent */
+html.light footer {
+  background-color: #111111 !important;
+  color: #ffffff !important;
+}
+html.light footer .text-white {
+  color: #ffffff !important;
+}
+html.light footer .text-white\/60 { color: rgba(255,255,255,0.6) !important; }
+html.light footer .text-white\/70 { color: rgba(255,255,255,0.7) !important; }
+html.light footer .text-white\/80 { color: rgba(255,255,255,0.8) !important; }
+
+/* Animate glow → yellow in light mode */
+html.light .animate-glow {
+  animation: idol-glow-yellow 3s ease-in-out infinite !important;
+}
+@keyframes idol-glow-yellow {
+  0%, 100% { box-shadow: 0 0 20px rgba(251, 191, 36, 0.3); }
+  50%       { box-shadow: 0 0 40px rgba(251, 191, 36, 0.7), 0 0 80px rgba(251, 191, 36, 0.2); }
+}
+
+/* Card hover border → yellow */
+html.light .hover\:border-pink-500\/40:hover {
+  border-color: rgba(251, 191, 36, 0.5) !important;
 }
