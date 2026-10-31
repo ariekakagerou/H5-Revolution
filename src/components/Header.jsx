@@ -11,6 +11,7 @@ import {
 } from "react-icons/fa";
 import { motion, AnimatePresence } from "framer-motion";
 import { useTheme } from "../contexts/ThemeContext";
+import Logo from "./Logo";
 
 /**
  * Header Component with Theme Switcher (Dark & Light Mode)
@@ -98,18 +99,8 @@ const Header = () => {
         <div className="max-w-[1500px] mx-auto px-4 sm:px-6 lg:px-12 flex items-center justify-between">
           
           {/* Logo Section */}
-          <Link to="/" className="flex flex-col group flex-shrink-0">
-            <div className="flex items-baseline leading-none">
-              <span className="text-3xl sm:text-4xl md:text-5xl font-black italic tracking-tighter leading-none
-                bg-gradient-to-r from-pink-400 via-orange-400 to-pink-500 bg-clip-text text-transparent
-                drop-shadow-[0_0_15px_rgba(236,72,153,0.5)] group-hover:drop-shadow-[0_0_25px_rgba(236,72,153,0.8)]
-                transition-all duration-300">
-                H5-R
-              </span>
-            </div>
-            <span className="text-[7px] md:text-[9px] font-bold tracking-[0.1em] text-pink-400/60 uppercase leading-none mt-1 ml-0.5 font-mono">
-              (HIVE-REVOLUTION)
-            </span>
+          <Link to="/" className="flex items-center flex-shrink-0" aria-label="H5-Revolution Home">
+            <Logo variant="compact" size="md" />
           </Link>
 
           {/* Desktop Navigation */}
@@ -263,14 +254,10 @@ const Header = () => {
                   <Link 
                     to="/" 
                     onClick={() => setIsMobileMenuOpen(false)} 
-                    className="flex flex-col"
+                    className="flex items-center"
+                    aria-label="H5-Revolution Home"
                   >
-                    <span className="text-3xl font-black italic bg-gradient-to-r from-pink-400 via-orange-400 to-pink-500 bg-clip-text text-transparent tracking-tighter">
-                      H5-R
-                    </span>
-                    <span className="text-[9px] font-bold text-pink-400/60 uppercase tracking-widest leading-none mt-1 font-mono">
-                      OFFICIAL PORTAL
-                    </span>
+                    <Logo variant="compact" size="sm" />
                   </Link>
                   
                   <div className="flex items-center gap-2">

@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { FaXTwitter, FaYoutube, FaTiktok, FaHeart, FaStar, FaInstagram } from "react-icons/fa6";
 import { useTheme } from "../contexts/ThemeContext";
+import Logo from "./Logo";
 
 /**
  * Footer Component
@@ -56,17 +57,10 @@ const Footer = () => {
           
           {/* Brand */}
           <div className="flex-shrink-0 text-center lg:text-left w-full lg:w-auto">
-            <div className="text-3xl md:text-4xl font-black italic tracking-tighter bg-gradient-to-r from-pink-400 via-orange-400 to-pink-500 bg-clip-text text-transparent drop-shadow-[0_0_20px_rgba(236,72,153,0.5)] transition-all duration-300 mb-2">
-              H5-REVOLUTION
-            </div>
-            <div className="flex items-center justify-center lg:justify-start gap-2 mb-4">
-              <FaStar className={`text-[10px] animate-pulse ${isDark ? "text-pink-400" : "text-yellow-400"}`} />
-              <span className={`text-[10px] font-bold tracking-[0.4em] uppercase font-mono ${isDark ? "text-pink-400/60" : "text-yellow-400/70"}`}>
-                RISE & SHINE • STAGE IDOL
-              </span>
-              <FaStar className={`text-[10px] animate-pulse ${isDark ? "text-orange-400" : "text-amber-400"}`} />
-            </div>
-            <p className={`text-xs leading-relaxed max-w-xs mx-auto lg:mx-0 ${isDark ? "text-white/30" : "text-white/50"}`}>
+            <Link to="/" className="inline-block mb-3" aria-label="H5-Revolution Home">
+              <Logo variant="full" size="md" />
+            </Link>
+            <p className={`text-xs leading-relaxed max-w-xs mx-auto lg:mx-0 ${isDark ? "text-white/40" : "text-white/60"}`}>
               Indonesia's premier idol group — bringing the stage to life with every performance.
             </p>
           </div>
