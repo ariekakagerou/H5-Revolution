@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import SEO from "../components/SEO";
 
@@ -7,7 +7,7 @@ const EVENTS = [
   {
     id: 1,
     title: "Summer Live Concert",
-    date: "May 21, 2022",
+    date: "May 21, 2026",
     location: "Tokyo Dome, Tokyo, Japan",
     type: "Concert",
     attendees: 318,
@@ -17,22 +17,22 @@ const EVENTS = [
     bannerImage: "https://images.unsplash.com/photo-1493225457124-a3eb161ffa5f?w=900&q=80",
     doorTime: "5:00 PM (JST)",
     startTime: "6:00 PM (JST)",
-    day: "Saturday, May 21, 2022",
+    day: "Saturday, May 21, 2026",
     ticketCost: "¥8,000 – ¥12,000",
     category: "upcoming",
   },
   {
     id: 2,
     title: "Fan Meet & Greet",
-    date: "June 5, 2022",
+    date: "June 5, 2026",
     dateShort: "5",
-    location: "Akiihbara Hall, Tokyo, Japan",
+    location: "Akihabara Hall, Tokyo, Japan",
     type: "Fan Meeting",
     description: "Exclusive fan interaction session with all H5-R members.",
     image: "https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?w=400&q=80",
     doorTime: "6:00 PM (JST)",
     startTime: "7:00 PM (JST)",
-    day: "Sunday, June 5, 2022",
+    day: "Sunday, June 5, 2026",
     ticketCost: "¥5,000 – ¥8,000",
     category: "upcoming",
   },
@@ -116,33 +116,40 @@ const Events = () => {
 
   return (
     <div
-      className="events-page"
+      className="events-page pt-28 pb-20 relative overflow-hidden"
       style={{
         minHeight: "100vh",
-        background: "#f5f5f5",
-        fontFamily: "'Inter', 'Segoe UI', sans-serif",
-        backgroundImage:
-          "radial-gradient(circle at 20% 10%, rgba(251,191,36,0.06) 0%, transparent 50%), radial-gradient(circle at 80% 80%, rgba(251,191,36,0.04) 0%, transparent 50%)",
+        background: "#0f0a1e",
+        fontFamily: "'Inter', system-ui, sans-serif",
+        color: "#f8fafc",
       }}
     >
       <SEO title="Events – H5-Revolution" description="Join H5-Revolution live concerts, fan meetings, and special showcases." />
 
+      {/* Ambient Glows */}
+      <div className="absolute top-0 right-1/4 w-[600px] h-[500px] bg-pink-600/10 rounded-full blur-[140px] pointer-events-none" />
+      <div className="absolute top-1/2 left-10 w-[500px] h-[500px] bg-orange-500/5 rounded-full blur-[120px] pointer-events-none" />
+
       {/* ── PAGE HEADER ───────────────────────────── */}
-      <div style={{ maxWidth: 1100, margin: "0 auto", padding: "28px 20px 0" }}>
+      <div style={{ maxWidth: 1100, margin: "0 auto", padding: "10px 20px 0" }} className="relative z-10">
         {/* Title + Tabs row */}
-        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: 12, marginBottom: 6 }}>
-          <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-            <h1 style={{ fontSize: 30, fontWeight: 800, color: "#1a1a2e", margin: 0 }}>Events</h1>
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: 14, marginBottom: 12 }}>
+          <div style={{ display: "flex", alignItems: "center", gap: 12 }}>
+            <h1 style={{ fontSize: 32, fontWeight: 900, margin: 0, textTransform: "uppercase", letterSpacing: "-0.03em" }}>
+              Live <span className="text-idol">Events</span>
+            </h1>
             <span
               style={{
-                background: "linear-gradient(135deg, #FBBF24, #F59E0B)",
-                borderRadius: 8,
-                padding: "4px 8px",
+                background: "linear-gradient(135deg, #ec4899, #f97316)",
+                borderRadius: 4,
+                padding: "6px 10px",
                 display: "flex",
                 alignItems: "center",
+                color: "#fff",
+                boxShadow: "0 0 15px rgba(236,72,153,0.5)",
               }}
             >
-              <CalIcon className="w-5 h-5" />
+              <CalIcon className="w-4 h-4" />
             </span>
           </div>
 
@@ -150,11 +157,10 @@ const Events = () => {
           <div
             style={{
               display: "flex",
-              background: "#fff",
-              borderRadius: 10,
-              border: "1px solid #e5e7eb",
+              background: "rgba(255,255,255,0.04)",
+              borderRadius: 4,
+              border: "1px solid rgba(255,255,255,0.08)",
               overflow: "hidden",
-              boxShadow: "0 2px 8px rgba(0,0,0,0.06)",
             }}
           >
             {["upcoming", "past"].map((tab) => (
@@ -165,177 +171,176 @@ const Events = () => {
                   padding: "8px 18px",
                   border: "none",
                   cursor: "pointer",
-                  fontWeight: 600,
-                  fontSize: 13,
+                  fontWeight: 800,
+                  fontSize: 12,
+                  textTransform: "uppercase",
+                  letterSpacing: "0.1em",
                   transition: "all 0.2s",
-                  background: activeTab === tab ? "linear-gradient(135deg,#FBBF24,#F59E0B)" : "transparent",
-                  color: activeTab === tab ? "#1a1a2e" : "#6b7280",
-                  borderRadius: activeTab === tab ? 8 : 0,
+                  background: activeTab === tab ? "linear-gradient(135deg,#ec4899,#f97316)" : "transparent",
+                  color: activeTab === tab ? "#fff" : "rgba(255,255,255,0.5)",
                 }}
               >
                 {tab === "upcoming" ? "Upcoming Events" : "Past Events"}
               </button>
             ))}
-            <button
-              style={{
-                padding: "8px 12px",
-                border: "none",
-                background: "transparent",
-                cursor: "pointer",
-                color: "#9ca3af",
-              }}
-            >
-              <ChevronIcon />
-            </button>
           </div>
         </div>
 
         {/* Breadcrumb + Search */}
-        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: 10, marginBottom: 20 }}>
-          <p style={{ margin: 0, fontSize: 13, color: "#9ca3af" }}>
-            <span style={{ color: "#6b7280" }}>Home</span>
-            <span style={{ margin: "0 6px" }}>•</span>
-            <span style={{ color: "#FBBF24", fontWeight: 600 }}>Events</span>
+        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", flexWrap: "wrap", gap: 10, marginBottom: 24 }}>
+          <p style={{ margin: 0, fontSize: 12, color: "rgba(255,255,255,0.4)", textTransform: "uppercase", letterSpacing: "0.1em" }}>
+            <span>Home</span>
+            <span style={{ margin: "0 8px" }}>/</span>
+            <span style={{ color: "#ec4899", fontWeight: 700 }}>Events</span>
           </p>
           <div
             style={{
               display: "flex",
               alignItems: "center",
-              background: "#fff",
-              border: "1px solid #e5e7eb",
-              borderRadius: 8,
+              background: "rgba(255,255,255,0.04)",
+              border: "1px solid rgba(255,255,255,0.08)",
+              borderRadius: 4,
               padding: "6px 12px",
-              gap: 6,
-              boxShadow: "0 1px 4px rgba(0,0,0,0.05)",
+              gap: 8,
             }}
           >
-            <SearchIcon className="w-4 h-4" />
+            <SearchIcon className="w-4 h-4 text-pink-400" />
             <input
               type="text"
               placeholder="Search events..."
               style={{
                 border: "none",
                 outline: "none",
-                fontSize: 13,
-                color: "#4b5563",
+                fontSize: 12,
+                color: "#fff",
                 background: "transparent",
                 width: 160,
               }}
             />
-            <SearchIcon className="w-4 h-4" />
           </div>
         </div>
 
         {/* ── FEATURED EVENT CARD ─────────────────────────── */}
         <div
+          className="group hover:border-pink-500/50 transition-all duration-300"
           style={{
-            background: "#fff",
-            borderRadius: 16,
+            background: "rgba(18, 8, 42, 0.8)",
+            backdropFilter: "blur(16px)",
+            borderRadius: 4,
+            border: "1px solid rgba(255,255,255,0.08)",
             overflow: "hidden",
-            boxShadow: "0 4px 24px rgba(0,0,0,0.10)",
-            marginBottom: 16,
+            boxShadow: "0 10px 30px rgba(0,0,0,0.4)",
+            marginBottom: 20,
             display: "grid",
             gridTemplateColumns: "minmax(0,1.1fr) minmax(0,1fr)",
           }}
         >
           {/* Left: image */}
-          <div style={{ position: "relative", minHeight: 220 }}>
+          <div style={{ position: "relative", minHeight: 240, overflow: "hidden" }}>
             <img
               src={FEATURED_EVENT.image}
               alt={FEATURED_EVENT.title}
-              style={{ width: "100%", height: "100%", objectFit: "cover", display: "block", minHeight: 220 }}
+              className="group-hover:scale-105 transition-transform duration-700"
+              style={{ width: "100%", height: "100%", objectFit: "cover", display: "block", minHeight: 240 }}
             />
             <div
               style={{
                 position: "absolute",
                 inset: 0,
-                background: "linear-gradient(120deg, rgba(251,191,36,0.18) 0%, rgba(0,0,0,0.18) 100%)",
+                background: "linear-gradient(120deg, rgba(236,72,153,0.3) 0%, rgba(15,10,30,0.8) 100%)",
               }}
             />
+            <div
+              style={{
+                position: "absolute",
+                top: 14,
+                left: 14,
+                background: "linear-gradient(135deg, #ec4899, #f97316)",
+                padding: "4px 10px",
+                borderRadius: 2,
+                fontSize: 10,
+                fontWeight: 900,
+                textTransform: "uppercase",
+                letterSpacing: "0.2em",
+                color: "#fff",
+                boxShadow: "0 0 15px rgba(236,72,153,0.6)",
+              }}
+            >
+              FEATURED CONCERT
+            </div>
           </div>
 
           {/* Right: info */}
-          <div style={{ padding: "28px 28px 22px", display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
+          <div style={{ padding: "28px 28px 24px", display: "flex", flexDirection: "column", justifyContent: "space-between" }}>
             {/* Title + attendees */}
             <div>
-              <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", gap: 8, marginBottom: 8 }}>
-                <h2 style={{ fontSize: 22, fontWeight: 800, color: "#1a1a2e", margin: 0, lineHeight: 1.3 }}>{FEATURED_EVENT.title}</h2>
+              <div style={{ display: "flex", alignItems: "flex-start", justifyContent: "space-between", gap: 10, marginBottom: 8 }}>
+                <h2 style={{ fontSize: 24, fontWeight: 900, color: "#fff", margin: 0, lineHeight: 1.2, textTransform: "uppercase", letterSpacing: "-0.02em" }}>
+                  {FEATURED_EVENT.title}
+                </h2>
                 <div
                   style={{
                     display: "flex",
                     alignItems: "center",
-                    gap: 5,
-                    background: "linear-gradient(135deg,#FBBF24,#F59E0B)",
-                    color: "#1a1a2e",
-                    borderRadius: 20,
+                    gap: 6,
+                    background: "rgba(236,72,153,0.15)",
+                    border: "1px solid rgba(236,72,153,0.4)",
+                    color: "#f472b6",
+                    borderRadius: 2,
                     padding: "4px 10px",
-                    fontWeight: 700,
-                    fontSize: 13,
+                    fontWeight: 800,
+                    fontSize: 11,
                     whiteSpace: "nowrap",
                     flexShrink: 0,
+                    fontFamily: "monospace",
                   }}
                 >
-                  <PeopleIcon className="w-4 h-4" />
-                  {FEATURED_EVENT.attendees}
-                  <span style={{ fontSize: 16, color: "#F59E0B", background: "#fff", borderRadius: "50%", width: 18, height: 18, display: "flex", alignItems: "center", justifyContent: "center", marginLeft: 2 }}>+</span>
+                  <PeopleIcon className="w-3.5 h-3.5" />
+                  {FEATURED_EVENT.attendees} GOING
                 </div>
               </div>
 
               {/* Date */}
-              <p style={{ margin: "0 0 6px", fontSize: 13, color: "#6b7280", fontWeight: 500 }}>{FEATURED_EVENT.date}</p>
+              <p style={{ margin: "0 0 6px", fontSize: 13, color: "#ec4899", fontWeight: 700, fontFamily: "monospace" }}>
+                {FEATURED_EVENT.date}
+              </p>
 
               {/* Location */}
               <div style={{ display: "flex", alignItems: "center", gap: 6, marginBottom: 12 }}>
-                <span style={{ color: "#FBBF24" }}>
-                  <PinIcon className="w-3 h-3" />
+                <span style={{ color: "#06b6d4" }}>
+                  <PinIcon className="w-3.5 h-3.5" />
                 </span>
-                <span style={{ fontSize: 13, color: "#6b7280" }}>{FEATURED_EVENT.location}</span>
+                <span style={{ fontSize: 13, color: "rgba(255,255,255,0.7)" }}>{FEATURED_EVENT.location}</span>
               </div>
 
               {/* Description */}
-              <p style={{ fontSize: 13, color: "#6b7280", lineHeight: 1.6, margin: "0 0 18px" }}>{FEATURED_EVENT.description}</p>
+              <p style={{ fontSize: 13, color: "rgba(255,255,255,0.6)", lineHeight: 1.6, margin: "0 0 20px" }}>
+                {FEATURED_EVENT.description}
+              </p>
             </div>
 
             {/* Actions */}
             <div style={{ display: "flex", alignItems: "center", gap: 12, flexWrap: "wrap" }}>
               <button
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: 6,
-                  background: "transparent",
-                  border: "1.5px solid #e5e7eb",
-                  borderRadius: 8,
-                  padding: "8px 14px",
-                  fontSize: 13,
-                  color: "#4b5563",
-                  cursor: "pointer",
-                  fontWeight: 500,
-                }}
-              >
-                <CalIcon className="w-4 h-4" />
-                Event Tickets
-                <span style={{ fontSize: 11, color: "#9ca3af" }}>▼</span>
-              </button>
-              <button
                 onClick={() => { setSelectedEvent(FEATURED_EVENT); setShowModal(true); }}
+                className="shimmer-btn"
                 style={{
                   display: "flex",
                   alignItems: "center",
                   gap: 8,
-                  background: "linear-gradient(135deg,#FBBF24,#F59E0B)",
+                  background: "linear-gradient(135deg,#ec4899,#f97316)",
                   border: "none",
-                  borderRadius: 8,
-                  padding: "9px 20px",
-                  fontSize: 13,
-                  fontWeight: 700,
-                  color: "#1a1a2e",
+                  borderRadius: 2,
+                  padding: "10px 22px",
+                  fontSize: 12,
+                  fontWeight: 900,
+                  textTransform: "uppercase",
+                  letterSpacing: "0.15em",
+                  color: "#fff",
                   cursor: "pointer",
-                  boxShadow: "0 2px 8px rgba(251,191,36,0.35)",
-                  transition: "transform 0.15s",
+                  boxShadow: "0 0 20px rgba(236,72,153,0.4)",
+                  transition: "all 0.2s",
                 }}
-                onMouseOver={(e) => (e.currentTarget.style.transform = "translateY(-1px)")}
-                onMouseOut={(e) => (e.currentTarget.style.transform = "none")}
               >
                 Get Tickets
                 <ArrowRightIcon className="w-4 h-4" />
@@ -347,15 +352,16 @@ const Events = () => {
         {/* ── SECONDARY EVENT CARD ─────────────────────────── */}
         <div
           style={{
-            background: "#fff",
-            borderRadius: 14,
+            background: "rgba(18, 8, 42, 0.7)",
+            backdropFilter: "blur(12px)",
+            borderRadius: 4,
+            border: "1px solid rgba(255,255,255,0.06)",
             padding: "16px 20px",
             marginBottom: 28,
             display: "flex",
             alignItems: "center",
             justifyContent: "space-between",
             gap: 16,
-            boxShadow: "0 2px 12px rgba(0,0,0,0.07)",
             flexWrap: "wrap",
           }}
         >
@@ -364,25 +370,25 @@ const Events = () => {
             {/* Calendar badge */}
             <div
               style={{
-                background: "linear-gradient(135deg,#FBBF24,#F59E0B)",
-                borderRadius: 10,
-                width: 50,
+                background: "linear-gradient(135deg,#ec4899,#f97316)",
+                borderRadius: 4,
+                width: 52,
                 height: 54,
                 display: "flex",
                 flexDirection: "column",
                 alignItems: "center",
                 justifyContent: "center",
-                boxShadow: "0 2px 8px rgba(251,191,36,0.3)",
+                boxShadow: "0 0 15px rgba(236,72,153,0.4)",
                 flexShrink: 0,
               }}
             >
-              <span style={{ fontSize: 10, fontWeight: 700, color: "#7c4f00", letterSpacing: 1 }}>JUN</span>
-              <span style={{ fontSize: 22, fontWeight: 900, color: "#1a1a2e", lineHeight: 1 }}>{NEXT_EVENT.dateShort}</span>
+              <span style={{ fontSize: 10, fontWeight: 900, color: "#fff", letterSpacing: 1 }}>JUN</span>
+              <span style={{ fontSize: 22, fontWeight: 900, color: "#fff", lineHeight: 1, fontFamily: "monospace" }}>{NEXT_EVENT.dateShort}</span>
             </div>
 
             <div>
-              <h3 style={{ margin: 0, fontSize: 15, fontWeight: 700, color: "#1a1a2e" }}>{NEXT_EVENT.title}</h3>
-              <p style={{ margin: "2px 0 0", fontSize: 12, color: "#9ca3af" }}>{NEXT_EVENT.location}</p>
+              <h3 style={{ margin: 0, fontSize: 16, fontWeight: 800, color: "#fff", textTransform: "uppercase" }}>{NEXT_EVENT.title}</h3>
+              <p style={{ margin: "2px 0 0", fontSize: 12, color: "rgba(255,255,255,0.5)" }}>{NEXT_EVENT.location}</p>
             </div>
           </div>
 
@@ -393,16 +399,18 @@ const Events = () => {
               display: "flex",
               alignItems: "center",
               gap: 6,
-              background: "linear-gradient(135deg,#FBBF24,#F59E0B)",
-              border: "none",
-              borderRadius: 8,
-              padding: "8px 16px",
-              fontSize: 13,
-              fontWeight: 700,
-              color: "#1a1a2e",
+              background: "rgba(255,255,255,0.05)",
+              border: "1px solid rgba(236,72,153,0.4)",
+              borderRadius: 2,
+              padding: "9px 18px",
+              fontSize: 12,
+              fontWeight: 800,
+              textTransform: "uppercase",
+              letterSpacing: "0.15em",
+              color: "#f472b6",
               cursor: "pointer",
               whiteSpace: "nowrap",
-              boxShadow: "0 2px 8px rgba(251,191,36,0.3)",
+              transition: "all 0.2s",
             }}
           >
             More Info
@@ -414,60 +422,47 @@ const Events = () => {
         <div className="flex flex-col lg:grid lg:grid-cols-[1fr_320px] gap-8 items-start">
           {/* ── LEFT: EVENT DETAILS ─────────────────────────── */}
           <div>
-            <h2 style={{ fontSize: 20, fontWeight: 800, color: "#1a1a2e", marginBottom: 16 }}>
-              Event Details: {selectedEvent.title}
+            <h2 style={{ fontSize: 20, fontWeight: 900, color: "#fff", marginBottom: 16, textTransform: "uppercase", letterSpacing: "-0.01em" }}>
+              Event Details: <span className="text-idol">{selectedEvent.title}</span>
             </h2>
 
             {/* Detail Card */}
             <div
               style={{
-                background: "#fff",
-                borderRadius: 14,
+                background: "rgba(18, 8, 42, 0.8)",
+                borderRadius: 4,
+                border: "1px solid rgba(255,255,255,0.08)",
                 overflow: "hidden",
-                boxShadow: "0 2px 12px rgba(0,0,0,0.08)",
+                boxShadow: "0 8px 30px rgba(0,0,0,0.3)",
               }}
             >
               {/* Item banner & title */}
               <div
                 style={{
-                  background: "linear-gradient(135deg, #fffbeb 0%, #fef3c7 50%, #fde68a 100%)",
-                  padding: "28px 24px 20px",
+                  background: "linear-gradient(135deg, rgba(236,72,153,0.2) 0%, rgba(249,115,22,0.1) 100%)",
+                  borderBottom: "1px solid rgba(255,255,255,0.06)",
+                  padding: "24px 24px 18px",
                   textAlign: "center",
                   position: "relative",
                   overflow: "hidden",
                 }}
               >
-                {/* Decorative stars */}
-                {["8% 20%", "92% 15%", "5% 80%", "95% 75%", "50% 5%"].map((pos, i) => (
-                  <span
-                    key={i}
-                    style={{
-                      position: "absolute",
-                      top: pos.split(" ")[1],
-                      left: pos.split(" ")[0],
-                      color: "#F59E0B",
-                      fontSize: [10, 14, 10, 12, 10][i],
-                      opacity: 0.6,
-                    }}
-                  >
-                    ✦
-                  </span>
-                ))}
                 <h3
                   style={{
                     fontSize: 24,
                     fontWeight: 900,
-                    color: "#1a1a2e",
+                    color: "#fff",
                     fontStyle: "italic",
-                    margin: "0 0 8px",
+                    margin: "0 0 6px",
+                    textTransform: "uppercase",
                   }}
                 >
                   {selectedEvent.title}
                 </h3>
                 <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: 8 }}>
-                  <span style={{ color: "#F59E0B" }}>✦</span>
-                  <span style={{ fontSize: 14, fontWeight: 600, color: "#6b7280" }}>{selectedEvent.date}</span>
-                  <span style={{ color: "#F59E0B" }}>✦</span>
+                  <span style={{ color: "#ec4899" }}>✦</span>
+                  <span style={{ fontSize: 13, fontWeight: 700, color: "rgba(255,255,255,0.7)", fontFamily: "monospace" }}>{selectedEvent.date}</span>
+                  <span style={{ color: "#f97316" }}>✦</span>
                 </div>
               </div>
 
@@ -480,18 +475,17 @@ const Events = () => {
                     width: "100%",
                     height: 220,
                     objectFit: "cover",
-                    borderRadius: 10,
-                    marginTop: -10,
+                    borderRadius: 2,
+                    marginTop: 16,
                     display: "block",
-                    boxShadow: "0 4px 16px rgba(0,0,0,0.12)",
+                    border: "1px solid rgba(255,255,255,0.1)",
                   }}
                 />
               </div>
 
               {/* Details */}
-              <div style={{ padding: "18px 24px 20px" }}>
-                {/* Location title */}
-                <h4 style={{ fontSize: 15, fontWeight: 700, color: "#1a1a2e", margin: "0 0 14px" }}>
+              <div style={{ padding: "20px 24px" }}>
+                <h4 style={{ fontSize: 16, fontWeight: 800, color: "#fff", margin: "0 0 14px" }}>
                   {selectedEvent.location}
                 </h4>
 
@@ -501,28 +495,28 @@ const Events = () => {
                     display: "flex",
                     gap: 20,
                     flexWrap: "wrap",
-                    marginBottom: 12,
-                    paddingBottom: 12,
-                    borderBottom: "1px solid #f3f4f6",
+                    marginBottom: 14,
+                    paddingBottom: 14,
+                    borderBottom: "1px solid rgba(255,255,255,0.06)",
                   }}
                 >
-                  <div style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 13, color: "#6b7280" }}>
-                    <span style={{ color: "#FBBF24" }}>
+                  <div style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 13, color: "rgba(255,255,255,0.7)" }}>
+                    <span style={{ color: "#ec4899" }}>
                       <CalIcon className="w-4 h-4" />
                     </span>
                     Doors · {selectedEvent.date}
                   </div>
-                  <div style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 13, color: "#6b7280" }}>
-                    <span style={{ color: "#FBBF24" }}>
+                  <div style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 13, color: "rgba(255,255,255,0.7)" }}>
+                    <span style={{ color: "#f97316" }}>
                       <ClockIcon className="w-4 h-4" />
                     </span>
-                    Start Timer: {selectedEvent.doorTime}
+                    Start: {selectedEvent.doorTime}
                   </div>
                 </div>
 
                 {/* Start location */}
-                <div style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 13, color: "#6b7280", marginBottom: 12 }}>
-                  <span style={{ color: "#FBBF24" }}>
+                <div style={{ display: "flex", alignItems: "center", gap: 6, fontSize: 13, color: "rgba(255,255,255,0.6)", marginBottom: 16 }}>
+                  <span style={{ color: "#06b6d4" }}>
                     <PinIcon className="w-4 h-4" />
                   </span>
                   Start at: {selectedEvent.location.split(",")[0]}, {selectedEvent.startTime}
@@ -535,30 +529,38 @@ const Events = () => {
                     alignItems: "center",
                     justifyContent: "space-between",
                     flexWrap: "wrap",
-                    gap: 10,
+                    gap: 12,
+                    background: "rgba(255,255,255,0.02)",
+                    border: "1px solid rgba(255,255,255,0.05)",
+                    padding: "12px 16px",
+                    borderRadius: 2,
                   }}
                 >
-                  <div style={{ display: "flex", alignItems: "center", gap: 6 }}>
-                    <span style={{ color: "#FBBF24" }}>
+                  <div style={{ display: "flex", alignItems: "center", gap: 8 }}>
+                    <span style={{ color: "#ec4899" }}>
                       <TicketIcon className="w-4 h-4" />
                     </span>
-                    <span style={{ fontSize: 14, fontWeight: 700, color: "#1a1a2e" }}>Ticket Cost</span>
-                    <span style={{ fontSize: 13, color: "#9ca3af" }}>{selectedEvent.ticketCost}</span>
+                    <span style={{ fontSize: 13, fontWeight: 700, textTransform: "uppercase", color: "rgba(255,255,255,0.5)" }}>Ticket Cost:</span>
+                    <span style={{ fontSize: 14, fontWeight: 900, color: "#ec4899", fontFamily: "monospace" }}>{selectedEvent.ticketCost}</span>
                   </div>
                   <button
+                    onClick={() => setShowModal(true)}
+                    className="shimmer-btn"
                     style={{
                       display: "flex",
                       alignItems: "center",
                       gap: 8,
-                      background: "linear-gradient(135deg,#FBBF24,#F59E0B)",
+                      background: "linear-gradient(135deg,#ec4899,#f97316)",
                       border: "none",
-                      borderRadius: 8,
+                      borderRadius: 2,
                       padding: "9px 20px",
-                      fontSize: 13,
-                      fontWeight: 700,
-                      color: "#1a1a2e",
+                      fontSize: 12,
+                      fontWeight: 900,
+                      textTransform: "uppercase",
+                      letterSpacing: "0.15em",
+                      color: "#fff",
                       cursor: "pointer",
-                      boxShadow: "0 2px 8px rgba(251,191,36,0.30)",
+                      boxShadow: "0 0 15px rgba(236,72,153,0.4)",
                     }}
                   >
                     Buy Tickets
@@ -575,24 +577,27 @@ const Events = () => {
             {/* Event Information */}
             <div
               style={{
-                background: "#fff",
-                borderRadius: 14,
+                background: "rgba(18, 8, 42, 0.8)",
+                borderRadius: 4,
+                border: "1px solid rgba(255,255,255,0.08)",
                 padding: "20px",
-                boxShadow: "0 2px 12px rgba(0,0,0,0.07)",
+                boxShadow: "0 4px 20px rgba(0,0,0,0.3)",
               }}
             >
-              <h3 style={{ fontSize: 16, fontWeight: 800, color: "#1a1a2e", margin: "0 0 14px" }}>Event Information</h3>
+              <h3 style={{ fontSize: 15, fontWeight: 900, textTransform: "uppercase", letterSpacing: "0.05em", color: "#fff", margin: "0 0 14px" }}>
+                Event Information
+              </h3>
               <div style={{ display: "flex", flexDirection: "column", gap: 10 }}>
-                <div style={{ display: "flex", alignItems: "center", gap: 8, fontSize: 13, color: "#4b5563" }}>
-                  <span style={{ color: "#FBBF24" }}><CalIcon className="w-4 h-4" /></span>
+                <div style={{ display: "flex", alignItems: "center", gap: 8, fontSize: 13, color: "rgba(255,255,255,0.7)" }}>
+                  <span style={{ color: "#ec4899" }}><CalIcon className="w-4 h-4" /></span>
                   {selectedEvent.date}
                 </div>
-                <div style={{ display: "flex", alignItems: "center", gap: 8, fontSize: 13, color: "#4b5563" }}>
-                  <span style={{ color: "#FBBF24" }}><PinIcon className="w-4 h-4" /></span>
+                <div style={{ display: "flex", alignItems: "center", gap: 8, fontSize: 13, color: "rgba(255,255,255,0.7)" }}>
+                  <span style={{ color: "#06b6d4" }}><PinIcon className="w-4 h-4" /></span>
                   {selectedEvent.location}
                 </div>
-                <div style={{ display: "flex", alignItems: "flex-start", gap: 8, fontSize: 13, color: "#4b5563" }}>
-                  <span style={{ color: "#FBBF24", marginTop: 1 }}><ClockIcon className="w-4 h-4" /></span>
+                <div style={{ display: "flex", alignItems: "flex-start", gap: 8, fontSize: 13, color: "rgba(255,255,255,0.7)" }}>
+                  <span style={{ color: "#f97316", marginTop: 1 }}><ClockIcon className="w-4 h-4" /></span>
                   <span>
                     {selectedEvent.day}
                     <br />
@@ -601,22 +606,26 @@ const Events = () => {
                 </div>
               </div>
               <button
+                onClick={() => setShowModal(true)}
+                className="shimmer-btn"
                 style={{
-                  marginTop: 16,
+                  marginTop: 18,
                   width: "100%",
-                  background: "linear-gradient(135deg,#FBBF24,#F59E0B)",
+                  background: "linear-gradient(135deg,#ec4899,#f97316)",
                   border: "none",
-                  borderRadius: 10,
+                  borderRadius: 2,
                   padding: "11px",
-                  fontSize: 14,
-                  fontWeight: 700,
-                  color: "#1a1a2e",
+                  fontSize: 12,
+                  fontWeight: 900,
+                  textTransform: "uppercase",
+                  letterSpacing: "0.15em",
+                  color: "#fff",
                   cursor: "pointer",
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
                   gap: 8,
-                  boxShadow: "0 3px 10px rgba(251,191,36,0.35)",
+                  boxShadow: "0 0 15px rgba(236,72,153,0.4)",
                 }}
               >
                 Buy Tickets
@@ -627,23 +636,25 @@ const Events = () => {
             {/* Next Event */}
             <div
               style={{
-                background: "#fff",
-                borderRadius: 14,
+                background: "rgba(18, 8, 42, 0.8)",
+                borderRadius: 4,
+                border: "1px solid rgba(255,255,255,0.08)",
                 padding: "20px",
-                boxShadow: "0 2px 12px rgba(0,0,0,0.07)",
               }}
             >
-              <h3 style={{ fontSize: 16, fontWeight: 800, color: "#1a1a2e", margin: "0 0 14px" }}>Next Event</h3>
-              <div style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 12 }}>
+              <h3 style={{ fontSize: 14, fontWeight: 900, textTransform: "uppercase", letterSpacing: "0.05em", color: "#fff", margin: "0 0 14px" }}>
+                Next Event
+              </h3>
+              <div style={{ display: "flex", alignItems: "center", gap: 12, marginBottom: 14 }}>
                 <img
                   src="https://images.unsplash.com/photo-1516450360452-9312f5e86fc7?w=80&q=80"
                   alt={NEXT_EVENT.title}
-                  style={{ width: 48, height: 48, borderRadius: 8, objectFit: "cover" }}
+                  style={{ width: 48, height: 48, borderRadius: 2, objectFit: "cover", border: "1px solid rgba(255,255,255,0.1)" }}
                 />
                 <div>
-                  <p style={{ margin: 0, fontSize: 11, color: "#9ca3af" }}>Give-H5-R</p>
-                  <p style={{ margin: "2px 0", fontSize: 13, fontWeight: 700, color: "#1a1a2e" }}>{NEXT_EVENT.title}</p>
-                  <p style={{ margin: 0, fontSize: 11, color: "#9ca3af" }}>{NEXT_EVENT.location}</p>
+                  <p style={{ margin: 0, fontSize: 10, color: "#ec4899", textTransform: "uppercase", fontWeight: 700 }}>H5-R Live</p>
+                  <p style={{ margin: "2px 0", fontSize: 13, fontWeight: 800, color: "#fff" }}>{NEXT_EVENT.title}</p>
+                  <p style={{ margin: 0, fontSize: 11, color: "rgba(255,255,255,0.5)" }}>{NEXT_EVENT.location}</p>
                 </div>
               </div>
               <div
@@ -652,11 +663,13 @@ const Events = () => {
                   alignItems: "center",
                   gap: 6,
                   padding: "8px 12px",
-                  background: "linear-gradient(135deg,#FBBF24,#F59E0B)",
-                  borderRadius: 8,
-                  fontSize: 13,
+                  background: "rgba(236,72,153,0.1)",
+                  border: "1px solid rgba(236,72,153,0.3)",
+                  borderRadius: 2,
+                  fontSize: 11,
                   fontWeight: 700,
-                  color: "#1a1a2e",
+                  color: "#f472b6",
+                  fontFamily: "monospace",
                 }}
               >
                 <CalIcon className="w-4 h-4" />
@@ -667,27 +680,30 @@ const Events = () => {
             {/* Newsletter */}
             <div
               style={{
-                background: "#fff",
-                borderRadius: 14,
+                background: "rgba(18, 8, 42, 0.8)",
+                borderRadius: 4,
+                border: "1px solid rgba(255,255,255,0.08)",
                 padding: "20px",
-                boxShadow: "0 2px 12px rgba(0,0,0,0.07)",
               }}
             >
-              <h3 style={{ fontSize: 15, fontWeight: 800, color: "#1a1a2e", margin: "0 0 6px" }}>Don't Miss Out!</h3>
-              <p style={{ fontSize: 12, color: "#9ca3af", margin: "0 0 12px", lineHeight: 1.5 }}>
-                Sign up for our newsletter to get the latest event updates and exclusive offers!
+              <h3 style={{ fontSize: 14, fontWeight: 900, textTransform: "uppercase", letterSpacing: "0.05em", color: "#fff", margin: "0 0 6px" }}>
+                Don't Miss Out!
+              </h3>
+              <p style={{ fontSize: 12, color: "rgba(255,255,255,0.5)", margin: "0 0 12px", lineHeight: 1.5 }}>
+                Sign up for event updates and member pre-sales!
               </p>
               {subscribed ? (
                 <div
                   style={{
-                    background: "#f0fdf4",
-                    border: "1px solid #bbf7d0",
-                    color: "#166534",
-                    borderRadius: 8,
+                    background: "rgba(16, 185, 129, 0.15)",
+                    border: "1px solid rgba(16, 185, 129, 0.4)",
+                    color: "#34d399",
+                    borderRadius: 2,
                     padding: "10px 14px",
-                    fontSize: 13,
-                    fontWeight: 600,
+                    fontSize: 12,
+                    fontWeight: 800,
                     textAlign: "center",
+                    textTransform: "uppercase",
                   }}
                 >
                   ✓ Subscribed!
@@ -698,94 +714,44 @@ const Events = () => {
                     type="email"
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
-                    placeholder="Your Email Address"
+                    placeholder="Your Email"
                     style={{
                       flex: 1,
-                      border: "1px solid #e5e7eb",
-                      borderRadius: 8,
+                      border: "1px solid rgba(255,255,255,0.1)",
+                      background: "rgba(255,255,255,0.04)",
+                      borderRadius: 2,
                       padding: "8px 10px",
                       fontSize: 12,
                       outline: "none",
-                      color: "#374151",
+                      color: "#fff",
                       minWidth: 0,
                     }}
                   />
                   <button
                     type="submit"
                     style={{
-                      background: "linear-gradient(135deg,#FBBF24,#F59E0B)",
+                      background: "linear-gradient(135deg,#ec4899,#f97316)",
                       border: "none",
-                      borderRadius: 8,
-                      padding: "8px 12px",
-                      fontSize: 12,
-                      fontWeight: 700,
-                      color: "#1a1a2e",
+                      borderRadius: 2,
+                      padding: "8px 14px",
+                      fontSize: 11,
+                      fontWeight: 900,
+                      textTransform: "uppercase",
+                      letterSpacing: "0.1em",
+                      color: "#fff",
                       cursor: "pointer",
                       whiteSpace: "nowrap",
                     }}
                   >
-                    Subscribe
+                    Join
                   </button>
                 </form>
               )}
             </div>
 
-            {/* Map placeholder */}
-            <div
-              style={{
-                borderRadius: 14,
-                overflow: "hidden",
-                height: 160,
-                boxShadow: "0 2px 12px rgba(0,0,0,0.07)",
-                position: "relative",
-              }}
-            >
-              <iframe
-                title="event-map"
-                src={`https://www.openstreetmap.org/export/embed.html?bbox=139.65,35.65,139.80,35.75&layer=mapnik&marker=35.705,139.752`}
-                style={{ width: "100%", height: "100%", border: "none" }}
-                loading="lazy"
-              />
-            </div>
           </div>
         </div>
 
-        {/* ── FOOTER STRIP ─────────────────────────── */}
-        <div
-          style={{
-            marginTop: 36,
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "space-between",
-            flexWrap: "wrap",
-            gap: 10,
-            paddingBottom: 28,
-            borderTop: "1px solid #f3f4f6",
-            paddingTop: 18,
-          }}
-        >
-          {/* Newsletter promo */}
-          <div style={{ display: "flex", alignItems: "center", gap: 10 }}>
-            <span
-              style={{
-                background: "linear-gradient(135deg,#FBBF24,#F59E0B)",
-                borderRadius: 8,
-                width: 36,
-                height: 36,
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
-              <MailIcon className="w-5 h-5" />
-            </span>
-            <div>
-              <p style={{ margin: 0, fontSize: 14, fontWeight: 700, color: "#1a1a2e", fontStyle: "italic" }}>Done, Praise Cat –</p>
-              <p style={{ margin: 0, fontSize: 12, color: "#9ca3af" }}>Sign up for our newsletter to the latest event updates and exclusive offers!</p>
-            </div>
-          </div>
-          <p style={{ margin: 0, fontSize: 12, color: "#9ca3af" }}>© 2022 HS-R. All rights reserved.</p>
-        </div>
       </div>
 
       {/* ── EVENT DETAIL MODAL ─────────────────────────── */}
@@ -794,25 +760,26 @@ const Events = () => {
           style={{
             position: "fixed",
             inset: 0,
-            background: "rgba(0,0,0,0.55)",
+            background: "rgba(0,0,0,0.8)",
             zIndex: 100,
             display: "flex",
             alignItems: "center",
             justifyContent: "center",
             padding: 20,
-            backdropFilter: "blur(4px)",
+            backdropFilter: "blur(8px)",
           }}
           onClick={(e) => { if (e.target === e.currentTarget) setShowModal(false); }}
         >
           <div
             style={{
-              background: "#fff",
-              borderRadius: 18,
+              background: "#140b2e",
+              borderRadius: 4,
+              border: "1px solid rgba(236,72,153,0.3)",
               maxWidth: 580,
               width: "100%",
               maxHeight: "85vh",
               overflowY: "auto",
-              boxShadow: "0 24px 64px rgba(0,0,0,0.25)",
+              boxShadow: "0 0 50px rgba(0,0,0,0.8), 0 0 30px rgba(236,72,153,0.2)",
             }}
           >
             {/* Modal header image */}
@@ -820,14 +787,13 @@ const Events = () => {
               <img
                 src={selectedEvent.image}
                 alt={selectedEvent.title}
-                style={{ width: "100%", height: 200, objectFit: "cover", display: "block", borderRadius: "18px 18px 0 0" }}
+                style={{ width: "100%", height: 200, objectFit: "cover", display: "block" }}
               />
               <div
                 style={{
                   position: "absolute",
                   inset: 0,
-                  background: "linear-gradient(to bottom, transparent 40%, rgba(0,0,0,0.6))",
-                  borderRadius: "18px 18px 0 0",
+                  background: "linear-gradient(to bottom, transparent 40%, #140b2e)",
                 }}
               />
               <button
@@ -836,46 +802,45 @@ const Events = () => {
                   position: "absolute",
                   top: 12,
                   right: 14,
-                  background: "rgba(255,255,255,0.25)",
-                  border: "none",
+                  background: "rgba(0,0,0,0.6)",
+                  border: "1px solid rgba(255,255,255,0.2)",
                   borderRadius: "50%",
-                  width: 34,
-                  height: 34,
-                  fontSize: 20,
+                  width: 32,
+                  height: 32,
+                  fontSize: 18,
                   color: "#fff",
                   cursor: "pointer",
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
-                  backdropFilter: "blur(4px)",
                 }}
               >
                 ×
               </button>
               <div style={{ position: "absolute", bottom: 14, left: 20 }}>
-                <h3 style={{ margin: 0, fontSize: 22, fontWeight: 800, color: "#fff" }}>{selectedEvent.title}</h3>
-                <p style={{ margin: "3px 0 0", fontSize: 13, color: "rgba(255,255,255,0.8)" }}>{selectedEvent.date} · {selectedEvent.location}</p>
+                <h3 style={{ margin: 0, fontSize: 22, fontWeight: 900, color: "#fff", textTransform: "uppercase" }}>{selectedEvent.title}</h3>
+                <p style={{ margin: "3px 0 0", fontSize: 12, color: "#ec4899", fontFamily: "monospace" }}>{selectedEvent.date} · {selectedEvent.location}</p>
               </div>
             </div>
 
             {/* Modal body */}
             <div style={{ padding: "20px 24px 24px" }}>
-              <p style={{ fontSize: 14, color: "#6b7280", lineHeight: 1.6, marginBottom: 18 }}>{selectedEvent.description}</p>
+              <p style={{ fontSize: 13, color: "rgba(255,255,255,0.7)", lineHeight: 1.6, marginBottom: 18 }}>{selectedEvent.description}</p>
 
               {/* Info grid */}
-              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 12, marginBottom: 20 }}>
+              <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: 10, marginBottom: 20 }}>
                 {[
                   { icon: <CalIcon className="w-4 h-4" />, label: "Date", value: selectedEvent.date },
                   { icon: <PinIcon className="w-4 h-4" />, label: "Location", value: selectedEvent.location },
                   { icon: <ClockIcon className="w-4 h-4" />, label: "Doors Open", value: selectedEvent.doorTime },
                   { icon: <TicketIcon className="w-4 h-4" />, label: "Ticket", value: selectedEvent.ticketCost },
                 ].map(({ icon, label, value }) => (
-                  <div key={label} style={{ background: "#fafafa", borderRadius: 10, padding: "12px 14px" }}>
-                    <div style={{ display: "flex", alignItems: "center", gap: 6, color: "#FBBF24", marginBottom: 4 }}>
+                  <div key={label} style={{ background: "rgba(255,255,255,0.03)", border: "1px solid rgba(255,255,255,0.06)", borderRadius: 2, padding: "10px 12px" }}>
+                    <div style={{ display: "flex", alignItems: "center", gap: 6, color: "#ec4899", marginBottom: 3 }}>
                       {icon}
-                      <span style={{ fontSize: 11, fontWeight: 600, color: "#9ca3af", textTransform: "uppercase", letterSpacing: 0.5 }}>{label}</span>
+                      <span style={{ fontSize: 10, fontWeight: 800, color: "rgba(255,255,255,0.4)", textTransform: "uppercase", letterSpacing: "0.1em" }}>{label}</span>
                     </div>
-                    <p style={{ margin: 0, fontSize: 13, fontWeight: 600, color: "#1a1a2e" }}>{value}</p>
+                    <p style={{ margin: 0, fontSize: 13, fontWeight: 700, color: "#fff", fontFamily: label === "Ticket" ? "monospace" : "inherit" }}>{value}</p>
                   </div>
                 ))}
               </div>
@@ -883,17 +848,20 @@ const Events = () => {
               {/* Buttons */}
               <div style={{ display: "flex", gap: 10 }}>
                 <button
+                  className="shimmer-btn"
                   style={{
                     flex: 1,
-                    background: "linear-gradient(135deg,#FBBF24,#F59E0B)",
+                    background: "linear-gradient(135deg,#ec4899,#f97316)",
                     border: "none",
-                    borderRadius: 10,
+                    borderRadius: 2,
                     padding: "12px",
-                    fontSize: 14,
-                    fontWeight: 700,
-                    color: "#1a1a2e",
+                    fontSize: 12,
+                    fontWeight: 900,
+                    textTransform: "uppercase",
+                    letterSpacing: "0.15em",
+                    color: "#fff",
                     cursor: "pointer",
-                    boxShadow: "0 3px 10px rgba(251,191,36,0.3)",
+                    boxShadow: "0 0 15px rgba(236,72,153,0.4)",
                   }}
                 >
                   🎫 Buy Tickets
@@ -902,12 +870,14 @@ const Events = () => {
                   onClick={() => setShowModal(false)}
                   style={{
                     padding: "12px 20px",
-                    background: "#f3f4f6",
-                    border: "none",
-                    borderRadius: 10,
-                    fontSize: 14,
-                    fontWeight: 600,
-                    color: "#6b7280",
+                    background: "rgba(255,255,255,0.05)",
+                    border: "1px solid rgba(255,255,255,0.1)",
+                    borderRadius: 2,
+                    fontSize: 12,
+                    fontWeight: 700,
+                    textTransform: "uppercase",
+                    letterSpacing: "0.1em",
+                    color: "rgba(255,255,255,0.6)",
                     cursor: "pointer",
                   }}
                 >

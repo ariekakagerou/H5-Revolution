@@ -9,6 +9,7 @@ import CartDrawer from './components/CartDrawer.jsx';
 
 // Context
 import { CartProvider } from './contexts/CartContext.jsx';
+import { ThemeProvider } from './contexts/ThemeContext.jsx';
 
 // Pages
 import Home from "./pages/home";
@@ -81,7 +82,7 @@ function AppLayout() {
   const isAuthPage = location.pathname === "/login";
 
   return (
-    <div className="flex flex-col min-h-screen">
+    <div className="flex flex-col min-h-screen transition-colors duration-500">
       {/* Header dengan navigasi (Disembunyikan di halaman Auth) */}
       {!isAuthPage && <Header />}
 
@@ -104,17 +105,19 @@ function App() {
   const [loading, setLoading] = React.useState(true);
 
   return (
-    <Router>
-      <CartProvider>
-        <AnimatePresence mode="wait">
-          {loading ? (
-            <SplashScreen key="splash" onComplete={() => setLoading(false)} />
-          ) : (
-            <AppLayout key="main" />
-          )}
-        </AnimatePresence>
-      </CartProvider>
-    </Router>
+    <ThemeProvider>
+      <Router>
+        <CartProvider>
+          <AnimatePresence mode="wait">
+            {loading ? (
+              <SplashScreen key="splash" onComplete={() => setLoading(false)} />
+            ) : (
+              <AppLayout key="main" />
+            )}
+          </AnimatePresence>
+        </CartProvider>
+      </Router>
+    </ThemeProvider>
   );
 }
 

@@ -6,57 +6,60 @@ import { useCart } from "../contexts/CartContext";
 
 const Shop = () => {
   const [filter, setFilter] = useState("All");
+  const [searchQuery, setSearchQuery] = useState("");
   const { addToCart } = useCart();
 
   const products = [
-    { id: 1, name: "H5-Revolution Official Lightstick v2", category: "Lightstick", price: "$45.00", image: "https://placehold.co/400x400/ffe4e6/f43f5e?text=Lightstick", tag: "NEW", desc: "Bluetooth synced." },
-    { id: 2, name: "'Shining Stars' 1st Full Album", category: "Album", price: "$25.00", image: "https://placehold.co/400x400/e0f2fe/0ea5e9?text=Album", tag: "HOT", desc: "Includes poster & PC." },
-    { id: 3, name: "H5-Rev Summer Tour T-Shirt", category: "Apparel", price: "$30.00", image: "https://placehold.co/400x400/fef3c7/d97706?text=T-Shirt", desc: "100% Cotton, Premium build." },
-    { id: 4, name: "Yuki Tanaka Solo Photocard Set", category: "Photocard", price: "$12.00", image: "https://placehold.co/400x400/fce7f3/db2777?text=Yuki+PC", desc: "Set of 5 exclusive cards." },
-    { id: 5, name: "Sakura Yamamoto Solo Photocard Set", category: "Photocard", price: "$12.00", image: "https://placehold.co/400x400/fce7f3/db2777?text=Sakura+PC", desc: "Set of 5 exclusive cards." },
-    { id: 6, name: "Official Slogan Towel", category: "Accessories", price: "$18.00", image: "https://placehold.co/400x400/e0e7ff/4f46e5?text=Slogan", tag: "BEST SELLER", desc: "Microfiber concert towel." },
+    { id: 1, name: "H5-Revolution Official Lightstick v2", category: "Lightstick", price: "$45.00", image: "https://placehold.co/400x400/180a36/ec4899?text=Lightstick", tag: "NEW", desc: "Stage synchronized Bluetooth RGB lightstick." },
+    { id: 2, name: "'Shining Stars' 1st Full Album", category: "Album", price: "$25.00", image: "https://placehold.co/400x400/180a36/06b6d4?text=Album", tag: "HOT", desc: "Includes holographic poster & 2 random PCs." },
+    { id: 3, name: "H5-Rev Cyber Tour Stage Tee", category: "Apparel", price: "$30.00", image: "https://placehold.co/400x400/180a36/f97316?text=Tour+Tee", desc: "100% Heavyweight Cotton with neon screenprint." },
+    { id: 4, name: "Yuki Tanaka Solo Photocard Set", category: "Photocard", price: "$12.00", image: "https://placehold.co/400x400/180a36/ec4899?text=Yuki+PC", desc: "Set of 5 exclusive holographic cards." },
+    { id: 5, name: "Sakura Yamamoto Solo Photocard Set", category: "Photocard", price: "$12.00", image: "https://placehold.co/400x400/180a36/06b6d4?text=Sakura+PC", desc: "Set of 5 exclusive holographic cards." },
+    { id: 6, name: "Official Stage Slogan Towel", category: "Accessories", price: "$18.00", image: "https://placehold.co/400x400/180a36/a855f7?text=Slogan", tag: "BEST SELLER", desc: "Microfiber concert cheering towel." },
   ];
 
   const categories = ["All", "Album", "Lightstick", "Apparel", "Photocard", "Accessories"];
-  const filteredProducts = filter === "All" ? products : products.filter(p => p.category === filter);
+  const filteredProducts = products
+    .filter(p => filter === "All" ? true : p.category === filter)
+    .filter(p => searchQuery === "" ? true : p.name.toLowerCase().includes(searchQuery.toLowerCase()));
 
   return (
-    <div className="min-h-screen bg-slate-50 w-full pb-24 font-inter text-gray-800">
+    <div className="min-h-screen bg-[#0f0a1e] w-full pb-24 font-inter text-white relative overflow-hidden">
       <SEO title="Official Merch Store" description="Support H5-Revolution with exclusive high-quality gear and official merchandise." />
       
-      {/* ─── Minimal Hero Banner ──────────────────────────────── */}
-      <section className="relative pt-32 pb-20 px-4 flex flex-col items-center justify-center text-center overflow-hidden bg-gradient-to-br from-pink-100 via-white to-cyan-50 border-b border-pink-100 shadow-sm">
-        <div className="absolute inset-0 bg-[url('https://transparenttextures.com/patterns/cubes.png')] opacity-5 mix-blend-overlay"></div>
-        <div className="absolute -top-20 -right-20 w-64 h-64 bg-yellow-200/50 rounded-full blur-[80px]"></div>
-        <div className="absolute top-20 -left-20 w-64 h-64 bg-pink-300/30 rounded-full blur-[80px]"></div>
+      {/* Ambient glows */}
+      <div className="absolute top-20 right-1/4 w-[500px] h-[500px] bg-pink-600/10 rounded-full blur-[140px] pointer-events-none" />
+      <div className="absolute top-1/2 left-10 w-[500px] h-[500px] bg-orange-500/5 rounded-full blur-[120px] pointer-events-none" />
 
+      {/* ─── Minimal Hero Banner ──────────────────────────────── */}
+      <section className="relative pt-36 pb-20 px-4 flex flex-col items-center justify-center text-center overflow-hidden bg-gradient-to-b from-[#160a2e] to-[#0f0a1e] border-b border-pink-900/30">
         <div className="relative z-10">
-          <div className="flex justify-center mb-4">
-             <FaStar className="text-yellow-400 text-2xl animate-pulse" />
+          <div className="badge-idol mb-4 mx-auto inline-flex">
+            <FaStar size={10} /> Official Goods
           </div>
-          <h1 className="text-5xl md:text-7xl font-black text-gray-800 uppercase tracking-tighter mb-4 font-outfit drop-shadow-sm">
-            OFFICIAL <span className="text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-orange-400">MERCH</span>
+          <h1 className="text-5xl md:text-7xl font-black text-white uppercase tracking-tighter mb-4 font-outfit">
+            OFFICIAL <span className="text-idol">MERCH</span>
           </h1>
-          <p className="text-gray-500 font-bold tracking-widest uppercase text-xs md:text-sm max-w-xl">
-            Support H5-Revolution with exclusive high-quality gear.
+          <p className="text-white/50 font-bold tracking-widest uppercase text-xs md:text-sm max-w-xl mx-auto">
+            Gear up for the next live concert with official idol goods.
           </p>
         </div>
       </section>
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-12">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 mt-12 relative z-10">
         {/* ─── Controls: Filter & Search ──────────────────────── */}
         <div className="flex flex-col md:flex-row justify-between items-center gap-6 mb-12">
           {/* Categories Scrollable Row */}
-          <div className="w-full md:w-auto overflow-x-auto scrollbar-hide pb-2 md:pb-0 font-outfit">
+          <div className="w-full md:w-auto overflow-x-auto no-scrollbar pb-2 md:pb-0 font-outfit">
              <div className="flex gap-2 min-w-max">
                {categories.map((cat) => (
                  <button
                    key={cat}
                    onClick={() => setFilter(cat)}
-                   className={`px-6 py-2.5 rounded-full text-sm font-bold tracking-wider capitalize transition-all duration-300 shadow-sm ${
+                   className={`px-5 py-2 rounded-sm text-xs font-bold uppercase tracking-widest transition-all duration-300 ${
                      filter === cat 
-                       ? 'bg-gradient-to-r from-pink-500 to-orange-400 text-white shadow-pink-200' 
-                       : 'bg-white text-gray-500 border border-gray-200 hover:text-pink-500 hover:border-pink-300'
+                       ? 'bg-gradient-to-r from-pink-500 to-orange-500 text-white shadow-idol-pink' 
+                       : 'bg-white/[0.04] text-white/50 border border-white/10 hover:text-pink-300 hover:border-pink-500/40'
                    }`}
                  >
                    {cat}
@@ -65,41 +68,49 @@ const Shop = () => {
              </div>
           </div>
 
-          <div className="w-full md:w-72 bg-white rounded-full flex items-center px-5 py-3 border border-pink-200 focus-within:border-pink-500 focus-within:ring-2 focus-within:ring-pink-100 transition-all shadow-sm">
-            <FaSearch className="text-pink-400" />
-            <input type="text" placeholder="Search merch..." className="bg-transparent border-none outline-none text-sm text-gray-700 px-3 w-full placeholder-gray-400 font-medium" />
+          <div className="w-full md:w-80 bg-[#12082a] rounded-sm flex items-center px-4 py-2.5 border border-white/10 focus-within:border-pink-500/60 transition-all shadow-md">
+            <FaSearch className="text-pink-400 shrink-0" size={13} />
+            <input 
+              type="text" 
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+              placeholder="Search merchandise..." 
+              className="bg-transparent border-none outline-none text-xs text-white px-3 w-full placeholder-white/30 font-medium" 
+            />
           </div>
         </div>
 
         {/* ─── Product Grid ───────────────────────────────────── */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
           {filteredProducts.map((product) => (
-            <div key={product.id} className="group relative bg-white rounded-3xl overflow-hidden border border-gray-100 transition-all duration-500 hover:shadow-2xl hover:shadow-pink-100 flex flex-col h-full hover:-translate-y-1">
-              
+            <div 
+              key={product.id} 
+              className="group relative bg-[#12082a]/80 backdrop-blur-md rounded-sm overflow-hidden border border-white/10 hover:border-pink-500/50 transition-all duration-300 hover:shadow-idol-pink flex flex-col h-full hover:-translate-y-1"
+            >
               {/* Product Image Area */}
-              <div className="relative aspect-[4/3] bg-gradient-to-br from-pink-50 to-orange-50 overflow-hidden flex items-center justify-center p-4">
-                <Link to={`/shop/${product.id}`} className="absolute inset-0 flex items-center justify-center p-4 z-0">
+              <div className="relative aspect-[4/3] bg-gradient-to-br from-[#1c0a38] to-[#0f0a1e] overflow-hidden flex items-center justify-center p-4">
+                <Link to={`/shop/${product.id}`} className="absolute inset-0 flex items-center justify-center p-6 z-0">
                   <img 
                     src={product.image} 
                     alt={product.name} 
-                    className="w-full h-full object-contain group-hover:scale-105 transition-all duration-700 ease-out filter drop-shadow-sm" 
+                    className="w-full h-full object-contain group-hover:scale-105 transition-all duration-500 ease-out" 
                   />
                 </Link>
                 
                 {/* Badges */}
-                <div className="absolute top-4 left-4 flex gap-2">
+                <div className="absolute top-3 left-3 flex gap-2">
                   {product.tag && (
-                    <span className="bg-white/90 backdrop-blur-sm text-pink-600 border border-pink-100 shadow-sm text-[10px] font-black px-3 py-1.5 rounded-full tracking-wider uppercase">
+                    <span className="bg-pink-500/20 backdrop-blur-md text-pink-300 border border-pink-500/40 text-[9px] font-black px-2.5 py-0.5 rounded-sm tracking-widest uppercase">
                       {product.tag}
                     </span>
                   )}
                 </div>
 
                 {/* Quick Add Overlay */}
-                <div className="absolute inset-0 bg-white/40 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center backdrop-blur-[2px] z-10 pointer-events-none">
+                <div className="absolute inset-0 bg-black/50 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center backdrop-blur-[2px] z-10 pointer-events-none">
                    <button 
                      onClick={(e) => { e.preventDefault(); e.stopPropagation(); addToCart(product); }}
-                     className="pointer-events-auto transform translate-y-4 group-hover:translate-y-0 transition-all duration-300 bg-pink-500 hover:bg-orange-500 text-white rounded-full px-6 py-3 text-xs font-bold tracking-widest uppercase shadow-xl shadow-pink-200 flex items-center gap-2"
+                     className="shimmer-btn pointer-events-auto transform translate-y-3 group-hover:translate-y-0 transition-all duration-300 bg-gradient-to-r from-pink-500 to-orange-500 text-white rounded-sm px-5 py-2.5 text-xs font-black tracking-widest uppercase shadow-idol-pink flex items-center gap-2"
                    >
                      <FaCartPlus/> Add to Cart
                    </button>
@@ -107,20 +118,25 @@ const Shop = () => {
               </div>
 
               {/* Product Info */}
-              <div className="p-6 flex flex-col flex-1">
-                <p className="text-orange-500 text-[10px] font-black tracking-[0.2em] uppercase mb-2 bg-orange-50 w-fit px-2 py-0.5 rounded-md">{product.category}</p>
+              <div className="p-5 flex flex-col flex-1">
+                <p className="text-orange-400 text-[9px] font-black tracking-[0.2em] uppercase mb-2 bg-orange-500/10 border border-orange-500/20 w-fit px-2 py-0.5 rounded-sm">
+                  {product.category}
+                </p>
                 <Link to={`/shop/${product.id}`}>
-                  <h3 className="text-lg font-bold text-gray-800 group-hover:text-pink-600 transition-colors mb-2 line-clamp-2 md:h-14 font-outfit">{product.name}</h3>
+                  <h3 className="text-base font-bold text-white group-hover:text-pink-300 transition-colors mb-2 line-clamp-2 md:h-12">
+                    {product.name}
+                  </h3>
                 </Link>
-                <p className="text-gray-500 text-xs mb-6 line-clamp-2 font-medium">{product.desc}</p>
+                <p className="text-white/40 text-xs mb-6 line-clamp-2">{product.desc}</p>
                 
-                <div className="mt-auto flex items-center justify-between border-t border-gray-100 pt-4">
-                  <span className="text-xl font-black font-mono text-gray-800 tracking-tight">{product.price}</span>
+                <div className="mt-auto flex items-center justify-between border-t border-white/5 pt-4">
+                  <span className="text-lg font-black font-mono text-pink-400 tracking-tight">{product.price}</span>
                   <button 
                     onClick={() => addToCart(product)}
-                    className="w-12 h-12 rounded-full bg-pink-50 flex items-center justify-center text-pink-500 hover:bg-pink-500 hover:text-white transition-all duration-300 shadow-sm"
+                    className="w-10 h-10 rounded-sm bg-white/5 border border-white/10 flex items-center justify-center text-white/60 hover:text-pink-400 hover:border-pink-500/50 hover:bg-pink-500/10 transition-all duration-300"
+                    title="Add to Cart"
                   >
-                    <FaShoppingBag className="text-sm" />
+                    <FaShoppingBag size={14} />
                   </button>
                 </div>
               </div>
@@ -131,9 +147,9 @@ const Shop = () => {
 
         {/* Empty State */}
         {filteredProducts.length === 0 && (
-          <div className="text-center py-24 bg-white rounded-3xl border border-dashed border-pink-200 shadow-sm">
-            <h3 className="text-2xl font-bold text-gray-700 mb-2 font-outfit">No products found</h3>
-            <p className="text-gray-500 text-sm">Try changing the category filter or search term.</p>
+          <div className="text-center py-20 bg-white/[0.02] rounded-sm border border-white/10">
+            <h3 className="text-xl font-bold text-white mb-2 uppercase tracking-tight">No products found</h3>
+            <p className="text-white/40 text-xs">Try changing the category filter or search term.</p>
           </div>
         )}
       </div>

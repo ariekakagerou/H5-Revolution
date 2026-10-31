@@ -6,12 +6,12 @@ import SEO from "../components/SEO";
 
 // Database simulasi
 const productsData = [
-  { id: 1, name: "H5-Revolution Official Lightstick v2", category: "Lightstick", price: "$45.00", image: "https://placehold.co/800x800/ffe4e6/f43f5e?text=Lightstick", tag: "NEW", desc: "The official version 2 lightstick with bluetooth syncing for concerts. It changes colors according to the member's theme!" },
-  { id: 2, name: "'Shining Stars' 1st Full Album", category: "Album", price: "$25.00", image: "https://placehold.co/800x800/e0f2fe/0ea5e9?text=Album", tag: "HOT", desc: "Includes CD, 100-page photobook, folded poster, and 2 random photocards." },
-  { id: 3, name: "H5-Rev Summer Tour T-Shirt", category: "Apparel", price: "$30.00", image: "https://placehold.co/800x800/fef3c7/d97706?text=T-Shirt", desc: "100% Cotton, Premium build. Commemorative tour shirt." },
-  { id: 4, name: "Yuki Tanaka Solo Photocard Set", category: "Photocard", price: "$12.00", image: "https://placehold.co/800x800/fce7f3/db2777?text=Yuki+PC", desc: "Set of 5 exclusive never-before-seen selfies from Yuki Tanaka." },
-  { id: 5, name: "Sakura Yamamoto Solo Photocard Set", category: "Photocard", price: "$12.00", image: "https://placehold.co/800x800/fce7f3/db2777?text=Sakura+PC", desc: "Set of 5 exclusive never-before-seen selfies from Sakura." },
-  { id: 6, name: "Official Slogan Towel", category: "Accessories", price: "$18.00", image: "https://placehold.co/800x800/e0e7ff/4f46e5?text=Slogan", tag: "BEST SELLER", desc: "Microfiber concert towel to show your support." }
+  { id: 1, name: "H5-Revolution Official Lightstick v2", category: "Lightstick", price: "$45.00", image: "https://placehold.co/800x800/180a36/ec4899?text=Lightstick", tag: "NEW", desc: "The official version 2 lightstick with bluetooth syncing for concerts. It changes colors according to the member's theme!" },
+  { id: 2, name: "'Shining Stars' 1st Full Album", category: "Album", price: "$25.00", image: "https://placehold.co/800x800/180a36/06b6d4?text=Album", tag: "HOT", desc: "Includes CD, 100-page photobook, folded poster, and 2 random photocards." },
+  { id: 3, name: "H5-Rev Cyber Tour Stage Tee", category: "Apparel", price: "$30.00", image: "https://placehold.co/800x800/180a36/f97316?text=Tour+Tee", desc: "100% Heavyweight Cotton, Premium build. Commemorative tour shirt." },
+  { id: 4, name: "Yuki Tanaka Solo Photocard Set", category: "Photocard", price: "$12.00", image: "https://placehold.co/800x800/180a36/ec4899?text=Yuki+PC", desc: "Set of 5 exclusive never-before-seen selfies from Yuki Tanaka." },
+  { id: 5, name: "Sakura Yamamoto Solo Photocard Set", category: "Photocard", price: "$12.00", image: "https://placehold.co/800x800/180a36/06b6d4?text=Sakura+PC", desc: "Set of 5 exclusive never-before-seen selfies from Sakura." },
+  { id: 6, name: "Official Stage Slogan Towel", category: "Accessories", price: "$18.00", image: "https://placehold.co/800x800/180a36/a855f7?text=Slogan", tag: "BEST SELLER", desc: "Microfiber concert towel to show your support." }
 ];
 
 const ProductDetail = () => {
@@ -28,75 +28,112 @@ const ProductDetail = () => {
 
   if (!product) {
     return (
-      <div className="min-h-screen flex flex-col items-center justify-center bg-slate-50">
-        <h2 className="text-3xl font-black text-gray-800">Product not found</h2>
-        <button onClick={() => navigate("/shop")} className="mt-4 px-6 py-2 bg-pink-500 text-white rounded-full font-bold">Back to Shop</button>
+      <div className="min-h-screen flex flex-col items-center justify-center bg-[#0f0a1e] text-white">
+        <h2 className="text-3xl font-black mb-4 uppercase tracking-tight">Product not found</h2>
+        <button onClick={() => navigate("/shop")} className="shimmer-btn px-6 py-3 bg-gradient-to-r from-pink-500 to-orange-500 text-white rounded-sm font-black text-xs uppercase tracking-widest shadow-idol-pink">
+          Back to Shop
+        </button>
       </div>
     );
   }
 
   const handleAddToCart = () => {
-    // Add multiple quantities
-    for(let i = 0; i < quantity; i++){
+    for (let i = 0; i < quantity; i++) {
       addToCart(product);
     }
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 font-inter pb-24">
+    <div className="min-h-screen bg-[#0f0a1e] font-inter text-white pb-24 relative overflow-hidden">
       <SEO title={`${product.name} | Shop`} description={`Buy ${product.name} on H5-Revolution official shop.`} />
       
+      {/* Ambient Glows */}
+      <div className="absolute top-20 right-1/4 w-[500px] h-[500px] bg-pink-600/10 rounded-full blur-[140px] pointer-events-none" />
+      <div className="absolute top-1/2 left-10 w-[450px] h-[450px] bg-orange-500/5 rounded-full blur-[120px] pointer-events-none" />
+
       {/* Back Button */}
-      <div className="max-w-6xl mx-auto px-4 pt-24 pb-8">
-        <Link to="/shop" className="inline-flex items-center gap-2 text-gray-500 hover:text-pink-500 font-bold transition-colors uppercase tracking-wider text-sm">
-          <FaArrowLeft /> Kembali ke Toko
+      <div className="max-w-6xl mx-auto px-6 pt-32 pb-8 relative z-10">
+        <Link to="/shop" className="inline-flex items-center gap-2 text-white/50 hover:text-pink-400 font-bold transition-all uppercase tracking-widest text-xs group">
+          <div className="w-8 h-8 rounded-sm bg-white/5 border border-white/10 flex items-center justify-center group-hover:border-pink-500/50 group-hover:bg-pink-500/10 group-hover:-translate-x-1 transition-all">
+            <FaArrowLeft size={11} />
+          </div>
+          Kembali ke Toko
         </Link>
       </div>
 
-      <div className="max-w-6xl mx-auto px-4 grid grid-cols-1 md:grid-cols-2 gap-12">
+      <div className="max-w-6xl mx-auto px-6 grid grid-cols-1 md:grid-cols-2 gap-12 items-center relative z-10">
         {/* Product Image */}
-        <div className="bg-white rounded-3xl p-6 shadow-xl border border-gray-100 flex items-center justify-center relative overflow-hidden group">
-          <div className="absolute inset-0 bg-gradient-to-br from-pink-50 to-orange-50 opacity-50"></div>
+        <div className="bg-[#12082a]/80 backdrop-blur-md rounded-sm p-8 shadow-2xl border border-white/10 flex items-center justify-center relative overflow-hidden group">
+          <div className="absolute inset-0 bg-gradient-to-br from-pink-500/5 to-transparent pointer-events-none"></div>
           {product.tag && (
-            <span className="absolute top-6 left-6 z-10 bg-white/90 backdrop-blur-sm text-pink-600 border border-pink-100 shadow-sm text-xs font-black px-4 py-2 rounded-full tracking-wider uppercase">
+            <span className="absolute top-4 left-4 z-10 bg-pink-500/20 backdrop-blur-md text-pink-300 border border-pink-500/40 text-[10px] font-black px-3 py-1 rounded-sm tracking-widest uppercase">
               {product.tag}
             </span>
           )}
-          <img src={product.image} alt={product.name} className="relative z-10 w-full h-auto object-contain transform group-hover:scale-105 transition-transform duration-700 max-h-[500px]" />
+          <img 
+            src={product.image} 
+            alt={product.name} 
+            className="relative z-10 w-full h-auto object-contain transform group-hover:scale-105 transition-transform duration-500 max-h-[460px]" 
+          />
         </div>
 
         {/* Product Info */}
         <div className="flex flex-col justify-center">
-          <div className="mb-6">
-            <span className="text-orange-500 text-xs font-black tracking-[0.2em] uppercase bg-orange-50 px-3 py-1 rounded-full">{product.category}</span>
+          <div className="mb-4">
+            <span className="text-orange-400 text-[10px] font-black tracking-[0.2em] uppercase bg-orange-500/10 border border-orange-500/20 px-3 py-1 rounded-sm">
+              {product.category}
+            </span>
           </div>
-          <h1 className="text-4xl md:text-5xl font-black text-gray-800 uppercase tracking-tighter mb-4 font-outfit">{product.name}</h1>
+          
+          <h1 className="text-3xl md:text-5xl font-black text-white uppercase tracking-tight mb-3 font-outfit">
+            {product.name}
+          </h1>
+          
           <div className="flex items-center gap-2 mb-6">
-            <div className="flex text-yellow-400"><FaStar/><FaStar/><FaStar/><FaStar/><FaStar/></div>
-            <span className="text-gray-500 text-sm font-medium">(4.9/5 Reviews)</span>
+            <div className="flex text-amber-400 text-xs gap-1">
+              <FaStar /><FaStar /><FaStar /><FaStar /><FaStar />
+            </div>
+            <span className="text-white/40 text-xs font-mono font-medium">(4.9/5 Official Verified)</span>
           </div>
           
-          <h2 className="text-3xl font-black font-mono text-gray-900 mb-6 py-4 border-y border-gray-200">{product.price}</h2>
+          <h2 className="text-3xl font-black font-mono text-pink-400 mb-6 py-4 border-y border-white/10">
+            {product.price}
+          </h2>
           
-          <p className="text-gray-600 leading-relaxed mb-8">{product.desc}</p>
+          <p className="text-white/60 leading-relaxed mb-8 text-sm">
+            {product.desc}
+          </p>
 
           {/* Controls */}
           <div className="flex flex-col sm:flex-row items-center gap-4">
-            <div className="flex items-center bg-white border border-gray-200 rounded-full p-1.5 shadow-sm w-full sm:w-32 justify-between">
-              <button onClick={() => setQuantity(Math.max(1, quantity - 1))} className="w-10 h-10 rounded-full flex items-center justify-center text-gray-500 hover:bg-gray-100 transition-colors"><FaMinus size={12}/></button>
-              <span className="font-black text-lg text-gray-800">{quantity}</span>
-              <button onClick={() => setQuantity(quantity + 1)} className="w-10 h-10 rounded-full flex items-center justify-center text-gray-500 hover:bg-pink-50 hover:text-pink-500 transition-colors"><FaPlus size={12}/></button>
+            <div className="flex items-center bg-white/5 border border-white/10 rounded-sm p-1.5 w-full sm:w-36 justify-between">
+              <button 
+                onClick={() => setQuantity(Math.max(1, quantity - 1))} 
+                className="w-8 h-8 rounded-sm bg-white/5 flex items-center justify-center text-white/70 hover:bg-pink-500/20 hover:text-pink-400 transition-colors"
+              >
+                <FaMinus size={10}/>
+              </button>
+              <span className="font-mono font-black text-base text-white">{quantity}</span>
+              <button 
+                onClick={() => setQuantity(quantity + 1)} 
+                className="w-8 h-8 rounded-sm bg-white/5 flex items-center justify-center text-white/70 hover:bg-emerald-500/20 hover:text-emerald-400 transition-colors"
+              >
+                <FaPlus size={10}/>
+              </button>
             </div>
             
-            <button onClick={handleAddToCart} className="shimmer-btn flex-1 w-full bg-gradient-to-r from-pink-500 to-orange-400 text-white rounded-full py-4 px-8 font-black tracking-widest uppercase flex items-center justify-center gap-2 hover:shadow-xl hover:shadow-pink-300 transition-all duration-300 transform hover:-translate-y-1">
-              <FaCartPlus size={20} /> Add to Cart
+            <button 
+              onClick={handleAddToCart} 
+              className="shimmer-btn flex-1 w-full bg-gradient-to-r from-pink-500 to-orange-500 text-white rounded-sm py-4 px-8 font-black text-xs uppercase tracking-[0.2em] flex items-center justify-center gap-2 shadow-idol-pink hover:scale-[1.02] transition-all duration-300"
+            >
+              <FaCartPlus size={16} /> Add to Cart
             </button>
           </div>
 
-          <ul className="mt-8 space-y-2 text-sm font-medium text-gray-500">
-            <li className="flex items-center gap-2"><FaCheck className="text-green-500"/> 100% Official Merchandise</li>
-            <li className="flex items-center gap-2"><FaCheck className="text-green-500"/> Ships Worldwide</li>
-            <li className="flex items-center gap-2"><FaCheck className="text-green-500"/> Secure Checkout</li>
+          <ul className="mt-8 space-y-2 text-xs font-medium text-white/50">
+            <li className="flex items-center gap-2"><FaCheck className="text-emerald-400"/> 100% Official Licensed Merchandise</li>
+            <li className="flex items-center gap-2"><FaCheck className="text-emerald-400"/> Worldwide Express Shipping Available</li>
+            <li className="flex items-center gap-2"><FaCheck className="text-emerald-400"/> Secure Encrypted Checkout</li>
           </ul>
         </div>
       </div>

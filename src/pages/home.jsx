@@ -5,8 +5,38 @@ import EventCard from "../components/EventCard";
 import { FaChevronRight, FaPlay, FaCalendarAlt, FaMusic, FaArrowRight, FaHeart, FaStar, FaChevronLeft } from "react-icons/fa";
 import SEO from "../components/SEO";
 
+/* ─── Star Particles ────────────────────────────────── */
+const StarField = ({ count = 40 }) => {
+  const stars = Array.from({ length: count }, (_, i) => ({
+    id: i,
+    top: `${Math.random() * 100}%`,
+    left: `${Math.random() * 100}%`,
+    size: Math.random() > 0.7 ? 2 : 1,
+    delay: `${Math.random() * 4}s`,
+    duration: `${2 + Math.random() * 3}s`,
+  }));
+  return (
+    <div className="absolute inset-0 overflow-hidden pointer-events-none">
+      {stars.map(s => (
+        <div
+          key={s.id}
+          className="absolute rounded-full bg-white animate-twinkle"
+          style={{
+            top: s.top, left: s.left,
+            width: s.size, height: s.size,
+            animationDelay: s.delay,
+            animationDuration: s.duration,
+            opacity: 0.4,
+          }}
+        />
+      ))}
+    </div>
+  );
+};
+
+/* ─── Calendar Section ──────────────────────────────── */
 const CalendarSection = () => {
-  const [currentDate, setCurrentDate] = useState(new Date(2025, 3)); // Star at April 2025
+  const [currentDate, setCurrentDate] = useState(new Date(2025, 3));
   
   const daysInMonth = (year, month) => new Date(year, month + 1, 0).getDate();
   const firstDayOfMonth = (year, month) => new Date(year, month, 1).getDay();
@@ -21,81 +51,105 @@ const CalendarSection = () => {
   const numDays = daysInMonth(year, month);
   const startDay = firstDayOfMonth(year, month);
 
-  // Mock events (keyed by YYYY-MM-DD)
   const events = {
     "2025-03-14": { type: 'Theater', color: 'bg-pink-500' },
     "2025-03-15": { type: 'Special', color: 'bg-orange-400' },
     "2025-03-17": { type: 'Theater', color: 'bg-pink-500' },
-    "2025-03-19": { type: 'Event', color: 'bg-yellow-400' },
+    "2025-03-19": { type: 'Event', color: 'bg-cyan-400' },
     "2025-03-20": { type: 'Special', color: 'bg-orange-400' },
     "2025-03-25": { type: 'Theater', color: 'bg-pink-500' },
-    "2025-03-26": { type: 'Event', color: 'bg-yellow-400' },
+    "2025-03-26": { type: 'Event', color: 'bg-cyan-400' },
     "2025-03-30": { type: 'Theater', color: 'bg-pink-500' }
   };
 
   return (
-    <section className="py-20 px-6 max-w-7xl mx-auto">
+    <section className="py-20 px-6 max-w-7xl mx-auto relative">
+      {/* Section glow */}
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-pink-500/3 to-transparent pointer-events-none" />
+      
       <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
-         <div className="flex flex-col items-center md:items-start text-center md:text-left w-full md:w-auto">
-            <div className="flex items-center gap-4 mb-2">
-               <button onClick={prevMonth} className="w-10 h-10 rounded-full border border-slate-100 flex items-center justify-center text-slate-400 hover:text-pink-500 hover:bg-pink-50 transition-all"><FaChevronLeft size={12} /></button>
-               <h2 className="text-3xl md:text-5xl font-black text-slate-800 uppercase tracking-tighter">
-                  {monthNames[month]} <span className="text-pink-500">{year}</span>
-               </h2>
-               <button onClick={nextMonth} className="w-10 h-10 rounded-full border border-slate-100 flex items-center justify-center text-slate-400 hover:text-pink-500 hover:bg-pink-50 transition-all"><FaChevronRight size={12} /></button>
-            </div>
-            <p className="text-gray-400 font-bold uppercase tracking-[0.4em] text-[10px]">H5-REVOLUTION THEATER PROGRAM</p>
-         </div>
-         <div className="hidden md:flex items-center gap-6 text-[10px] font-black uppercase tracking-widest text-slate-300">
-            <span className="flex items-center gap-2"><div className="w-2 h-2 rounded-full bg-pink-500" /> Theater</span>
-            <span className="flex items-center gap-2"><div className="w-2 h-2 rounded-full bg-orange-400" /> Special</span>
-            <span className="flex items-center gap-2"><div className="w-2 h-2 rounded-full bg-yellow-400" /> Event</span>
-         </div>
+        <div className="flex flex-col items-center md:items-start text-center md:text-left w-full md:w-auto">
+          <div className="flex items-center gap-4 mb-3">
+            <button 
+              onClick={prevMonth} 
+              className="w-10 h-10 rounded-sm border border-pink-500/30 flex items-center justify-center text-pink-400/60 hover:text-pink-400 hover:bg-pink-500/10 hover:border-pink-500/60 transition-all"
+            >
+              <FaChevronLeft size={12} />
+            </button>
+            <h2 className="text-3xl md:text-5xl font-black text-white uppercase tracking-tighter">
+              {monthNames[month]} <span className="text-idol">&gt;{year}</span>
+            </h2>
+            <button 
+              onClick={nextMonth} 
+              className="w-10 h-10 rounded-sm border border-pink-500/30 flex items-center justify-center text-pink-400/60 hover:text-pink-400 hover:bg-pink-500/10 hover:border-pink-500/60 transition-all"
+            >
+              <FaChevronRight size={12} />
+            </button>
+          </div>
+          <p className="text-pink-400/40 font-bold uppercase tracking-[0.4em] text-[10px]">H5-REVOLUTION THEATER PROGRAM</p>
+        </div>
+        <div className="hidden md:flex items-center gap-6 text-[10px] font-black uppercase tracking-widest text-white/30">
+          <span className="flex items-center gap-2"><div className="w-2 h-2 rounded-full bg-pink-500 shadow-idol-pink" /> Theater</span>
+          <span className="flex items-center gap-2"><div className="w-2 h-2 rounded-full bg-orange-400 shadow-idol-orange" /> Special</span>
+          <span className="flex items-center gap-2"><div className="w-2 h-2 rounded-full bg-cyan-400 shadow-idol-cyan" /> Event</span>
+        </div>
       </div>
 
-      <div className="bg-white rounded-[3rem] p-4 md:p-10 border border-slate-100 shadow-2xl relative overflow-hidden">
-         <div className="grid grid-cols-7 mb-6 border-b border-slate-50 pb-6">
-            {['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'].map(day => (
-              <div key={day} className="text-center text-[10px] md:text-xs font-black text-slate-400 uppercase tracking-widest">{day}</div>
-            ))}
-         </div>
+      <div className="glass-idol rounded-2xl p-4 md:p-10 relative overflow-hidden">
+        {/* Corner decorations */}
+        <div className="absolute top-4 left-4 w-6 h-6 border-t-2 border-l-2 border-pink-500/40" />
+        <div className="absolute top-4 right-4 w-6 h-6 border-t-2 border-r-2 border-pink-500/40" />
+        <div className="absolute bottom-4 left-4 w-6 h-6 border-b-2 border-l-2 border-pink-500/40" />
+        <div className="absolute bottom-4 right-4 w-6 h-6 border-b-2 border-r-2 border-pink-500/40" />
 
-         <div className="grid grid-cols-7 gap-1 md:gap-4">
-            {Array.from({ length: startDay }).map((_, i) => (
-              <div key={`empty-${i}`} className="aspect-square bg-slate-50/20 rounded-2xl md:rounded-[2rem]" />
-            ))}
+        <div className="grid grid-cols-7 mb-6 border-b border-white/5 pb-6">
+          {['SUN', 'MON', 'TUE', 'WED', 'THU', 'FRI', 'SAT'].map(day => (
+            <div key={day} className="text-center text-[10px] md:text-xs font-black text-white/25 uppercase tracking-widest">{day}</div>
+          ))}
+        </div>
 
-            {Array.from({ length: numDays }).map((_, i) => {
-              const dateVal = i + 1;
-              const dateStr = `${year}-${month.toString().padStart(2, '0')}-${dateVal.toString().padStart(2, '0')}`;
-              const event = events[dateStr];
+        <div className="grid grid-cols-7 gap-1 md:gap-3">
+          {Array.from({ length: startDay }).map((_, i) => (
+            <div key={`empty-${i}`} className="aspect-square rounded-sm opacity-10" />
+          ))}
 
-              return (
-                <div key={i} className={`relative aspect-square rounded-2xl md:rounded-[2rem] border transition-all flex items-center justify-center group/cell cursor-pointer ${
-                  event ? 'border-pink-100 bg-pink-50/10 hover:bg-white hover:shadow-xl' : 'border-slate-50 bg-white hover:border-slate-200 shadow-sm'
-                }`}>
-                   <span className={`text-base md:text-2xl font-black font-outfit ${event ? 'text-pink-600' : 'text-slate-300'}`}>
-                      {dateVal}
-                   </span>
-                   {event && (
-                      <div className={`absolute bottom-2 md:bottom-4 left-1/2 -translate-x-1/2 w-1.5 h-1.5 md:w-2 md:h-2 rounded-full ${event.color} shadow-lg`} />
-                   )}
-                   {event && (
-                     <div className="absolute bottom-full mb-2 left-1/2 -translate-x-1/2 hidden md:group-hover/cell:block z-50">
-                        <div className="bg-slate-900 text-white text-[8px] font-black uppercase tracking-widest px-3 py-1 rounded-full whitespace-nowrap shadow-xl">
-                           H5-R {event.type}
-                        </div>
-                     </div>
-                   )}
-                </div>
-              );
-            })}
-         </div>
+          {Array.from({ length: numDays }).map((_, i) => {
+            const dateVal = i + 1;
+            const dateStr = `${year}-${month.toString().padStart(2, '0')}-${dateVal.toString().padStart(2, '0')}`;
+            const event = events[dateStr];
+
+            return (
+              <div 
+                key={i} 
+                className={`relative aspect-square rounded-sm border transition-all flex items-center justify-center group/cell cursor-pointer ${
+                  event 
+                    ? 'border-pink-500/30 bg-pink-500/8 hover:bg-pink-500/15 hover:border-pink-500/50' 
+                    : 'border-white/5 bg-white/2 hover:border-white/15 hover:bg-white/5'
+                }`}
+              >
+                <span className={`text-base md:text-2xl font-black font-outfit ${event ? 'text-pink-300' : 'text-white/20'}`}>
+                  {dateVal}
+                </span>
+                {event && (
+                  <div className={`absolute bottom-2 md:bottom-3 left-1/2 -translate-x-1/2 w-1.5 h-1.5 md:w-2 md:h-2 rounded-full ${event.color}`} />
+                )}
+                {event && (
+                  <div className="absolute bottom-full mb-2 left-1/2 -translate-x-1/2 hidden md:group-hover/cell:block z-50">
+                    <div className="bg-black/90 border border-pink-500/30 text-pink-300 text-[8px] font-black uppercase tracking-widest px-3 py-1 rounded-sm whitespace-nowrap">
+                      H5-R {event.type}
+                    </div>
+                  </div>
+                )}
+              </div>
+            );
+          })}
+        </div>
       </div>
     </section>
   );
 };
 
+/* ─── Home Page ─────────────────────────────────────── */
 const Home = () => {
   const [scrollY, setScrollY] = useState(0);
 
@@ -141,151 +195,210 @@ const Home = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-white w-full overflow-hidden text-gray-800">
+    <div className="min-h-screen bg-[#0f0a1e] w-full overflow-hidden text-white">
       <SEO title="Home" description="Welcome to the official website of H5-Revolution. Experience the revolution in idol entertainment." />
       
-      {/* ─── Hero Banner Section ──────────────────────────────── */}
-      <section className="relative min-h-[100svh] md:h-screen md:min-h-[600px] md:max-h-[1080px] w-full flex flex-col items-center justify-start md:justify-center overflow-hidden bg-white pb-24 md:pb-0">
-        
-        {/* Colorful Abstract Orbs (Behind Banner) */}
-        <div className="absolute inset-0 z-0 overflow-hidden">
-           <div className="absolute top-10 left-10 w-[80vw] h-[80vw] md:w-[60vw] md:h-[60vw] bg-pink-300/30 rounded-full blur-[60px] md:blur-[100px] mix-blend-multiply animate-orb"></div>
-           <div className="absolute bottom-10 right-10 w-[70vw] h-[70vw] md:w-[50vw] md:h-[50vw] bg-cyan-300/30 rounded-full blur-[60px] md:blur-[100px] mix-blend-multiply animate-orb" style={{ animationDelay: '-3s' }}></div>
-           <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[60vw] h-[60vw] md:w-[40vw] md:h-[40vw] bg-yellow-300/30 rounded-full blur-[60px] md:blur-[100px] mix-blend-multiply animate-orb" style={{ animationDelay: '-6s' }}></div>
+      {/* ─── Hero Banner Section ──────────────────────────── */}
+      <section className="relative min-h-[100svh] md:h-screen md:min-h-[600px] md:max-h-[1080px] w-full flex flex-col items-center justify-start md:justify-center overflow-hidden pb-24 md:pb-0"
+        style={{ background: 'linear-gradient(160deg, #0f0a1e 0%, #1a0535 40%, #0d1a2e 100%)' }}
+      >
+        {/* Star field */}
+        <StarField count={50} />
+
+        {/* Stage spotlight cones */}
+        <div className="absolute inset-0 z-0 overflow-hidden pointer-events-none">
+          <div 
+            className="absolute top-0 left-1/4 w-[400px] h-[600px] opacity-20"
+            style={{ background: 'conic-gradient(from -10deg at 50% 0%, transparent 30%, rgba(236,72,153,0.3) 50%, transparent 70%)', animation: 'stage-light 4s ease-in-out infinite' }}
+          />
+          <div 
+            className="absolute top-0 right-1/4 w-[400px] h-[600px] opacity-15"
+            style={{ background: 'conic-gradient(from -10deg at 50% 0%, transparent 30%, rgba(249,115,22,0.3) 50%, transparent 70%)', animation: 'stage-light 4s ease-in-out infinite', animationDelay: '-2s' }}
+          />
+          {/* Deep glow orbs */}
+          <div className="absolute top-1/3 left-1/4 w-[500px] h-[500px] bg-pink-600/10 rounded-full blur-[120px] animate-orb" />
+          <div className="absolute top-1/3 right-1/4 w-[400px] h-[400px] bg-orange-500/8 rounded-full blur-[100px] animate-orb" style={{ animationDelay: '-4s' }} />
+          <div className="absolute bottom-0 left-1/2 -translate-x-1/2 w-[600px] h-[200px] bg-cyan-500/6 rounded-full blur-[80px]" />
         </div>
+
+        {/* Horizontal line decoration */}
+        <div className="absolute top-[72px] left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-pink-500/20 to-transparent z-10" />
 
         {/* Mobile Banner */}
         <div className="w-full md:hidden relative pt-[80px] z-10">
           <img 
             src="/images/h5-revolution-banner.jpg" 
             alt="H5-Revolution Banner" 
-            className="w-full h-auto object-contain shadow-xl shadow-pink-200" 
+            className="w-full h-auto object-contain" 
+            style={{ filter: 'drop-shadow(0 0 40px rgba(236,72,153,0.3))' }}
           />
         </div>
 
-        {/* Desktop Banner Layer with bright gradient overlay */}
+        {/* Desktop Banner */}
         <div 
           className="hidden md:block absolute inset-0 z-10 bg-center bg-cover bg-no-repeat" 
           style={{backgroundImage: "url('/images/h5-revolution-banner.jpg')"}}
         >
-          {/* A soft bright gradient from bottom to make text legible but keep the bright feel */}
-          <div className="absolute inset-0 bg-gradient-to-t from-white via-white/40 to-transparent"></div>
-          {/* Side colorful washes */}
-          <div className="absolute inset-0 bg-gradient-to-r from-pink-500/10 to-cyan-500/10"></div>
+          <div className="absolute inset-0 bg-gradient-to-t from-[#0f0a1e] via-[#0f0a1e]/50 to-[#0f0a1e]/20" />
+          <div className="absolute inset-0 bg-gradient-to-r from-[#0f0a1e]/60 to-[#0f0a1e]/60" />
         </div>
-        
-        {/* Fun Overlay Pattern */}
-        <div className="absolute inset-x-0 bottom-0 h-64 bg-[url('https://transparenttextures.com/patterns/cubes.png')] opacity-10 pointer-events-none z-10 mix-blend-overlay"></div>
 
-        <div className="relative z-20 text-center px-6 mt-8 md:mt-20 flex-1 md:flex-none flex flex-col justify-center animate-fade-up w-full max-w-5xl mx-auto">
-          <div className="inline-block mb-6 px-5 py-2 rounded-full border border-pink-200 bg-white/60 backdrop-blur-md mx-auto shadow-sm">
-            <span className="text-pink-500 text-[10px] md:text-sm font-bold tracking-[0.2em] uppercase flex items-center gap-2">
-              <FaHeart className="text-pink-400" /> The New Era Begins
-            </span>
+        {/* Hero Content */}
+        <div className="relative z-20 text-center px-6 mt-8 md:mt-0 flex-1 md:flex-none flex flex-col justify-center animate-fade-up w-full max-w-5xl mx-auto">
+          {/* Badge */}
+          <div className="inline-flex items-center gap-2 mx-auto mb-8 px-5 py-2 border border-pink-500/30 bg-pink-500/5 backdrop-blur-sm rounded-sm">
+            <FaHeart className="text-pink-400 text-xs animate-pulse" />
+            <span className="text-pink-300 text-[10px] md:text-xs font-bold tracking-[0.3em] uppercase">The New Era Begins</span>
+            <FaHeart className="text-pink-400 text-xs animate-pulse" />
           </div>
-          <h1 className="text-4xl sm:text-6xl md:text-8xl lg:text-9xl font-black text-transparent bg-clip-text bg-gradient-to-r from-pink-500 via-orange-400 to-yellow-400 tracking-tighter mb-4 drop-shadow-sm font-outfit uppercase break-words leading-none">
+
+          {/* Main title */}
+          <h1 className="text-5xl sm:text-7xl md:text-9xl lg:text-[10rem] font-black tracking-tighter mb-2 font-display uppercase leading-none
+            text-transparent bg-clip-text bg-gradient-to-r from-pink-400 via-orange-300 to-pink-500
+            drop-shadow-[0_0_40px_rgba(236,72,153,0.5)]">
             REVOLUTION
           </h1>
-          <p className="text-gray-600 text-[10px] sm:text-sm md:text-xl md:tracking-[0.5em] tracking-[0.2em] mb-12 uppercase font-bold bg-white/30 backdrop-blur-sm mx-auto px-4 py-1 rounded-lg">
-            We are H5 Official Group
-          </p>
 
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-             <button className="shimmer-btn w-full sm:w-auto px-10 py-4 bg-gradient-to-r from-pink-500 to-orange-400 text-white font-black tracking-widest text-sm rounded-full hover:scale-105 hover:shadow-xl hover:shadow-pink-300/50 transition-all duration-300 uppercase">
-                Watch New MV
-             </button>
-             <button className="w-full sm:w-auto px-10 py-4 bg-white/80 backdrop-blur-md text-pink-500 border-2 border-pink-100 font-black tracking-widest text-sm rounded-full hover:bg-pink-50 hover:border-pink-300 transition-all duration-300 flex items-center justify-center gap-2 uppercase group shadow-md shadow-pink-100">
-                Discover More
-                <FaArrowRight className="group-hover:translate-x-1 transition-transform" />
-             </button>
+          {/* Subtitle line */}
+          <div className="flex items-center justify-center gap-4 mb-6">
+            <div className="h-[1px] w-16 bg-gradient-to-r from-transparent to-pink-500/50" />
+            <p className="text-white/40 text-[10px] sm:text-xs md:text-sm tracking-[0.5em] uppercase font-bold">
+              We are H5 Official Group
+            </p>
+            <div className="h-[1px] w-16 bg-gradient-to-l from-transparent to-pink-500/50" />
           </div>
+
+          {/* CTA Buttons */}
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mt-6">
+            <button className="shimmer-btn w-full sm:w-auto px-10 py-4 bg-gradient-to-r from-pink-500 to-orange-500 text-white font-black tracking-[0.2em] text-sm rounded-sm hover:scale-105 hover:shadow-idol-pink transition-all duration-300 uppercase flex items-center justify-center gap-3">
+              <FaPlay size={10} /> Watch New MV
+            </button>
+            <button className="w-full sm:w-auto px-10 py-4 bg-transparent text-pink-300 border border-pink-500/40 font-black tracking-[0.2em] text-sm rounded-sm hover:bg-pink-500/10 hover:border-pink-500/70 transition-all duration-300 flex items-center justify-center gap-2 uppercase group">
+              Discover More
+              <FaArrowRight size={10} className="group-hover:translate-x-1 transition-transform" />
+            </button>
+          </div>
+
+          {/* Stats row */}
+          <div className="flex items-center justify-center gap-8 mt-12 pt-8 border-t border-white/5">
+            {[
+              { value: '5+', label: 'Members' },
+              { value: '100+', label: 'Shows' },
+              { value: '50K+', label: 'Fans' },
+            ].map((stat, i) => (
+              <div key={i} className="text-center">
+                <div className="text-xl md:text-2xl font-black text-idol">{stat.value}</div>
+                <div className="text-[9px] text-white/30 uppercase tracking-widest font-bold">{stat.label}</div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Bottom scroll indicator */}
+        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-2 animate-float">
+          <div className="w-[1px] h-8 bg-gradient-to-b from-pink-500/60 to-transparent" />
+          <div className="w-1 h-1 rounded-full bg-pink-400 animate-pulse" />
         </div>
       </section>
 
-      {/* ─── Ticker Tape ──────────────────────────────────────── */}
-      <div className="w-full bg-gradient-to-r from-pink-400 via-yellow-400 to-cyan-400 py-3 overflow-hidden flex whitespace-nowrap z-20 relative shadow-inner">
-        <div className="animate-marquee flex gap-8 items-center">
-            {[...Array(6)].map((_, i) => (
-              <React.Fragment key={i}>
-                <span className="text-white font-black text-sm tracking-widest uppercase text-shadow-sm">H5-Revolution First Tour 2025</span>
-                <FaStar className="text-yellow-200 text-xs animate-spin-slow" />
-                <span className="text-white font-black text-sm tracking-widest uppercase text-shadow-sm">Tickets On Sale Now</span>
-                <FaStar className="text-yellow-200 text-xs animate-spin-slow" />
-              </React.Fragment>
-            ))}
+      {/* ─── Ticker Tape ──────────────────────────────────── */}
+      <div className="w-full bg-black border-y border-pink-500/20 py-3 overflow-hidden flex whitespace-nowrap z-20 relative">
+        <div className="absolute inset-y-0 left-0 w-16 bg-gradient-to-r from-black to-transparent z-10 pointer-events-none" />
+        <div className="absolute inset-y-0 right-0 w-16 bg-gradient-to-l from-black to-transparent z-10 pointer-events-none" />
+        <div className="animate-marquee flex gap-12 items-center">
+          {[...Array(8)].map((_, i) => (
+            <React.Fragment key={i}>
+              <span className="text-pink-400 font-black text-xs tracking-[0.3em] uppercase">H5-Revolution First Tour 2025</span>
+              <FaStar className="text-orange-400 text-[8px] shrink-0" />
+              <span className="text-white/40 font-black text-xs tracking-[0.3em] uppercase">Tickets On Sale Now</span>
+              <FaStar className="text-cyan-400 text-[8px] shrink-0" />
+            </React.Fragment>
+          ))}
         </div>
       </div>
 
-      {/* ─── Information / News ───────────────────────────────── */}
-      <section className="py-24 px-4 sm:px-6 lg:px-8 relative bg-slate-50">
+      {/* ─── Information / News ───────────────────────────── */}
+      <section className="py-24 px-4 sm:px-6 lg:px-8 relative" style={{ background: 'linear-gradient(180deg, #0f0a1e 0%, #12082a 100%)' }}>
         <div className="max-w-7xl mx-auto">
+          {/* Section header */}
           <div className="text-left mb-12">
-            <h2 className="text-4xl md:text-5xl font-black text-gray-800 uppercase tracking-tight mb-2">
-              <span className="text-pink-500">LATEST</span> INFO
+            <div className="badge-idol mb-4">
+              <FaStar size={8} /> Latest Updates
+            </div>
+            <h2 className="text-4xl md:text-5xl font-black text-white uppercase tracking-tight mb-3">
+              <span className="text-idol">LATEST</span> INFO
             </h2>
-            <div className="w-20 h-2 bg-gradient-to-r from-pink-400 to-orange-400 rounded-full"></div>
+            <div className="idol-divider w-24" />
           </div>
 
           <div className="grid lg:grid-cols-3 gap-8">
-            <div className="lg:col-span-2 space-y-4">
+            {/* News list */}
+            <div className="lg:col-span-2 space-y-3">
               {latestNews.map((news, index) => (
-                <div key={index} className="group bg-white p-6 rounded-2xl flex flex-col sm:flex-row sm:items-center gap-4 border border-gray-100 shadow-sm hover:shadow-xl hover:shadow-pink-100 hover:border-pink-200 transition-all duration-300">
-                  <div className="flex items-center gap-3 w-32 shrink-0">
-                    <span className="text-orange-400 font-mono font-bold">{news.date}</span>
+                <div 
+                  key={index} 
+                  className="group glass-idol rounded-sm p-5 flex flex-col sm:flex-row sm:items-center gap-4 
+                    hover:border-pink-500/30 hover:bg-pink-500/5 transition-all duration-300 cursor-pointer"
+                >
+                  <div className="flex items-center gap-3 w-28 shrink-0">
+                    <span className="text-orange-400 font-mono font-bold text-sm">{news.date}</span>
                     {news.isNew && (
-                      <span className="bg-pink-500 text-white text-[10px] font-black px-2 py-0.5 rounded uppercase tracking-wider shadow-sm shadow-pink-200">
+                      <span className="bg-pink-500 text-white text-[9px] font-black px-2 py-0.5 rounded-sm uppercase tracking-wider">
                         New
                       </span>
                     )}
                   </div>
-                  <h3 className="text-gray-700 group-hover:text-pink-600 font-bold text-sm md:text-base transition-colors flex-1 line-clamp-2">
+                  <h3 className="text-white/70 group-hover:text-pink-200 font-bold text-sm transition-colors flex-1 line-clamp-2">
                     {news.title}
                   </h3>
-                  <FaChevronRight className="hidden sm:block text-pink-300 group-hover:text-pink-500 group-hover:translate-x-1 transition-all" />
+                  <FaChevronRight className="hidden sm:block text-white/20 group-hover:text-pink-400 group-hover:translate-x-1 transition-all shrink-0" />
                 </div>
               ))}
               <div className="pt-4">
-                 <button className="text-orange-500 text-sm font-bold tracking-widest uppercase hover:text-pink-500 flex items-center gap-2 group transition-colors">
-                   View All News <FaArrowRight className="group-hover:translate-x-1 transition-transform" />
-                 </button>
+                <button className="text-pink-400 hover:text-orange-400 text-xs font-bold tracking-[0.3em] uppercase flex items-center gap-2 group transition-colors">
+                  View All News <FaArrowRight className="group-hover:translate-x-1 transition-transform" />
+                </button>
               </div>
             </div>
 
-            {/* Featured Box */}
-            <div className="bg-gradient-to-br from-pink-400 to-orange-400 p-1 rounded-2xl transition-all shadow-lg shadow-pink-200 group relative overflow-hidden hidden lg:block">
-               <div className="absolute inset-0 bg-[url('https://transparenttextures.com/patterns/stardust.png')] opacity-30 mix-blend-overlay"></div>
-               <div className="h-full bg-white/10 backdrop-blur-sm rounded-xl p-8 relative z-10 flex flex-col justify-center items-center text-center">
-                  <div className="w-16 h-16 bg-white rounded-full flex items-center justify-center mb-6 group-hover:scale-110 shadow-lg transition-all duration-500">
-                     <FaCalendarAlt className="text-3xl text-pink-500 group-hover:text-orange-500 transition-colors" />
-                  </div>
-                  <h3 className="text-white text-xl font-bold mb-2 drop-shadow-sm">Upcoming Showcase</h3>
-                  <p className="text-pink-50 text-sm mb-6 drop-shadow-sm font-medium">Join our exclusive fan meeting event in Tokyo.</p>
-                  <button className="shimmer-btn px-6 py-2 bg-white text-pink-500 hover:text-orange-500 rounded-full text-xs font-bold tracking-widest uppercase transition-all shadow-md mt-auto">
-                    Register
-                  </button>
-               </div>
+            {/* Featured box */}
+            <div className="relative rounded-sm overflow-hidden border border-pink-500/20 hover:border-pink-500/40 transition-all group hidden lg:block">
+              <div className="absolute inset-0 bg-gradient-to-br from-pink-600/20 to-orange-600/10" />
+              <div className="relative z-10 p-8 flex flex-col justify-center items-center text-center h-full min-h-[240px]">
+                <div className="w-16 h-16 border border-pink-500/40 flex items-center justify-center mb-6 group-hover:border-pink-400 transition-all group-hover:shadow-idol-pink">
+                  <FaCalendarAlt className="text-2xl text-pink-400 group-hover:text-pink-300 transition-colors" />
+                </div>
+                <h3 className="text-white text-xl font-bold mb-2">Upcoming Showcase</h3>
+                <p className="text-white/40 text-sm mb-6 font-medium">Join our exclusive fan meeting event in Tokyo.</p>
+                <button className="shimmer-btn px-6 py-2 bg-gradient-to-r from-pink-500 to-orange-500 text-white rounded-sm text-xs font-bold tracking-widest uppercase hover:shadow-idol-pink transition-all">
+                  Register
+                </button>
+              </div>
             </div>
           </div>
         </div>
       </section>
 
-      {/* ─── Monthly Activity Calendar ─────────────────────────── */}
-      <CalendarSection />
+      {/* ─── Monthly Activity Calendar ──────────────────── */}
+      <section style={{ background: 'linear-gradient(180deg, #12082a 0%, #0f0a1e 100%)' }}>
+        <CalendarSection />
+      </section>
 
-      {/* ─── Members Highlight ───────────────────────────────── */}
-      <section className="py-24 px-4 sm:px-6 lg:px-8 bg-white relative overflow-hidden">
-        {/* Glow effect */}
-        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-gradient-to-bl from-cyan-100 to-transparent rounded-full blur-[80px] pointer-events-none"></div>
-        <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-gradient-to-tr from-pink-100 to-transparent rounded-full blur-[80px] pointer-events-none"></div>
+      {/* ─── Members Highlight ────────────────────────────── */}
+      <section className="py-24 px-4 sm:px-6 lg:px-8 relative overflow-hidden" style={{ background: '#0f0a1e' }}>
+        {/* Glow effects */}
+        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-cyan-500/5 rounded-full blur-[100px] pointer-events-none" />
+        <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-pink-600/5 rounded-full blur-[100px] pointer-events-none" />
 
         <div className="max-w-7xl mx-auto relative z-10">
           <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
             <div className="text-left">
-              <h2 className="text-4xl md:text-6xl font-black text-gray-800 uppercase tracking-tight mb-2">
-                MEET THE <br className="hidden md:block"/> <span className="text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-cyan-500">MEMBERS</span>
+              <div className="badge-idol mb-4"><FaStar size={8} /> Our Stars</div>
+              <h2 className="text-4xl md:text-6xl font-black text-white uppercase tracking-tight mb-2">
+                MEET THE <br className="hidden md:block" /> <span className="text-idol">MEMBERS</span>
               </h2>
             </div>
-            <Link to="/members" className="w-fit text-cyan-600 hover:text-pink-500 text-sm font-bold tracking-widest uppercase flex items-center gap-2 group transition-colors">
+            <Link to="/members" className="w-fit text-cyan-400 hover:text-pink-400 text-xs font-bold tracking-[0.3em] uppercase flex items-center gap-2 group transition-colors">
               Explore Profiles <FaArrowRight className="group-hover:translate-x-1 transition-transform" />
             </Link>
           </div>
@@ -300,33 +413,33 @@ const Home = () => {
         </div>
       </section>
 
-      {/* ─── Live Photos Gallery ──────────────────────────────── */}
-      <section className="py-24 px-4 sm:px-6 lg:px-8 bg-gradient-to-b from-pink-50 to-white relative">
+      {/* ─── Live Photos Gallery ────────────────────────── */}
+      <section className="py-24 px-4 sm:px-6 lg:px-8 relative" style={{ background: 'linear-gradient(180deg, #0f0a1e 0%, #12082a 100%)' }}>
         <div className="max-w-7xl mx-auto">
           <div className="text-center mb-16">
-            <h2 className="text-4xl md:text-5xl font-black text-gray-800 uppercase tracking-tight mb-4">
-              LIVE <span className="text-cyan-500">MOMENTS</span>
+            <div className="badge-idol mb-4 mx-auto inline-flex"><FaStar size={8} /> Live Archive</div>
+            <h2 className="text-4xl md:text-5xl font-black text-white uppercase tracking-tight mb-4">
+              LIVE <span className="text-cyan-glow" style={{ color: '#06b6d4' }}>MOMENTS</span>
             </h2>
-            <p className="text-gray-500 font-bold tracking-wide">Capturing the energy of H5-Revolution</p>
+            <p className="text-white/30 font-bold tracking-widest text-xs uppercase">Capturing the energy of H5-Revolution</p>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-4">
             {livePhotos.map((photo, index) => (
-              <div key={index} className={`group relative rounded-2xl overflow-hidden aspect-[4/5] sm:aspect-auto sm:h-72 cursor-pointer shadow-sm hover:shadow-xl hover:shadow-cyan-100 transition-all duration-300 ${index === 0 || index === 2 ? 'lg:col-span-2' : ''}`}>
-                <div className="absolute inset-0 bg-gray-100">
-                   {/* Placeholder for real images */}
-                   <div className="w-full h-full bg-gradient-to-br from-pink-100 to-cyan-100 flex items-center justify-center">
-                     <FaHeart className="text-white/50 text-4xl group-hover:scale-125 transition-transform duration-500" />
-                   </div>
+              <div key={index} className={`group relative rounded-sm overflow-hidden aspect-[4/5] sm:aspect-auto sm:h-72 cursor-pointer border border-white/5 hover:border-pink-500/30 transition-all duration-300 ${index === 0 || index === 2 ? 'lg:col-span-2' : ''}`}>
+                <div className="absolute inset-0 bg-gradient-to-br from-pink-900/40 to-[#0f0a1e]">
+                  <div className="w-full h-full flex items-center justify-center">
+                    <FaHeart className="text-white/10 text-4xl group-hover:text-pink-500/30 group-hover:scale-125 transition-all duration-500" />
+                  </div>
                 </div>
-                <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-80 group-hover:opacity-100 transition-opacity duration-300" />
+                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/20 to-transparent opacity-80 group-hover:opacity-100 transition-opacity duration-300" />
                 
                 <div className="absolute bottom-0 left-0 right-0 p-5 translate-y-4 group-hover:translate-y-0 transition-transform duration-300">
-                   <div className="inline-block bg-pink-500 text-white text-[10px] font-black px-2 py-1 rounded mb-2 uppercase shadow-sm">
-                     LIVE
-                   </div>
-                   <p className="text-cyan-300 font-mono text-xs mb-1">{photo.date}</p>
-                   <h3 className="text-white font-bold text-sm line-clamp-2">{photo.title}</h3>
+                  <div className="inline-block bg-pink-500 text-white text-[9px] font-black px-2 py-0.5 rounded-sm mb-2 uppercase tracking-widest">
+                    LIVE
+                  </div>
+                  <p className="text-cyan-400 font-mono text-xs mb-1">{photo.date}</p>
+                  <h3 className="text-white font-bold text-sm line-clamp-2">{photo.title}</h3>
                 </div>
               </div>
             ))}
@@ -334,26 +447,36 @@ const Home = () => {
         </div>
       </section>
 
-      {/* ─── Fan Club Call to Action ───────────────────────────── */}
-      <section className="py-32 px-4 relative overflow-hidden bg-white">
-        <div className="absolute inset-0 bg-gradient-to-br from-orange-100 via-pink-100 to-cyan-100 opacity-50"></div>
-        <div className="absolute inset-0 bg-[url('https://transparenttextures.com/patterns/stardust.png')] opacity-30 mix-blend-multiply"></div>
+      {/* ─── Fan Club Call to Action ─────────────────────── */}
+      <section className="py-32 px-4 relative overflow-hidden" style={{ background: 'linear-gradient(135deg, #12082a 0%, #0f0a1e 50%, #0d1a2e 100%)' }}>
+        {/* Background effects */}
+        <div className="absolute inset-0 pointer-events-none">
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-pink-600/8 rounded-full blur-[100px]" />
+          <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[400px] h-[400px] bg-orange-500/5 rounded-full blur-[80px]" />
+        </div>
+        {/* Stage lines */}
+        <div className="absolute top-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-pink-500/30 to-transparent" />
+        <div className="absolute bottom-0 left-0 right-0 h-[1px] bg-gradient-to-r from-transparent via-orange-500/20 to-transparent" />
+
         <div className="max-w-4xl mx-auto relative z-10 text-center">
-          <div className="w-20 h-20 bg-white rounded-full flex items-center justify-center mx-auto mb-8 shadow-xl shadow-pink-200 hover:scale-110 transition-transform duration-500 border border-pink-100">
-             <FaMusic className="text-3xl text-pink-500" />
+          <div className="badge-idol mb-8 mx-auto inline-flex">
+            <FaMusic size={8} /> Fan Community
           </div>
-          <h2 className="text-5xl md:text-7xl font-black text-gray-800 uppercase tracking-tighter mb-6">
-            Join the <br/> <span className="text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-orange-400">Revolution</span>
+          <div className="w-16 h-16 border border-pink-500/40 flex items-center justify-center mx-auto mb-8 hover:border-pink-400 hover:shadow-idol-pink transition-all duration-500">
+            <FaMusic className="text-2xl text-pink-400" />
+          </div>
+          <h2 className="text-5xl md:text-7xl font-black text-white uppercase tracking-tighter mb-6">
+            Join the <br /> <span className="text-idol">Revolution</span>
           </h2>
-          <p className="text-gray-600 text-lg md:text-xl font-bold mb-12 max-w-2xl mx-auto">
+          <p className="text-white/40 text-base md:text-lg font-bold mb-12 max-w-2xl mx-auto leading-relaxed">
             Become an official member. Get exclusive access to behind-the-scenes content, early ticket sales, and special merchandise.
           </p>
           
           <div className="flex flex-col sm:flex-row justify-center items-center gap-6">
-            <button className="shimmer-btn w-full sm:w-auto px-10 py-5 bg-gradient-to-r from-pink-500 to-orange-400 text-white font-black tracking-widest text-sm rounded-full hover:scale-105 shadow-xl shadow-pink-200 transition-all duration-300 uppercase">
+            <button className="shimmer-btn w-full sm:w-auto px-10 py-5 bg-gradient-to-r from-pink-500 to-orange-500 text-white font-black tracking-[0.2em] text-sm rounded-sm hover:scale-105 hover:shadow-idol-pink transition-all duration-300 uppercase">
               Join Fan Club
             </button>
-            <Link to="/shop" className="w-full sm:w-auto px-10 py-5 bg-white text-pink-500 font-black tracking-widest text-sm rounded-full border border-pink-200 hover:bg-pink-50 hover:shadow-lg transition-all duration-300 uppercase text-center text-nowrap">
+            <Link to="/shop" className="w-full sm:w-auto px-10 py-5 bg-transparent text-pink-300 border border-pink-500/40 font-black tracking-[0.2em] text-sm rounded-sm hover:bg-pink-500/10 hover:border-pink-500/70 transition-all duration-300 uppercase text-center">
               Visit Store
             </Link>
           </div>

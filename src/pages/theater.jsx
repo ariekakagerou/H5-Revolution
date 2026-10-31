@@ -5,7 +5,7 @@ import SEO from "../components/SEO";
 
 /**
  * Theater Page Component
- * Contains "Theater Schedule" and "Theater Guide" sections.
+ * Dark Cyber-Idol Theme for H5-Revolution Permanent Theater.
  */
 const Theater = () => {
   useEffect(() => {
@@ -31,157 +31,171 @@ const Theater = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-slate-50 font-inter text-slate-800 pb-24">
+    <div className="min-h-screen bg-[#0f0a1e] font-inter text-slate-100 pb-24 relative overflow-hidden">
       <SEO title="H5-R Theater" description="Get the latest schedule and guide for H5-Revolution's permanent theater." />
 
+      {/* Ambient background glows */}
+      <div className="absolute top-0 right-1/4 w-[500px] h-[500px] bg-pink-600/10 rounded-full blur-[140px] pointer-events-none" />
+      <div className="absolute top-1/3 left-10 w-[400px] h-[400px] bg-orange-500/5 rounded-full blur-[120px] pointer-events-none" />
+
       {/* ─── Hero Section ─────────────────────────────────── */}
-      <section className="relative pt-32 pb-20 px-6 overflow-hidden bg-white border-b border-slate-100">
-        <div className="absolute top-0 right-0 w-[600px] h-[600px] bg-pink-50 rounded-full blur-[120px] -z-10" />
-        
-        <div className="max-w-6xl mx-auto flex flex-col items-center text-center">
+      <section className="relative pt-36 pb-20 px-6 overflow-hidden bg-gradient-to-b from-[#160a2e] to-[#0f0a1e] border-b border-pink-900/30">
+        <div className="max-w-6xl mx-auto flex flex-col items-center text-center relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 10 }}
             animate={{ opacity: 1, y: 0 }}
-            className="w-20 h-20 bg-gradient-to-br from-pink-500 to-orange-400 rounded-3xl flex items-center justify-center text-white shadow-xl mb-8 -rotate-6"
+            className="w-16 h-16 bg-gradient-to-br from-pink-500 to-orange-500 rounded-sm flex items-center justify-center text-white shadow-idol-pink mb-6"
           >
-            <FaStar size={36} />
+            <FaStar size={28} />
           </motion.div>
           
-          <h1 className="text-5xl md:text-7xl font-black tracking-tighter uppercase mb-4 font-outfit">
-             THE <span className="text-transparent bg-clip-text bg-gradient-to-r from-pink-500 to-orange-400">THEATER</span>
+          <div className="badge-idol mb-4">
+            Official Live Stage
+          </div>
+
+          <h1 className="text-5xl md:text-7xl font-black tracking-tighter uppercase mb-4 font-outfit text-white">
+            THE <span className="text-idol">THEATER</span>
           </h1>
-          <p className="text-gray-400 font-bold uppercase tracking-[0.4em] text-xs">Our Home. Your Experience.</p>
+          <p className="text-pink-400/70 font-mono font-bold uppercase tracking-[0.4em] text-xs">
+            Our Home. Your Live Cyber-Stage Experience.
+          </p>
         </div>
       </section>
 
       {/* ─── Section: Theater Schedule (#schedule) ────────── */}
-      <section id="schedule" className="py-24 px-6 max-w-7xl mx-auto">
-         <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
-            <div className="text-left">
-               <h2 className="text-4xl font-black text-slate-800 uppercase tracking-tight">Theater <span className="text-pink-500">Schedule</span></h2>
-               <p className="text-gray-400 font-bold text-sm">Weekly Performance Calendar</p>
-            </div>
-            <div className="flex items-center gap-4 text-xs font-bold uppercase tracking-widest text-slate-400">
-               <span className="flex items-center gap-1"><div className="w-2 h-2 rounded-full bg-green-400" /> Available</span>
-               <span className="flex items-center gap-1"><div className="w-2 h-2 rounded-full bg-orange-400" /> Limited</span>
-               <span className="flex items-center gap-1"><div className="w-2 h-2 rounded-full bg-red-400" /> Sold Out</span>
-            </div>
-         </div>
+      <section id="schedule" className="py-20 px-6 max-w-7xl mx-auto relative z-10">
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
+          <div className="text-left">
+            <h2 className="text-3xl md:text-4xl font-black text-white uppercase tracking-tight">
+              Theater <span className="text-idol">Schedule</span>
+            </h2>
+            <p className="text-white/40 font-bold text-sm mt-1">Weekly Performance Calendar</p>
+          </div>
+          <div className="flex items-center gap-4 text-xs font-mono font-bold uppercase tracking-widest text-white/50">
+            <span className="flex items-center gap-1.5"><div className="w-2 h-2 rounded-full bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.8)]" /> Available</span>
+            <span className="flex items-center gap-1.5"><div className="w-2 h-2 rounded-full bg-orange-400 shadow-[0_0_8px_rgba(251,146,60,0.8)]" /> Limited</span>
+            <span className="flex items-center gap-1.5"><div className="w-2 h-2 rounded-full bg-red-400 shadow-[0_0_8px_rgba(248,113,113,0.8)]" /> Sold Out</span>
+          </div>
+        </div>
 
-         <div className="grid grid-cols-1 gap-4">
-            {schedule.map((item, i) => (
-              <motion.div 
-                key={i}
-                whileHover={{ x: 10 }}
-                className="bg-white rounded-[1.5rem] p-6 flex flex-col md:flex-row items-center justify-between gap-6 shadow-sm border border-slate-100 hover:border-pink-200 transition-all group"
-              >
-                 <div className="flex items-center gap-8 w-full md:w-auto">
-                    <div className="flex flex-col items-center justify-center w-20 h-20 rounded-2xl bg-slate-50 border border-slate-100 text-slate-800 shrink-0">
-                       <span className="text-xs font-black uppercase text-pink-500">{item.day}</span>
-                       <span className="text-lg font-black leading-none">{item.date.split(' ')[1]}</span>
-                    </div>
-                    <div>
-                        <div className="flex items-center gap-2 mb-1">
-                           <FaClock size={12} className="text-gray-300" />
-                           <span className="text-xs font-bold text-gray-400">{item.time} JST</span>
-                        </div>
-                        <h3 className="text-xl font-black text-slate-800 uppercase tracking-tight group-hover:text-pink-600 transition-colors">{item.title}</h3>
-                    </div>
-                 </div>
+        <div className="grid grid-cols-1 gap-4">
+          {schedule.map((item, i) => (
+            <motion.div 
+              key={i}
+              whileHover={{ x: 6 }}
+              className="bg-[#12082a]/80 backdrop-blur-md rounded-sm p-6 flex flex-col md:flex-row items-center justify-between gap-6 border border-white/10 hover:border-pink-500/50 hover:shadow-idol-pink transition-all group"
+            >
+              <div className="flex items-center gap-6 w-full md:w-auto">
+                <div className="flex flex-col items-center justify-center w-18 h-18 rounded-sm bg-white/[0.04] border border-white/10 text-white shrink-0 p-3 group-hover:border-pink-500/40 transition-colors">
+                  <span className="text-xs font-black uppercase text-pink-400 font-mono">{item.day}</span>
+                  <span className="text-xl font-black font-mono leading-none mt-1">{item.date.split(' ')[1]}</span>
+                </div>
+                <div>
+                  <div className="flex items-center gap-2 mb-1">
+                    <FaClock size={11} className="text-pink-400" />
+                    <span className="text-xs font-mono text-white/50">{item.time} JST</span>
+                  </div>
+                  <h3 className="text-lg md:text-xl font-black text-white uppercase tracking-tight group-hover:text-pink-300 transition-colors">
+                    {item.title}
+                  </h3>
+                </div>
+              </div>
 
-                 <div className="flex items-center gap-6 w-full md:w-auto justify-between md:justify-end">
-                    <span className={`px-4 py-1.5 rounded-full text-[10px] font-black uppercase tracking-widest ${
-                      item.status === "Available" ? "bg-green-50 text-green-500" :
-                      item.status === "Limited" ? "bg-orange-50 text-orange-500" : "bg-red-50 text-red-500"
-                    }`}>
-                       {item.status}
-                    </span>
-                    <button className={`px-8 py-3 rounded-xl font-black text-xs uppercase tracking-widest transition-all ${
-                      item.status === "Sold Out" ? "bg-gray-100 text-gray-400 cursor-not-allowed" : "bg-gradient-to-r from-pink-500 to-orange-400 text-white shadow-lg hover:shadow-xl hover:-translate-y-0.5"
-                    }`}>
-                       {item.status === "Sold Out" ? "Full House" : "Apply Ticket"}
-                    </button>
-                 </div>
-              </motion.div>
-            ))}
-         </div>
+              <div className="flex items-center gap-6 w-full md:w-auto justify-between md:justify-end">
+                <span className={`px-3 py-1 rounded-sm text-[10px] font-black uppercase tracking-widest border ${
+                  item.status === "Available" ? "bg-emerald-500/10 text-emerald-400 border-emerald-500/30" :
+                  item.status === "Limited" ? "bg-orange-500/10 text-orange-400 border-orange-500/30" : "bg-red-500/10 text-red-400 border-red-500/30"
+                }`}>
+                  {item.status}
+                </span>
+                <button className={`px-6 py-3 rounded-sm font-black text-xs uppercase tracking-[0.15em] transition-all ${
+                  item.status === "Sold Out" 
+                    ? "bg-white/5 text-white/30 border border-white/10 cursor-not-allowed" 
+                    : "shimmer-btn bg-gradient-to-r from-pink-500 to-orange-500 text-white shadow-md hover:shadow-idol-pink"
+                }`}>
+                  {item.status === "Sold Out" ? "Full House" : "Apply Ticket"}
+                </button>
+              </div>
+            </motion.div>
+          ))}
+        </div>
       </section>
 
       {/* ─── Section: Theater Guide (#guide) ─────────────── */}
-      <section id="guide" className="py-24 bg-white border-y border-slate-100 relative overflow-hidden">
-         <div className="absolute top-0 left-0 w-96 h-96 bg-orange-50 rounded-full blur-3xl -z-10 opacity-60" />
-         
-         <div className="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-20 items-start">
-            
-            {/* Guide Info */}
-            <div className="space-y-12">
-               <div>
-                  <h2 className="text-4xl font-black text-slate-800 uppercase tracking-tight mb-4">Theater <span className="text-orange-500">Guide</span></h2>
-                  <p className="text-slate-500 font-bold leading-relaxed">
-                     To ensure everyone has a great time, please read our visitor guidelines before your first visit. Our theater is a sacred place for fans and members alike.
-                  </p>
-               </div>
-
-               <div className="space-y-6">
-                  {[
-                    { icon: <FaInfoCircle />, title: "ID Check", desc: "Please bring a valid photo ID. Tickets are non-transferable." },
-                    { icon: <FaTicketAlt />, title: "Ticket Exchange", desc: "Exchange your confirmation for a physical ticket 30 mins before." },
-                    { icon: <FaStar />, title: "Rules", desc: "Photography and recording are strictly prohibited during shows." }
-                  ].map((guide, i) => (
-                    <div key={i} className="flex gap-6 p-6 bg-slate-50 rounded-[2rem] border border-slate-100 group hover:bg-white hover:shadow-xl transition-all">
-                       <div className="w-14 h-14 rounded-2xl bg-white shadow-sm flex items-center justify-center text-orange-500 text-2xl group-hover:scale-110 transition-transform">
-                          {guide.icon}
-                       </div>
-                       <div>
-                          <h4 className="text-sm font-black text-slate-800 uppercase tracking-widest mb-1">{guide.title}</h4>
-                          <p className="text-xs font-bold text-gray-400 leading-relaxed">{guide.desc}</p>
-                       </div>
-                    </div>
-                  ))}
-               </div>
+      <section id="guide" className="py-20 bg-[#0b0616]/90 border-y border-pink-950/40 relative overflow-hidden">
+        <div className="max-w-7xl mx-auto px-6 grid lg:grid-cols-2 gap-16 items-start relative z-10">
+          
+          {/* Guide Info */}
+          <div className="space-y-8">
+            <div>
+              <div className="badge-idol mb-3">Guidelines</div>
+              <h2 className="text-3xl md:text-4xl font-black text-white uppercase tracking-tight mb-4">
+                Theater <span className="text-idol">Guide</span>
+              </h2>
+              <p className="text-white/50 font-medium leading-relaxed text-sm">
+                To ensure everyone enjoys the live show experience, please read our visitor guidelines before entering. Our theater is an intimate sanctuary for idols and fans alike.
+              </p>
             </div>
 
-            {/* Access/Map */}
-            <div className="bg-slate-50 rounded-[3rem] p-10 border border-slate-100 relative shadow-2xl">
-               <div className="mb-10 flex items-center gap-4">
-                  <div className="w-12 h-12 bg-white rounded-2xl shadow-sm flex items-center justify-center text-pink-500">
-                    <FaMapMarkerAlt />
+            <div className="space-y-4">
+              {[
+                { icon: <FaInfoCircle />, title: "ID Check", desc: "Please bring a valid photo ID matching your reservation. Tickets are strictly non-transferable." },
+                { icon: <FaTicketAlt />, title: "Ticket Exchange", desc: "Exchange your confirmation barcode for an entry pass 30 minutes before showtime." },
+                { icon: <FaStar />, title: "Stage Rules", desc: "Photography, audio recording, and video filming are strictly prohibited during the live show." }
+              ].map((guide, i) => (
+                <div key={i} className="flex gap-5 p-5 bg-white/[0.03] rounded-sm border border-white/5 group hover:border-pink-500/40 hover:bg-pink-500/[0.04] transition-all">
+                  <div className="w-12 h-12 rounded-sm bg-pink-500/10 border border-pink-500/20 flex items-center justify-center text-pink-400 text-xl group-hover:scale-110 transition-transform shrink-0">
+                    {guide.icon}
                   </div>
                   <div>
-                    <h3 className="text-xl font-black text-slate-800 uppercase tracking-tight">Access & Location</h3>
-                    <p className="text-xs font-bold text-gray-400">H5-R Theater, Akihabara District</p>
+                    <h4 className="text-xs font-black text-white uppercase tracking-widest mb-1">{guide.title}</h4>
+                    <p className="text-xs text-white/50 leading-relaxed">{guide.desc}</p>
                   </div>
-               </div>
+                </div>
+              ))}
+            </div>
+          </div>
 
-               <div className="space-y-8">
-                  <div className="aspect-video w-full bg-slate-200 rounded-3xl overflow-hidden relative group">
-                     {/* Placeholder for Map */}
-                     <div className="absolute inset-0 bg-gradient-to-br from-slate-300 to-slate-400 flex flex-col items-center justify-center group-hover:scale-110 transition-transform duration-700">
-                        <FaMapMarkerAlt className="text-pink-500 text-5xl drop-shadow-lg animate-bounce" />
-                        <span className="mt-4 text-[10px] font-black text-white uppercase tracking-[0.4em]">Map View</span>
-                     </div>
-                  </div>
-
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                     <div className="p-6 bg-white rounded-2xl border border-slate-100 flex items-start gap-4">
-                        <FaTrain className="text-cyan-500" />
-                        <div>
-                           <p className="text-[10px] font-black text-slate-800 uppercase mb-1">By Train</p>
-                           <p className="text-[10px] font-bold text-gray-400">5 min walk from Akihabara St. (JR Yamanote Line)</p>
-                        </div>
-                     </div>
-                     <div className="p-6 bg-white rounded-2xl border border-slate-100 flex items-start gap-4">
-                        <FaBus className="text-purple-500" />
-                        <div>
-                           <p className="text-[10px] font-black text-slate-800 uppercase mb-1">By Bus</p>
-                           <p className="text-[10px] font-bold text-gray-400">Sudacho Bus Stop (Terminal 3)</p>
-                        </div>
-                     </div>
-                  </div>
-               </div>
+          {/* Access/Map */}
+          <div className="bg-[#12082a]/90 rounded-sm p-8 border border-white/10 relative shadow-2xl">
+            <div className="mb-8 flex items-center gap-4">
+              <div className="w-11 h-11 bg-pink-500/10 border border-pink-500/20 rounded-sm flex items-center justify-center text-pink-400">
+                <FaMapMarkerAlt size={20} />
+              </div>
+              <div>
+                <h3 className="text-lg font-black text-white uppercase tracking-tight">Access & Location</h3>
+                <p className="text-xs font-mono text-pink-400/70">H5-R Theater, Akihabara District</p>
+              </div>
             </div>
 
-         </div>
+            <div className="space-y-6">
+              <div className="aspect-video w-full bg-[#1b0d36] rounded-sm overflow-hidden relative group border border-white/10">
+                <div className="absolute inset-0 bg-gradient-to-br from-[#240d46] to-[#0f0a1e] flex flex-col items-center justify-center group-hover:scale-105 transition-transform duration-700">
+                  <FaMapMarkerAlt className="text-pink-500 text-4xl drop-shadow-[0_0_15px_rgba(236,72,153,0.8)] animate-bounce" />
+                  <span className="mt-3 text-[10px] font-mono font-bold text-white uppercase tracking-[0.4em]">Akihabara Stage</span>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div className="p-4 bg-white/[0.03] rounded-sm border border-white/5 flex items-start gap-3">
+                  <FaTrain className="text-cyan-400 mt-0.5 shrink-0" />
+                  <div>
+                    <p className="text-[10px] font-black text-white uppercase mb-1">By Train</p>
+                    <p className="text-[10px] text-white/50 leading-normal">5 min walk from Akihabara St. (JR Yamanote Line)</p>
+                  </div>
+                </div>
+                <div className="p-4 bg-white/[0.03] rounded-sm border border-white/5 flex items-start gap-3">
+                  <FaBus className="text-pink-400 mt-0.5 shrink-0" />
+                  <div>
+                    <p className="text-[10px] font-black text-white uppercase mb-1">By Bus</p>
+                    <p className="text-[10px] text-white/50 leading-normal">Sudacho Bus Stop (Terminal 3)</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+        </div>
       </section>
 
     </div>
