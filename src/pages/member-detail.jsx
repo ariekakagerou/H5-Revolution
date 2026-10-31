@@ -53,12 +53,12 @@ const MemberDetail = () => {
         </Link>
       </div>
 
-      <div className="max-w-6xl mx-auto px-6 grid grid-cols-1 lg:grid-cols-2 gap-14 items-center relative z-10">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-14 items-center relative z-10">
         
-        {/* ─── REMI CARD PHOTO AREA ─────────────────────────── */}
+        {/* ─── PHOTO CARD AREA ─────────────────────────── */}
         <div className="relative flex justify-center lg:justify-start">
           <div 
-            className="w-full max-w-[420px] aspect-[10/14] bg-[#12082a] rounded-sm border relative overflow-hidden group shadow-2xl transition-all duration-500"
+            className="w-full max-w-[340px] sm:max-w-[420px] aspect-[10/14] bg-[#12082a] rounded-sm border relative overflow-hidden group shadow-2xl transition-all duration-500"
             style={{ 
               borderColor: `${member.hexColor}40`,
               boxShadow: `0 20px 50px rgba(0,0,0,0.6), 0 0 30px ${member.hexColor}25`
@@ -78,23 +78,20 @@ const MemberDetail = () => {
 
             {/* Main Content Area */}
             <div className="h-full w-full flex flex-col items-center justify-center p-8 relative">
-               {/* Stylized circle border */}
                <div 
                  className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[70%] aspect-square border-2 rounded-full opacity-20 animate-pulse" 
                  style={{ borderColor: member.hexColor }} 
                />
                
-               {/* Large Name Display (Center Art) */}
                <div className="text-center z-10">
                   <span className="text-[10px] font-mono font-bold uppercase tracking-[0.4em] block mb-2" style={{ color: `${member.hexColor}aa` }}>
                     H5-REVOLUTION IDOL
                   </span>
-                  <h2 className="text-7xl font-black mb-0 leading-none tracking-tighter uppercase font-outfit" style={{ color: member.hexColor, textShadow: `0 0 30px ${member.hexColor}80` }}>
+                  <h2 className="text-5xl sm:text-7xl font-black mb-0 leading-none tracking-tighter uppercase font-outfit" style={{ color: member.hexColor, textShadow: `0 0 30px ${member.hexColor}80` }}>
                      {member.name.split(' ')[0]}
                   </h2>
                </div>
 
-               {/* Bottom Social Floating Icons */}
                <div className="absolute bottom-8 left-8 right-8 flex justify-center gap-3 z-20">
                   <a href="#" className="w-9 h-9 bg-white/5 hover:bg-pink-500/20 rounded-sm flex items-center justify-center text-white/50 hover:text-pink-400 hover:scale-110 transition-all border border-white/10 hover:border-pink-500/50">
                     <FaInstagram size={14} />
@@ -108,14 +105,13 @@ const MemberDetail = () => {
                </div>
             </div>
 
-            {/* Shine Sweep Effect */}
             <div className="absolute inset-0 bg-gradient-to-r from-transparent via-white/5 to-transparent -skew-x-12 transform -translate-x-full group-hover:translate-x-full transition-transform duration-1000 pointer-events-none" />
           </div>
         </div>
 
         {/* ─── BIO AREA ─────────────────────────────────────── */}
         <div className="flex flex-col">
-          <div className="flex items-center gap-4 mb-5">
+          <div className="flex flex-wrap items-center gap-3 mb-5">
             <span className="flex items-center gap-2 px-4 py-1.5 bg-white/5 border border-white/10 text-white/80 font-bold text-[10px] tracking-widest uppercase rounded-sm">
                <div className="w-2 h-2 rounded-full" style={{ backgroundColor: member.hexColor, boxShadow: `0 0 6px ${member.hexColor}` }} />
                Active Stage Idol
@@ -125,28 +121,28 @@ const MemberDetail = () => {
             </span>
           </div>
           
-          <h1 className="text-5xl md:text-7xl font-black text-white uppercase tracking-tighter mb-2 leading-none font-outfit">
+          <h1 className="text-4xl sm:text-5xl md:text-7xl font-black text-white uppercase tracking-tighter mb-2 leading-none font-outfit">
              {member.name}
           </h1>
-          <h2 className="text-base md:text-lg font-mono font-bold mb-8 uppercase tracking-widest" style={{ color: member.hexColor }}>
+          <h2 className="text-sm md:text-base font-mono font-bold mb-6 md:mb-8 uppercase tracking-widest" style={{ color: member.hexColor }}>
             {member.role}
           </h2>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 mb-8">
-             <div className="bg-[#12082a]/80 backdrop-blur-md p-6 rounded-sm border border-white/10 relative group hover:border-pink-500/40 transition-all">
-                <FaHeart className="absolute -top-3 -right-3 text-6xl text-pink-500/5 pointer-events-none" />
-                <h3 className="font-black text-white uppercase tracking-widest text-[11px] mb-4 flex items-center gap-2 font-mono">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 md:gap-4 mb-6 md:mb-8">
+             <div className="bg-[#12082a]/80 backdrop-blur-md p-4 md:p-6 rounded-sm border border-white/10 relative group hover:border-pink-500/40 transition-all">
+                <FaHeart className="absolute -top-3 -right-3 text-5xl text-pink-500/5 pointer-events-none" />
+                <h3 className="font-black text-white uppercase tracking-widest text-[11px] mb-3 md:mb-4 flex items-center gap-2 font-mono">
                    <div className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: member.hexColor }} />
                    Dossier Data
                 </h3>
-                <ul className="space-y-3 text-xs">
+                <ul className="space-y-2.5 text-xs">
                   <li className="flex justify-between items-center pb-2 border-b border-white/5">
                     <span className="text-white/40 font-bold uppercase tracking-wider">Age</span>
                     <span className="font-mono font-bold text-white">{member.age} YEARS</span>
                   </li>
                   <li className="flex justify-between items-center pb-2 border-b border-white/5">
                     <span className="text-white/40 font-bold uppercase tracking-wider">Hobbies</span>
-                    <span className="font-bold text-white">DANCING, SINGING</span>
+                    <span className="font-bold text-white text-right">DANCING, SINGING</span>
                   </li>
                   <li className="flex justify-between items-center">
                     <span className="text-white/40 font-bold uppercase tracking-wider">Zodiac</span>
@@ -155,18 +151,18 @@ const MemberDetail = () => {
                 </ul>
              </div>
 
-             <div className="bg-[#12082a]/80 backdrop-blur-md p-6 rounded-sm border border-white/10 flex flex-col justify-center gap-3 hover:border-pink-500/40 transition-all">
+             <div className="bg-[#12082a]/80 backdrop-blur-md p-4 md:p-6 rounded-sm border border-white/10 flex flex-col justify-center gap-3 hover:border-pink-500/40 transition-all">
                 <h3 className="font-black text-white uppercase tracking-widest text-[11px] flex items-center gap-2 font-mono">
                    <div className="w-1.5 h-1.5 rounded-full" style={{ backgroundColor: member.hexColor }} />
                    Member Color
                 </h3>
                 <div className="flex items-center gap-4">
                    <div 
-                     className="w-14 h-14 rounded-sm border border-white/40 shadow-lg" 
+                     className="w-12 h-12 md:w-14 md:h-14 rounded-sm border border-white/40 shadow-lg flex-shrink-0" 
                      style={{ backgroundColor: member.hexColor, boxShadow: `0 0 20px ${member.hexColor}60` }} 
                    />
                    <div>
-                      <p className="text-lg font-black text-white leading-none mb-1 uppercase tracking-tight">{member.color}</p>
+                      <p className="text-base md:text-lg font-black text-white leading-none mb-1 uppercase tracking-tight">{member.color}</p>
                       <p className="text-[10px] font-mono font-bold text-white/40 uppercase tracking-widest">Stage Signature Hue</p>
                    </div>
                 </div>
@@ -174,7 +170,7 @@ const MemberDetail = () => {
           </div>
 
           <div 
-            className="p-8 rounded-sm text-white shadow-2xl relative overflow-hidden border"
+            className="p-5 md:p-8 rounded-sm text-white shadow-2xl relative overflow-hidden border"
             style={{ 
               background: 'linear-gradient(135deg, #180a36 0%, #0f0a1e 100%)',
               borderColor: `${member.hexColor}40`,
@@ -184,7 +180,7 @@ const MemberDetail = () => {
              <h3 className="font-mono font-bold uppercase tracking-[0.3em] text-[10px] mb-3 text-pink-400">
                Message to Fans
              </h3>
-             <p className="text-xl md:text-2xl font-black italic leading-snug tracking-tight">
+             <p className="text-lg md:text-xl lg:text-2xl font-black italic leading-snug tracking-tight">
                 "{member.quote}"
              </p>
           </div>

@@ -29,7 +29,7 @@ const Shows = () => {
       <div className="absolute top-1/2 left-10 w-[450px] h-[450px] bg-orange-500/5 rounded-full blur-[120px] pointer-events-none" />
 
       {/* ─── Hero / Live Featured Show ─────────────────────── */}
-      <section className="relative h-[75vh] min-h-[520px] flex items-center justify-center overflow-hidden border-b border-pink-900/30">
+      <section className="relative h-[60vh] min-h-[440px] md:h-[75vh] md:min-h-[520px] flex items-center justify-center overflow-hidden border-b border-pink-900/30 pt-16 md:pt-20">
         {/* Background Video/Image */}
         <div className="absolute inset-0 opacity-30">
            <img 
@@ -40,11 +40,11 @@ const Shows = () => {
            <div className="absolute inset-0 bg-gradient-to-t from-[#0f0a1e] via-[#0f0a1e]/60 to-transparent" />
         </div>
 
-        <div className="relative z-10 max-w-4xl mx-auto text-center px-6 pt-16">
+        <div className="relative z-10 max-w-4xl mx-auto text-center px-4 sm:px-6">
            <motion.div 
              initial={{ opacity: 0, scale: 0.8 }}
              animate={{ opacity: 1, scale: 1 }}
-             className="flex items-center gap-2 px-3.5 py-1 bg-red-600/90 border border-red-500/50 rounded-sm text-[10px] font-black tracking-widest uppercase mb-6 mx-auto w-fit shadow-[0_0_20px_rgba(239,68,68,0.6)]"
+             className="flex items-center gap-2 px-3.5 py-1 bg-red-600/90 border border-red-500/50 rounded-sm text-[10px] font-black tracking-widest uppercase mb-4 md:mb-6 mx-auto w-fit shadow-[0_0_20px_rgba(239,68,68,0.6)]"
            >
               <FaDotCircle className="animate-pulse" size={10} /> LIVE BROADCAST
            </motion.div>
@@ -52,12 +52,12 @@ const Shows = () => {
            <motion.h1 
              initial={{ opacity: 0, y: 20 }}
              animate={{ opacity: 1, y: 0 }}
-             className="text-5xl md:text-7xl lg:text-8xl font-black tracking-tighter uppercase mb-6 drop-shadow-2xl font-outfit"
+             className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-black tracking-tighter uppercase mb-4 md:mb-6 drop-shadow-2xl font-outfit"
            >
               VIRTUAL <span className="text-idol">THEATER</span>
            </motion.h1>
 
-           <div className="flex flex-col sm:flex-row items-center justify-center gap-6 mb-10">
+           <div className="flex flex-col sm:flex-row items-center justify-center gap-4 md:gap-6 mb-8 md:mb-10">
               <div className="flex items-center gap-2 text-white/70 font-mono text-xs">
                  <FaUsers className="text-pink-400" /> 12,483 Fans Streaming
               </div>
@@ -66,26 +66,26 @@ const Shows = () => {
               </div>
            </div>
 
-           <button className="shimmer-btn group relative px-10 py-4 bg-gradient-to-r from-pink-500 to-orange-500 text-white font-black rounded-sm flex items-center justify-center gap-3 shadow-idol-pink hover:scale-105 transition-all uppercase tracking-[0.2em] text-xs mx-auto">
+           <button className="shimmer-btn group relative w-full sm:w-auto px-8 md:px-10 py-3.5 md:py-4 bg-gradient-to-r from-pink-500 to-orange-500 text-white font-black rounded-sm flex items-center justify-center gap-3 shadow-idol-pink hover:scale-105 transition-all uppercase tracking-[0.2em] text-xs mx-auto">
               <FaPlay size={12} /> Enter Virtual Stage
            </button>
         </div>
       </section>
 
       {/* ─── Online Shows List ─────────────────────────────── */}
-      <section className="max-w-7xl mx-auto px-6 py-20 relative z-10">
-         <div className="flex items-center justify-between mb-12">
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-14 md:py-20 relative z-10">
+         <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-8 md:mb-12 gap-4">
             <div>
                <div className="badge-idol mb-3">Live Broadcasts</div>
-               <h2 className="text-3xl md:text-4xl font-black uppercase tracking-tight">
+               <h2 className="text-2xl md:text-4xl font-black uppercase tracking-tight">
                  Upcoming <span className="text-idol">Streams</span>
                </h2>
                <p className="text-white/40 font-mono text-xs uppercase tracking-widest mt-1">Get your digital passes ready</p>
             </div>
-            <FaTv className="text-4xl text-pink-500/30" />
+            <FaTv className="text-3xl md:text-4xl text-pink-500/30 hidden sm:block" />
          </div>
 
-         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6">
             {onlineShows.map((show) => (
               <motion.div 
                 key={show.id}
@@ -106,12 +106,12 @@ const Shows = () => {
                        </div>
                     )}
                  </div>
-                 <div className="p-6">
+                 <div className="p-4 md:p-6">
                     <p className="text-pink-400 font-mono font-bold text-[10px] tracking-[0.2em] uppercase mb-2">{show.date}</p>
-                    <h3 className="text-lg font-black text-white mb-6 line-clamp-2 uppercase tracking-tight group-hover:text-pink-300 transition-colors">
+                    <h3 className="text-base md:text-lg font-black text-white mb-4 md:mb-6 line-clamp-2 uppercase tracking-tight group-hover:text-pink-300 transition-colors">
                       {show.title}
                     </h3>
-                    <div className="flex items-center justify-between border-t border-white/5 pt-4">
+                    <div className="flex items-center justify-between border-t border-white/5 pt-3 md:pt-4">
                        <div className="flex items-center gap-2 text-white/50 text-xs font-mono">
                           <FaUsers size={12} /> {show.visitors}
                        </div>
@@ -126,27 +126,27 @@ const Shows = () => {
       </section>
 
       {/* ─── Archive / VOD Section ─────────────────────────── */}
-      <section className="py-20 bg-[#0b0616]/90 border-y border-pink-950/40 relative overflow-hidden">
-         <div className="max-w-7xl mx-auto px-6 relative z-10">
-            <div className="flex items-center gap-4 mb-10">
-               <FaHistory className="text-2xl text-orange-400" />
-               <h2 className="text-3xl font-black uppercase tracking-tight">Show <span className="text-idol">Archive</span></h2>
+      <section className="py-14 md:py-20 bg-[#0b0616]/90 border-y border-pink-950/40 relative overflow-hidden">
+         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+            <div className="flex items-center gap-4 mb-8 md:mb-10">
+               <FaHistory className="text-xl md:text-2xl text-orange-400 shrink-0" />
+               <h2 className="text-2xl md:text-3xl font-black uppercase tracking-tight">Show <span className="text-idol">Archive</span></h2>
                <div className="flex-1 h-[1px] bg-white/10" />
             </div>
 
-            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3 md:gap-4">
                {archiveShows.map((arch, i) => (
-                 <div key={i} className="bg-white/[0.03] border border-white/5 p-5 rounded-sm flex items-center justify-between group hover:border-pink-500/40 hover:bg-pink-500/[0.03] transition-all">
-                    <div className="flex items-center gap-5">
-                       <div className="w-11 h-11 bg-pink-500/10 border border-pink-500/20 rounded-sm flex items-center justify-center text-pink-400 group-hover:scale-110 transition-transform shrink-0">
+                 <div key={i} className="bg-white/[0.03] border border-white/5 p-4 md:p-5 rounded-sm flex items-center justify-between group hover:border-pink-500/40 hover:bg-pink-500/[0.03] transition-all">
+                    <div className="flex items-center gap-4 min-w-0">
+                       <div className="w-10 h-10 md:w-11 md:h-11 bg-pink-500/10 border border-pink-500/20 rounded-sm flex items-center justify-center text-pink-400 group-hover:scale-110 transition-transform shrink-0">
                           <FaPlay size={12} />
                        </div>
-                       <div>
-                          <h4 className="font-bold text-sm uppercase tracking-tight mb-1 group-hover:text-pink-300 transition-colors text-white">{arch.title}</h4>
+                       <div className="min-w-0">
+                          <h4 className="font-bold text-xs md:text-sm uppercase tracking-tight mb-1 group-hover:text-pink-300 transition-colors text-white line-clamp-1">{arch.title}</h4>
                           <p className="text-[10px] font-mono text-white/40 uppercase tracking-widest">{arch.date} • {arch.duration}</p>
                        </div>
                     </div>
-                    <FaLock size={12} className="text-white/20 group-hover:text-orange-400 transition-colors" />
+                    <FaLock size={12} className="text-white/20 group-hover:text-orange-400 transition-colors shrink-0 ml-3" />
                  </div>
                ))}
             </div>
@@ -154,13 +154,13 @@ const Shows = () => {
       </section>
 
       {/* ─── Streaming Info ────────────────────────────────── */}
-      <section className="py-20 max-w-4xl mx-auto px-6 text-center relative z-10">
+      <section className="py-14 md:py-20 max-w-4xl mx-auto px-4 sm:px-6 text-center relative z-10">
          <div className="badge-idol mb-4 mx-auto inline-flex">Streaming Specs</div>
-         <h3 className="text-2xl font-black mb-4 uppercase tracking-tight">Experience H5-R From Anywhere</h3>
+         <h3 className="text-xl md:text-2xl font-black mb-4 uppercase tracking-tight">Experience H5-R From Anywhere</h3>
          <p className="text-white/50 leading-relaxed mb-8 text-sm max-w-2xl mx-auto">
             Our cyber-virtual platform supports 4K HDR streaming, multi-angle camera feeds, and real-time interactive fan lightstick synchronization.
          </p>
-         <div className="flex justify-center gap-8 text-white/30 font-mono text-xs font-bold uppercase tracking-widest">
+         <div className="flex flex-wrap justify-center gap-4 md:gap-8 text-white/30 font-mono text-xs font-bold uppercase tracking-widest">
             <span>4K ULTRA HD</span>
             <span>•</span>
             <span>SPATIAL AUDIO</span>

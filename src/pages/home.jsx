@@ -195,11 +195,11 @@ const Home = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-[#0f0a1e] w-full overflow-hidden text-white">
+    <div className="min-h-screen bg-[#0f0a1e] w-full overflow-x-hidden text-white">
       <SEO title="Home" description="Welcome to the official website of H5-Revolution. Experience the revolution in idol entertainment." />
       
       {/* ─── Hero Banner Section ──────────────────────────── */}
-      <section className="relative min-h-[100svh] md:h-screen md:min-h-[600px] md:max-h-[1080px] w-full flex flex-col items-center justify-start md:justify-center overflow-hidden pb-24 md:pb-0"
+      <section className="relative min-h-[100svh] md:h-screen md:min-h-[600px] md:max-h-[1080px] w-full flex flex-col items-center justify-start md:justify-center overflow-hidden pb-20 md:pb-0"
         style={{ background: 'linear-gradient(160deg, #0f0a1e 0%, #1a0535 40%, #0d1a2e 100%)' }}
       >
         {/* Star field */}
@@ -244,51 +244,51 @@ const Home = () => {
         </div>
 
         {/* Hero Content */}
-        <div className="relative z-20 text-center px-6 mt-8 md:mt-0 flex-1 md:flex-none flex flex-col justify-center animate-fade-up w-full max-w-5xl mx-auto">
+        <div className="relative z-20 text-center px-4 sm:px-6 mt-6 md:mt-0 flex-1 md:flex-none flex flex-col justify-center animate-fade-up w-full max-w-5xl mx-auto">
           {/* Badge */}
-          <div className="inline-flex items-center gap-2 mx-auto mb-8 px-5 py-2 border border-pink-500/30 bg-pink-500/5 backdrop-blur-sm rounded-sm">
+          <div className="inline-flex items-center gap-2 mx-auto mb-6 md:mb-8 px-4 py-2 border border-pink-500/30 bg-pink-500/5 backdrop-blur-sm rounded-sm">
             <FaHeart className="text-pink-400 text-xs animate-pulse" />
-            <span className="text-pink-300 text-[10px] md:text-xs font-bold tracking-[0.3em] uppercase">The New Era Begins</span>
+            <span className="text-pink-300 text-[10px] md:text-xs font-bold tracking-[0.2em] md:tracking-[0.3em] uppercase">The New Era Begins</span>
             <FaHeart className="text-pink-400 text-xs animate-pulse" />
           </div>
 
           {/* Main title */}
-          <h1 className="text-5xl sm:text-7xl md:text-9xl lg:text-[10rem] font-black tracking-tighter mb-2 font-display uppercase leading-none
+          <h1 className="text-4xl sm:text-6xl md:text-9xl lg:text-[10rem] font-black tracking-tighter mb-2 font-display uppercase leading-none
             text-transparent bg-clip-text bg-gradient-to-r from-pink-400 via-orange-300 to-pink-500
             drop-shadow-[0_0_40px_rgba(236,72,153,0.5)]">
             REVOLUTION
           </h1>
 
           {/* Subtitle line */}
-          <div className="flex items-center justify-center gap-4 mb-6">
-            <div className="h-[1px] w-16 bg-gradient-to-r from-transparent to-pink-500/50" />
-            <p className="text-white/40 text-[10px] sm:text-xs md:text-sm tracking-[0.5em] uppercase font-bold">
+          <div className="flex items-center justify-center gap-3 md:gap-4 mb-5 md:mb-6">
+            <div className="h-[1px] w-10 md:w-16 bg-gradient-to-r from-transparent to-pink-500/50" />
+            <p className="text-white/40 text-[9px] sm:text-xs md:text-sm tracking-[0.3em] md:tracking-[0.5em] uppercase font-bold">
               We are H5 Official Group
             </p>
-            <div className="h-[1px] w-16 bg-gradient-to-l from-transparent to-pink-500/50" />
+            <div className="h-[1px] w-10 md:w-16 bg-gradient-to-l from-transparent to-pink-500/50" />
           </div>
 
           {/* CTA Buttons */}
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 mt-6">
-            <button className="shimmer-btn w-full sm:w-auto px-10 py-4 bg-gradient-to-r from-pink-500 to-orange-500 text-white font-black tracking-[0.2em] text-sm rounded-sm hover:scale-105 hover:shadow-idol-pink transition-all duration-300 uppercase flex items-center justify-center gap-3">
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-3 md:gap-4 mt-4 md:mt-6 px-4 sm:px-0">
+            <button className="shimmer-btn w-full sm:w-auto px-8 md:px-10 py-3.5 md:py-4 bg-gradient-to-r from-pink-500 to-orange-500 text-white font-black tracking-[0.2em] text-xs md:text-sm rounded-sm hover:scale-105 hover:shadow-idol-pink transition-all duration-300 uppercase flex items-center justify-center gap-3">
               <FaPlay size={10} /> Watch New MV
             </button>
-            <button className="w-full sm:w-auto px-10 py-4 bg-transparent text-pink-300 border border-pink-500/40 font-black tracking-[0.2em] text-sm rounded-sm hover:bg-pink-500/10 hover:border-pink-500/70 transition-all duration-300 flex items-center justify-center gap-2 uppercase group">
+            <button className="w-full sm:w-auto px-8 md:px-10 py-3.5 md:py-4 bg-transparent text-pink-300 border border-pink-500/40 font-black tracking-[0.2em] text-xs md:text-sm rounded-sm hover:bg-pink-500/10 hover:border-pink-500/70 transition-all duration-300 flex items-center justify-center gap-2 uppercase group">
               Discover More
               <FaArrowRight size={10} className="group-hover:translate-x-1 transition-transform" />
             </button>
           </div>
 
           {/* Stats row */}
-          <div className="flex items-center justify-center gap-8 mt-12 pt-8 border-t border-white/5">
+          <div className="flex items-center justify-center gap-6 md:gap-8 mt-10 md:mt-12 pt-6 md:pt-8 border-t border-white/5">
             {[
               { value: '5+', label: 'Members' },
               { value: '100+', label: 'Shows' },
               { value: '50K+', label: 'Fans' },
             ].map((stat, i) => (
               <div key={i} className="text-center">
-                <div className="text-xl md:text-2xl font-black text-idol">{stat.value}</div>
-                <div className="text-[9px] text-white/30 uppercase tracking-widest font-bold">{stat.label}</div>
+                <div className="text-lg md:text-2xl font-black text-idol">{stat.value}</div>
+                <div className="text-[8px] md:text-[9px] text-white/30 uppercase tracking-widest font-bold">{stat.label}</div>
               </div>
             ))}
           </div>
@@ -302,15 +302,15 @@ const Home = () => {
       </section>
 
       {/* ─── Ticker Tape ──────────────────────────────────── */}
-      <div className="w-full bg-black border-y border-pink-500/20 py-3 overflow-hidden flex whitespace-nowrap z-20 relative">
-        <div className="absolute inset-y-0 left-0 w-16 bg-gradient-to-r from-black to-transparent z-10 pointer-events-none" />
-        <div className="absolute inset-y-0 right-0 w-16 bg-gradient-to-l from-black to-transparent z-10 pointer-events-none" />
-        <div className="animate-marquee flex gap-12 items-center">
+      <div className="w-full bg-black border-y border-pink-500/20 py-2.5 overflow-hidden flex whitespace-nowrap z-20 relative">
+        <div className="absolute inset-y-0 left-0 w-12 bg-gradient-to-r from-black to-transparent z-10 pointer-events-none" />
+        <div className="absolute inset-y-0 right-0 w-12 bg-gradient-to-l from-black to-transparent z-10 pointer-events-none" />
+        <div className="animate-marquee flex gap-10 items-center">
           {[...Array(8)].map((_, i) => (
             <React.Fragment key={i}>
-              <span className="text-pink-400 font-black text-xs tracking-[0.3em] uppercase">H5-Revolution First Tour 2025</span>
+              <span className="text-pink-400 font-black text-[10px] md:text-xs tracking-[0.3em] uppercase">H5-Revolution First Tour 2025</span>
               <FaStar className="text-orange-400 text-[8px] shrink-0" />
-              <span className="text-white/40 font-black text-xs tracking-[0.3em] uppercase">Tickets On Sale Now</span>
+              <span className="text-white/40 font-black text-[10px] md:text-xs tracking-[0.3em] uppercase">Tickets On Sale Now</span>
               <FaStar className="text-cyan-400 text-[8px] shrink-0" />
             </React.Fragment>
           ))}
@@ -318,29 +318,29 @@ const Home = () => {
       </div>
 
       {/* ─── Information / News ───────────────────────────── */}
-      <section className="py-24 px-4 sm:px-6 lg:px-8 relative" style={{ background: 'linear-gradient(180deg, #0f0a1e 0%, #12082a 100%)' }}>
+      <section className="py-16 md:py-24 px-4 sm:px-6 lg:px-8 relative" style={{ background: 'linear-gradient(180deg, #0f0a1e 0%, #12082a 100%)' }}>
         <div className="max-w-7xl mx-auto">
           {/* Section header */}
-          <div className="text-left mb-12">
+          <div className="text-left mb-8 md:mb-12">
             <div className="badge-idol mb-4">
               <FaStar size={8} /> Latest Updates
             </div>
-            <h2 className="text-4xl md:text-5xl font-black text-white uppercase tracking-tight mb-3">
+            <h2 className="text-3xl md:text-5xl font-black text-white uppercase tracking-tight mb-3">
               <span className="text-idol">LATEST</span> INFO
             </h2>
             <div className="idol-divider w-24" />
           </div>
 
-          <div className="grid lg:grid-cols-3 gap-8">
+          <div className="grid lg:grid-cols-3 gap-6 md:gap-8">
             {/* News list */}
             <div className="lg:col-span-2 space-y-3">
               {latestNews.map((news, index) => (
                 <div 
                   key={index} 
-                  className="group glass-idol rounded-sm p-5 flex flex-col sm:flex-row sm:items-center gap-4 
+                  className="group glass-idol rounded-sm p-4 md:p-5 flex flex-col sm:flex-row sm:items-center gap-3 md:gap-4 
                     hover:border-pink-500/30 hover:bg-pink-500/5 transition-all duration-300 cursor-pointer"
                 >
-                  <div className="flex items-center gap-3 w-28 shrink-0">
+                  <div className="flex items-center gap-3 sm:w-28 shrink-0">
                     <span className="text-orange-400 font-mono font-bold text-sm">{news.date}</span>
                     {news.isNew && (
                       <span className="bg-pink-500 text-white text-[9px] font-black px-2 py-0.5 rounded-sm uppercase tracking-wider">
@@ -348,7 +348,7 @@ const Home = () => {
                       </span>
                     )}
                   </div>
-                  <h3 className="text-white/70 group-hover:text-pink-200 font-bold text-sm transition-colors flex-1 line-clamp-2">
+                  <h3 className="text-white/70 group-hover:text-pink-200 font-bold text-xs md:text-sm transition-colors flex-1 line-clamp-2">
                     {news.title}
                   </h3>
                   <FaChevronRight className="hidden sm:block text-white/20 group-hover:text-pink-400 group-hover:translate-x-1 transition-all shrink-0" />
@@ -362,15 +362,15 @@ const Home = () => {
             </div>
 
             {/* Featured box */}
-            <div className="relative rounded-sm overflow-hidden border border-pink-500/20 hover:border-pink-500/40 transition-all group hidden lg:block">
+            <div className="relative rounded-sm overflow-hidden border border-pink-500/20 hover:border-pink-500/40 transition-all group">
               <div className="absolute inset-0 bg-gradient-to-br from-pink-600/20 to-orange-600/10" />
-              <div className="relative z-10 p-8 flex flex-col justify-center items-center text-center h-full min-h-[240px]">
-                <div className="w-16 h-16 border border-pink-500/40 flex items-center justify-center mb-6 group-hover:border-pink-400 transition-all group-hover:shadow-idol-pink">
-                  <FaCalendarAlt className="text-2xl text-pink-400 group-hover:text-pink-300 transition-colors" />
+              <div className="relative z-10 p-6 md:p-8 flex flex-col justify-center items-center text-center h-full min-h-[200px] md:min-h-[240px]">
+                <div className="w-14 h-14 md:w-16 md:h-16 border border-pink-500/40 flex items-center justify-center mb-5 md:mb-6 group-hover:border-pink-400 transition-all group-hover:shadow-idol-pink">
+                  <FaCalendarAlt className="text-xl md:text-2xl text-pink-400 group-hover:text-pink-300 transition-colors" />
                 </div>
-                <h3 className="text-white text-xl font-bold mb-2">Upcoming Showcase</h3>
-                <p className="text-white/40 text-sm mb-6 font-medium">Join our exclusive fan meeting event in Tokyo.</p>
-                <button className="shimmer-btn px-6 py-2 bg-gradient-to-r from-pink-500 to-orange-500 text-white rounded-sm text-xs font-bold tracking-widest uppercase hover:shadow-idol-pink transition-all">
+                <h3 className="text-white text-lg md:text-xl font-bold mb-2">Upcoming Showcase</h3>
+                <p className="text-white/40 text-sm mb-5 md:mb-6 font-medium">Join our exclusive fan meeting event in Tokyo.</p>
+                <button className="shimmer-btn px-5 md:px-6 py-2 bg-gradient-to-r from-pink-500 to-orange-500 text-white rounded-sm text-xs font-bold tracking-widest uppercase hover:shadow-idol-pink transition-all">
                   Register
                 </button>
               </div>
@@ -385,16 +385,16 @@ const Home = () => {
       </section>
 
       {/* ─── Members Highlight ────────────────────────────── */}
-      <section className="py-24 px-4 sm:px-6 lg:px-8 relative overflow-hidden" style={{ background: '#0f0a1e' }}>
+      <section className="py-16 md:py-24 px-4 sm:px-6 lg:px-8 relative overflow-hidden" style={{ background: '#0f0a1e' }}>
         {/* Glow effects */}
-        <div className="absolute top-0 right-0 w-[500px] h-[500px] bg-cyan-500/5 rounded-full blur-[100px] pointer-events-none" />
-        <div className="absolute bottom-0 left-0 w-[500px] h-[500px] bg-pink-600/5 rounded-full blur-[100px] pointer-events-none" />
+        <div className="absolute top-0 right-0 w-[400px] h-[400px] bg-cyan-500/5 rounded-full blur-[100px] pointer-events-none" />
+        <div className="absolute bottom-0 left-0 w-[400px] h-[400px] bg-pink-600/5 rounded-full blur-[100px] pointer-events-none" />
 
         <div className="max-w-7xl mx-auto relative z-10">
-          <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-6">
+          <div className="flex flex-col sm:flex-row sm:items-end justify-between mb-8 md:mb-12 gap-4">
             <div className="text-left">
               <div className="badge-idol mb-4"><FaStar size={8} /> Our Stars</div>
-              <h2 className="text-4xl md:text-6xl font-black text-white uppercase tracking-tight mb-2">
+              <h2 className="text-3xl md:text-6xl font-black text-white uppercase tracking-tight mb-2">
                 MEET THE <br className="hidden md:block" /> <span className="text-idol">MEMBERS</span>
               </h2>
             </div>
@@ -403,9 +403,9 @@ const Home = () => {
             </Link>
           </div>
 
-          <div className="flex overflow-x-auto gap-6 pb-8 snap-x no-scrollbar md:grid md:grid-cols-2 lg:grid-cols-3 md:gap-8 box-content">
+          <div className="flex overflow-x-auto gap-4 md:gap-6 pb-6 snap-x no-scrollbar md:grid md:grid-cols-2 lg:grid-cols-3 md:overflow-visible">
             {sampleMembers.map((member, index) => (
-              <div key={index} className="min-w-[280px] sm:min-w-[320px] md:min-w-0 snap-center transform hover:-translate-y-2 transition-transform duration-300">
+              <div key={index} className="min-w-[260px] sm:min-w-[300px] md:min-w-0 snap-center transform hover:-translate-y-2 transition-transform duration-300">
                 <MemberCard {...member} />
               </div>
             ))}

@@ -25,6 +25,14 @@
     background: rgba(236, 72, 153, 0.3);
     color: #fce7f3;
   }
+  /* Prevent horizontal overflow globally */
+  *, *::before, *::after {
+    box-sizing: border-box;
+  }
+  img, video {
+    max-width: 100%;
+    height: auto;
+  }
 }
 
 /* ─── Custom Scrollbar ──────────────────────────────── */
@@ -47,6 +55,21 @@
 .transform-style-3d { transform-style: preserve-3d; }
 .backface-hidden { backface-visibility: hidden; -webkit-backface-visibility: hidden; }
 .rotate-y-180 { transform: rotateY(180deg); }
+
+/* ─── Responsive Container Helpers ─────────────────── */
+.section-pad {
+  padding-left: 1rem;
+  padding-right: 1rem;
+}
+@media (min-width: 640px) {
+  .section-pad { padding-left: 1.5rem; padding-right: 1.5rem; }
+}
+@media (min-width: 1024px) {
+  .section-pad { padding-left: 2rem; padding-right: 2rem; }
+}
+@media (min-width: 1280px) {
+  .section-pad { padding-left: 3rem; padding-right: 3rem; }
+}
 
 /* ─── Idol-specific Utilities ───────────────────────── */
 
@@ -256,6 +279,68 @@
   50% { opacity: 0.2; transform: scale(0.6); }
 }
 
+/* Stage light keyframe */
+@keyframes stage-light {
+  0%, 100% { opacity: 0.2; transform: rotate(-3deg); }
+  50% { opacity: 0.35; transform: rotate(3deg); }
+}
+
+/* ─── Mobile-first Global Layout Fixes ──────────────── */
+
+/* Prevent overflow on all pages */
+.min-h-screen {
+  min-height: 100dvh;
+}
+
+/* Safe area padding for notched devices */
+@supports (padding: env(safe-area-inset-bottom)) {
+  .pb-safe { padding-bottom: env(safe-area-inset-bottom); }
+}
+
+/* Section spacing — consistent across pages */
+.section-y { padding-top: 4rem; padding-bottom: 4rem; }
+@media (min-width: 768px) {
+  .section-y { padding-top: 6rem; padding-bottom: 6rem; }
+}
+
+/* Cards never overflow their containers */
+.card-grid {
+  display: grid;
+  grid-template-columns: repeat(1, minmax(0, 1fr));
+  gap: 1.5rem;
+}
+@media (min-width: 640px) {
+  .card-grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (min-width: 1024px) {
+  .card-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+}
+
+/* Horizontal scroll containers */
+.scroll-x-container {
+  display: flex;
+  overflow-x: auto;
+  gap: 1rem;
+  padding-bottom: 0.5rem;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+.scroll-x-container::-webkit-scrollbar { display: none; }
+
+/* Snap scroll items */
+.snap-item {
+  flex-shrink: 0;
+  scroll-snap-align: start;
+}
+
+/* Mobile button full width helper */
+@media (max-width: 639px) {
+  .btn-responsive {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
 /* ─── Light Mode Styles — Yellow/White/Black Theme ─────── */
 
 /* Selection highlight */
@@ -437,6 +522,8 @@ html.light footer .text-white {
 html.light footer .text-white\/60 { color: rgba(255,255,255,0.6) !important; }
 html.light footer .text-white\/70 { color: rgba(255,255,255,0.7) !important; }
 html.light footer .text-white\/80 { color: rgba(255,255,255,0.8) !important; }
+html.light footer .text-white\/40 { color: rgba(255,255,255,0.4) !important; }
+html.light footer .text-white\/50 { color: rgba(255,255,255,0.5) !important; }
 
 /* Animate glow → yellow in light mode */
 html.light .animate-glow {
@@ -450,4 +537,40 @@ html.light .animate-glow {
 /* Card hover border → yellow */
 html.light .hover\:border-pink-500\/40:hover {
   border-color: rgba(251, 191, 36, 0.5) !important;
+}
+
+/* Ticker tape in light */
+html.light .bg-black {
+  background-color: #111111 !important;
+}
+
+/* Dark bg inside sections — light mode fix */
+html.light section[style*="background"],
+html.light div[style*="background: linear-gradient"] {
+  background: #fffdf0 !important;
+  color: #0f0f0f !important;
+}
+
+/* Inline dark backgrounds override */
+html.light [style*="background: linear-gradient(180deg, #0f0a1e"],
+html.light [style*="background: linear-gradient(180deg, #12082a"],
+html.light [style*="background: linear-gradient(135deg, #12082a"],
+html.light [style*="background: linear-gradient(160deg, #0f0a1e"] {
+  background: linear-gradient(180deg, #fffdf0, #fffae8) !important;
+}
+
+/* Hero section light override */
+html.light [style*="background: 'linear-gradient(160deg, #0f0a1e"] {
+  background: linear-gradient(160deg, #fffdf0 0%, #fffae8 40%, #ffffff 100%) !important;
+}
+
+/* Splash screen stars hidden in light */
+html.light .star-particle {
+  opacity: 0.3;
+  background: #fbbf24;
+}
+
+/* Mobile drawer in light */
+html.light .fixed.bg-black\/80 {
+  background: rgba(15, 15, 15, 0.7) !important;
 }
