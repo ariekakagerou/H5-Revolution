@@ -2,10 +2,18 @@ import React, { createContext, useContext, useState, useEffect } from "react";
 
 const ThemeContext = createContext();
 
+/**
+ * ThemeProvider
+ * Primary theme: "light" (Yellow / White / Black - Warm Idol Stage)
+ * Secondary theme: "dark" (Cyber-Idol Live Stage)
+ */
 export const ThemeProvider = ({ children }) => {
   const [theme, setTheme] = useState(() => {
-    const saved = localStorage.getItem("h5_theme");
-    return saved ? saved : "dark";
+    // Primary / Default theme is LIGHT mode
+    const saved = localStorage.getItem("h5_theme_v2");
+    if (saved === "dark") return "dark";
+    if (saved === "light") return "light";
+    return "light"; // Default to Light Mode
   });
 
   useEffect(() => {
@@ -23,11 +31,12 @@ export const ThemeProvider = ({ children }) => {
       document.body.style.backgroundColor = "#fffdf0";
       document.body.style.color = "#0f0f0f";
     }
+    localStorage.setItem("h5_theme_v2", theme);
     localStorage.setItem("h5_theme", theme);
   }, [theme]);
 
   const toggleTheme = () => {
-    setTheme((prev) => (prev === "dark" ? "light" : "dark"));
+    setTheme((prev) => (prev === "light" ? "dark" : "light"));
   };
 
   return (
@@ -44,4 +53,3 @@ export const useTheme = () => {
   }
   return context;
 };
-
