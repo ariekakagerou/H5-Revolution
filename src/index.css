@@ -517,26 +517,48 @@ html.light .idol-divider {
   background: linear-gradient(90deg, transparent, rgba(251, 191, 36, 0.5), rgba(245, 158, 11, 0.5), transparent) !important;
 }
 
-/* Header nav in light → white with yellow accent */
-html.light header,
-html.light nav {
-  background: rgba(255, 255, 255, 0.95) !important;
-  border-bottom-color: rgba(251, 191, 36, 0.3) !important;
+/* Header in light mode → Vibrant Yellow Stage Theme */
+html.light header {
+  background-color: #fbbf24 !important;
+  background: linear-gradient(to right, #facc15, #fbbf24, #f59e0b) !important;
+  border-bottom: 2px solid rgba(180, 83, 9, 0.35) !important;
+  box-shadow: 0 4px 25px rgba(245, 158, 11, 0.25) !important;
 }
 
-/* Footer in light → black with yellow accent */
+html.light header nav a {
+  color: #0f0f0f !important;
+  font-weight: 800 !important;
+}
+html.light header nav a:hover {
+  color: #78350f !important;
+}
+
+/* Footer in light mode → Yellow stage theme matching header */
 html.light footer {
-  background-color: #111111 !important;
-  color: #ffffff !important;
+  background-color: #fbbf24 !important;
+  background: linear-gradient(180deg, #facc15 0%, #fbbf24 100%) !important;
+  border-top: 2px solid rgba(180, 83, 9, 0.35) !important;
+  color: #0f0f0f !important;
 }
-html.light footer .text-white {
-  color: #ffffff !important;
+html.light footer .text-white,
+html.light footer .text-slate-200 {
+  color: #0f0f0f !important;
 }
-html.light footer .text-white\/60 { color: rgba(255,255,255,0.6) !important; }
-html.light footer .text-white\/70 { color: rgba(255,255,255,0.7) !important; }
-html.light footer .text-white\/80 { color: rgba(255,255,255,0.8) !important; }
-html.light footer .text-white\/40 { color: rgba(255,255,255,0.4) !important; }
-html.light footer .text-white\/50 { color: rgba(255,255,255,0.5) !important; }
+html.light footer .text-white\/60,
+html.light footer .text-white\/70,
+html.light footer .text-white\/80,
+html.light footer .text-white\/40,
+html.light footer .text-white\/50,
+html.light footer .text-white\/30,
+html.light footer .text-white\/20 {
+  color: rgba(15, 15, 15, 0.75) !important;
+}
+html.light footer a {
+  color: #1f1f1f !important;
+}
+html.light footer a:hover {
+  color: #78350f !important;
+}
 
 /* Animate glow → yellow in light mode */
 html.light .animate-glow {

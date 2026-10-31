@@ -6,7 +6,9 @@ import Logo from "./Logo";
 
 /**
  * Footer Component
- * Supports Dark (Cyber-Idol) and Light (Yellow/White/Black) themes.
+ * Dynamic styling matching Header:
+ * - Light Mode: Stage Yellow (#fbbf24) with crisp obsidian-black text & new official logo.
+ * - Dark Mode: Cyber-Idol (#0a0614) with neon pink/amber accents.
  */
 const Footer = () => {
   const { isDark } = useTheme();
@@ -30,51 +32,56 @@ const Footer = () => {
   ];
 
   return (
-    <footer className={`relative overflow-hidden border-t ${
-      isDark
-        ? "bg-[#0a0614] text-slate-200 border-pink-950/40"
-        : "bg-[#111111] text-white border-yellow-800/30"
-    }`}>
-      {/* Top laser line */}
-      <div className={`absolute top-0 left-0 right-0 h-[1px] ${
+    <footer 
+      className={`relative overflow-hidden border-t-2 ${
+        isDark
+          ? "bg-[#0a0614] text-slate-200 border-pink-950/40"
+          : "bg-[#fbbf24] text-[#0f0f0f] border-amber-500/50"
+      }`}
+      style={{
+        backgroundColor: isDark ? "#0a0614" : "#fbbf24",
+        color: isDark ? "#f8fafc" : "#0f0f0f"
+      }}
+    >
+      {/* Top laser accent line */}
+      <div className={`absolute top-0 left-0 right-0 h-[2px] ${
         isDark
           ? "bg-gradient-to-r from-transparent via-pink-500/60 to-transparent"
-          : "bg-gradient-to-r from-transparent via-yellow-400/60 to-transparent"
+          : "bg-gradient-to-r from-transparent via-amber-800/60 to-transparent"
       }`} />
 
-      {/* Background glows */}
+      {/* Subtle Background Glows */}
       <div className={`absolute bottom-0 left-1/2 -translate-x-1/2 w-[600px] h-[280px] rounded-full blur-[140px] pointer-events-none ${
-        isDark ? "bg-pink-600/10" : "bg-yellow-500/8"
-      }`} />
-      <div className={`absolute top-0 right-1/4 w-[300px] h-[180px] rounded-full blur-[100px] pointer-events-none ${
-        isDark ? "bg-orange-500/5" : "bg-amber-400/5"
+        isDark ? "bg-pink-600/10" : "bg-yellow-400/20"
       }`} />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 md:py-16 relative z-10">
         
-        {/* Top Row: Logo + Nav */}
+        {/* Top Row: Official Logo + Navigation */}
         <div className="flex flex-col lg:flex-row gap-10 lg:gap-16 mb-12 items-start">
           
-          {/* Brand */}
+          {/* Brand & Official Logo */}
           <div className="flex-shrink-0 text-center lg:text-left w-full lg:w-auto">
             <Link to="/" className="inline-block mb-3" aria-label="H5-Revolution Home">
-              <Logo variant="full" size="md" />
+              <Logo size="lg" />
             </Link>
-            <p className={`text-xs leading-relaxed max-w-xs mx-auto lg:mx-0 ${isDark ? "text-white/40" : "text-white/60"}`}>
-              Indonesia's premier idol group — bringing the stage to life with every performance.
+            <p className={`text-xs leading-relaxed max-w-xs mx-auto lg:mx-0 font-medium ${
+              isDark ? "text-white/50" : "text-neutral-900"
+            }`}>
+              Indonesia's premier idol group — bringing the stage to life with every revolutionary performance.
             </p>
           </div>
 
-          {/* Nav Links Grid */}
-          <div className="w-full grid grid-cols-2 sm:grid-cols-4 gap-x-8 gap-y-3">
+          {/* Navigation Links Grid */}
+          <div className="w-full grid grid-cols-2 sm:grid-cols-4 gap-x-8 gap-y-3.5">
             {navLinks.map((link) => (
               <Link
                 key={link.label}
                 to={link.to}
-                className={`text-[11px] font-bold uppercase tracking-widest transition-colors ${
+                className={`text-[11px] font-black uppercase tracking-widest transition-colors ${
                   isDark
-                    ? "text-white/40 hover:text-pink-400"
-                    : "text-white/50 hover:text-yellow-400"
+                    ? "text-white/60 hover:text-pink-400"
+                    : "text-neutral-900 hover:text-black hover:underline"
                 }`}
               >
                 {link.label}
@@ -87,15 +94,15 @@ const Footer = () => {
         <div className={`h-[1px] w-full mb-8 ${
           isDark
             ? "bg-gradient-to-r from-transparent via-pink-500/20 to-transparent"
-            : "bg-gradient-to-r from-transparent via-yellow-500/30 to-transparent"
+            : "bg-gradient-to-r from-transparent via-black/15 to-transparent"
         }`} />
 
         {/* Bottom Row */}
         <div className="flex flex-col sm:flex-row items-center justify-between gap-6">
           
           {/* Copyright */}
-          <div className={`text-[10px] font-bold tracking-widest uppercase order-2 sm:order-1 ${
-            isDark ? "text-white/30" : "text-white/40"
+          <div className={`text-[10px] font-black tracking-widest uppercase order-2 sm:order-1 ${
+            isDark ? "text-white/40" : "text-neutral-900"
           }`}>
             © 2026 H5-REVOLUTION • All Rights Reserved
           </div>
@@ -112,7 +119,7 @@ const Footer = () => {
                 className={`w-10 h-10 rounded-sm flex items-center justify-center transition-all duration-300 transform hover:scale-110 border ${
                   isDark
                     ? "bg-white/[0.04] border-white/10 hover:border-pink-500/50 hover:bg-pink-500/10 text-white/50 hover:text-pink-400 hover:shadow-[0_0_15px_rgba(236,72,153,0.3)]"
-                    : "bg-white/[0.05] border-white/10 hover:border-yellow-400/60 hover:bg-yellow-400/10 text-white/40 hover:text-yellow-400"
+                    : "bg-black/10 border-black/20 hover:border-black hover:bg-black text-black hover:text-[#fbbf24]"
                 }`}
               >
                 <social.icon size={16} />
@@ -121,18 +128,24 @@ const Footer = () => {
           </div>
 
           {/* Made with love */}
-          <div className={`flex items-center gap-2 text-[10px] font-bold uppercase tracking-widest order-3 ${
-            isDark ? "text-white/30" : "text-white/40"
+          <div className={`flex items-center gap-2 text-[10px] font-black uppercase tracking-widest order-3 ${
+            isDark ? "text-white/40" : "text-neutral-900"
           }`}>
-            Made with <FaHeart className={`animate-pulse ${isDark ? "text-pink-500" : "text-yellow-400"}`} /> for fans
+            Made with <FaHeart className={`animate-pulse ${isDark ? "text-pink-500" : "text-rose-600"}`} /> for fans
           </div>
         </div>
 
         {/* Legal links */}
         <div className="flex justify-center gap-6 mt-6">
-          <a href="/legal" className={`text-[10px] font-bold uppercase tracking-widest transition-colors ${isDark ? "text-white/20 hover:text-pink-400" : "text-white/30 hover:text-yellow-400"}`}>Privacy</a>
-          <a href="/legal" className={`text-[10px] font-bold uppercase tracking-widest transition-colors ${isDark ? "text-white/20 hover:text-pink-400" : "text-white/30 hover:text-yellow-400"}`}>Terms</a>
-          <a href="/legal" className={`text-[10px] font-bold uppercase tracking-widest transition-colors ${isDark ? "text-white/20 hover:text-pink-400" : "text-white/30 hover:text-yellow-400"}`}>Contact</a>
+          <a href="/legal" className={`text-[10px] font-black uppercase tracking-widest transition-colors ${
+            isDark ? "text-white/30 hover:text-pink-400" : "text-neutral-800 hover:text-black"
+          }`}>Privacy</a>
+          <a href="/legal" className={`text-[10px] font-black uppercase tracking-widest transition-colors ${
+            isDark ? "text-white/30 hover:text-pink-400" : "text-neutral-800 hover:text-black"
+          }`}>Terms</a>
+          <a href="/legal" className={`text-[10px] font-black uppercase tracking-widest transition-colors ${
+            isDark ? "text-white/30 hover:text-pink-400" : "text-neutral-800 hover:text-black"
+          }`}>Contact</a>
         </div>
       </div>
     </footer>
