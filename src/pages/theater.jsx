@@ -1,204 +1,457 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
-import { FaCalendarAlt, FaMapMarkerAlt, FaTicketAlt, FaInfoCircle, FaStar, FaClock, FaBus, FaTrain } from "react-icons/fa";
+import {
+  FaStar,
+  FaClock,
+  FaMapMarkerAlt,
+  FaChevronLeft,
+  FaChevronRight,
+  FaArrowRight,
+  FaFilter,
+  FaCalendarAlt,
+  FaBroadcastTower,
+  FaUsers,
+  FaHeart,
+} from "react-icons/fa";
 import SEO from "../components/SEO";
 
-/**
- * Theater Page Component
- * Dark Cyber-Idol Theme for H5-Revolution Permanent Theater.
- */
-const Theater = () => {
-  useEffect(() => {
-    const hash = window.location.hash;
-    if (hash) {
-      const element = document.querySelector(hash);
-      if (element) {
-        setTimeout(() => {
-          element.scrollIntoView({ behavior: "smooth" });
-        }, 500);
-      }
-    }
-  }, []);
+/* ─── Data ──────────────────────────────────────────────── */
+const upcomingShows = [
+  {
+    id: 1,
+    day: "MON",
+    date: 17,
+    month: "NOV",
+    title: "H5-Revolution Special Live — First Stage 2026 —",
+    time: "19:00 WIB (On Air)",
+    venue: "H5 Cyber Stage (Online)",
+    desc: "Penampilan spesial pertama H5-Revolution di tahun 2026 dengan konsep baru dan kejutan spesial untuk semua fans!",
+    status: "available",
+    tag: "LIVE STREAMING",
+    type: "concert",
+    image: "https://images.unsplash.com/photo-1514525253361-bee8a4874093?w=600&q=80",
+  },
+  {
+    id: 2,
+    day: "SAT",
+    date: 29,
+    month: "NOV",
+    title: "H5-Revolution Theater Special — Member Talk & Mini Live —",
+    time: "16:00 WIB (On Air)",
+    venue: "H5 Cyber Stage (Online)",
+    desc: "Sesi talkshow eksklusif bersama member dan penampilan mini live dengan setlist spesial!",
+    status: "limited",
+    tag: "LIVE",
+    type: "talkshow",
+    image: "https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=600&q=80",
+  },
+  {
+    id: 3,
+    day: "SUN",
+    date: 14,
+    month: "DEC",
+    title: "H5-Revolution Year End Concert — Beyond The Stage —",
+    time: "19:00 WIB (On Air)",
+    venue: "H5 Cyber Stage (Online)",
+    desc: "Konser penutup tahun dengan penampilan terbaik, dikemas spesial untuk seluruh fans H5-Revolution.",
+    status: "soldout",
+    tag: "LIVE",
+    type: "concert",
+    image: "https://images.unsplash.com/photo-1540039155733-5bb30b53aa14?w=600&q=80",
+  },
+];
 
-  const schedule = [
-    { day: "MON", date: "April 14", time: "18:30", title: "Evolution Team A-1", status: "Available" },
-    { day: "TUE", date: "April 15", time: "18:30", title: "New Era Special Stage", status: "Sold Out" },
-    { day: "WED", date: "April 16", time: "18:30", title: "Evolution Team B-2", status: "Available" },
-    { day: "THU", date: "April 17", time: "18:30", title: "Solo Performance: Yuki", status: "Limited" },
-    { day: "FRI", date: "April 18", time: "19:00", title: "Weekend Night Party", status: "Available" },
-    { day: "SAT", date: "April 19", time: "14:00", title: "Matinee Show: H5-R", status: "Available" },
-    { day: "SUN", date: "April 20", time: "15:00", title: "Anniversary Special", status: "Sold Out" },
-  ];
+const FILTER_TABS = ["Semua", "Live Streaming", "Onsite", "Concert", "Talkshow", "Special Event"];
+
+/* ─── Mini Interactive Calendar ─────────────────────────── */
+const TheaterCalendar = () => {
+  const today = new Date(2026, 10, 1); // Nov 2026 (untuk demo, sesuai referensi)
+  const [current, setCurrent] = useState(today);
+
+  const year = current.getFullYear();
+  const month = current.getMonth();
+  const monthNames = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+  const daysInMonth = new Date(year, month + 1, 0).getDate();
+  const firstDay = new Date(year, month, 1).getDay(); // 0=Sun
+  // Convert Sun-start to Mon-start
+  const startOffset = (firstDay + 6) % 7;
+
+  const eventDates = { 17: "available", 29: "limited", 14: "soldout" };
+
+  const prevMonth = () => setCurrent(new Date(year, month - 1, 1));
+  const nextMonth = () => setCurrent(new Date(year, month + 1, 1));
+
+  const dayLabels = ["MON", "TUE", "WED", "THU", "FRI", "SAT", "SUN"];
 
   return (
-    <div className="min-h-screen bg-[#0f0a1e] font-inter text-slate-100 pb-16 md:pb-24 relative overflow-hidden">
-      <SEO title="H5-R Theater" description="Get the latest schedule and guide for H5-Revolution's permanent theater." />
+    <div className="bg-white dark:bg-[#130b24] rounded-2xl border border-amber-100/60 dark:border-pink-900/30 shadow-sm p-5 sm:p-6">
+      {/* Header */}
+      <div className="flex items-center gap-2 mb-3">
+        <FaCalendarAlt className="text-pink-500" size={14} />
+        <div>
+          <h3 className="text-xs font-black text-gray-900 dark:text-white uppercase tracking-wider">THEATER CALENDAR</h3>
+          <p className="text-[10px] text-gray-500 dark:text-white/40">Jadwal pertunjukan bulan ini.</p>
+        </div>
+      </div>
 
-      {/* Ambient background glows */}
-      <div className="absolute top-0 right-1/4 w-[300px] h-[300px] md:w-[500px] md:h-[500px] bg-pink-600/10 rounded-full blur-[140px] pointer-events-none" />
-      <div className="absolute top-1/3 left-10 w-[250px] h-[250px] md:w-[400px] md:h-[400px] bg-orange-500/5 rounded-full blur-[120px] pointer-events-none" />
+      {/* Month Nav */}
+      <div className="flex items-center justify-between mb-3">
+        <button onClick={prevMonth} className="w-7 h-7 rounded-full border border-gray-200 dark:border-white/10 flex items-center justify-center text-gray-500 dark:text-white/60 hover:border-pink-400 hover:text-pink-500 transition-all cursor-pointer">
+          <FaChevronLeft size={10} />
+        </button>
+        <span className="text-xs font-black text-gray-900 dark:text-white tracking-widest uppercase">
+          {monthNames[month]} {year}
+        </span>
+        <button onClick={nextMonth} className="w-7 h-7 rounded-full border border-gray-200 dark:border-white/10 flex items-center justify-center text-gray-500 dark:text-white/60 hover:border-pink-400 hover:text-pink-500 transition-all cursor-pointer">
+          <FaChevronRight size={10} />
+        </button>
+      </div>
 
-      {/* ─── Hero Section ─────────────────────────────────── */}
-      <section className="relative pt-28 md:pt-36 pb-12 md:pb-20 px-4 sm:px-6 lg:px-16 overflow-hidden bg-gradient-to-b from-[#160a2e] to-[#0f0a1e] border-b border-pink-900/30">
-        <div className="max-w-6xl mx-auto flex flex-col items-center text-center relative z-10">
-          <motion.div
-            initial={{ opacity: 0, y: 10 }}
-            animate={{ opacity: 1, y: 0 }}
-            className="w-14 h-14 md:w-16 md:h-16 bg-gradient-to-br from-pink-500 to-orange-500 rounded-sm flex items-center justify-center text-white shadow-idol-pink mb-4 md:mb-6"
+      {/* Day labels */}
+      <div className="grid grid-cols-7 mb-1">
+        {dayLabels.map(d => (
+          <div key={d} className={`text-center text-[9px] font-black py-1 ${d === "SUN" ? "text-pink-500" : "text-gray-400 dark:text-white/30"}`}>
+            {d}
+          </div>
+        ))}
+      </div>
+
+      {/* Days grid */}
+      <div className="grid grid-cols-7 gap-0.5">
+        {Array.from({ length: startOffset }).map((_, i) => (
+          <div key={`e-${i}`} />
+        ))}
+        {Array.from({ length: daysInMonth }).map((_, i) => {
+          const d = i + 1;
+          const ev = eventDates[d];
+          const isToday = d === 14 && month === 10; // Dec 14 sold out highlight
+          return (
+            <div
+              key={d}
+              className={`aspect-square flex flex-col items-center justify-center rounded-full text-[10px] font-bold cursor-default relative transition-all ${
+                ev === "available"
+                  ? "bg-emerald-100 dark:bg-emerald-900/30 text-emerald-700 dark:text-emerald-300 font-black"
+                  : ev === "limited"
+                  ? "bg-orange-100 dark:bg-orange-900/20 text-orange-600 dark:text-orange-300 font-black"
+                  : ev === "soldout"
+                  ? "bg-pink-100 dark:bg-pink-950/40 text-pink-600 dark:text-pink-400 font-black"
+                  : "text-gray-600 dark:text-white/50 hover:bg-gray-100 dark:hover:bg-white/5"
+              }`}
+            >
+              {d}
+              {ev && (
+                <span className={`absolute bottom-0.5 w-1 h-1 rounded-full ${
+                  ev === "available" ? "bg-emerald-500" : ev === "limited" ? "bg-orange-400" : "bg-pink-500"
+                }`} />
+              )}
+            </div>
+          );
+        })}
+      </div>
+
+      {/* Legend */}
+      <div className="flex items-center justify-around mt-4 pt-3 border-t border-gray-100 dark:border-white/10 text-[9px] font-bold">
+        <span className="flex items-center gap-1 text-gray-600 dark:text-white/60">
+          <span className="w-2 h-2 rounded-full bg-emerald-500 inline-block" /> Available
+        </span>
+        <span className="flex items-center gap-1 text-gray-600 dark:text-white/60">
+          <span className="w-2 h-2 rounded-full bg-orange-400 inline-block" /> Limited
+        </span>
+        <span className="flex items-center gap-1 text-gray-600 dark:text-white/60">
+          <span className="w-2 h-2 rounded-full bg-pink-500 inline-block" /> Sold Out
+        </span>
+      </div>
+    </div>
+  );
+};
+
+/* ─── Status Badge ──────────────────────────────────────── */
+const StatusBadge = ({ status }) => {
+  if (status === "available") return (
+    <span className="flex items-center gap-1.5 text-[10px] font-black uppercase tracking-widest text-emerald-600 dark:text-emerald-400">
+      <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" /> AVAILABLE
+    </span>
+  );
+  if (status === "limited") return (
+    <span className="flex items-center gap-1.5 text-[10px] font-black uppercase tracking-widest text-orange-500 dark:text-orange-400">
+      <span className="w-2 h-2 rounded-full bg-orange-400" /> LIMITED
+    </span>
+  );
+  return (
+    <span className="flex items-center gap-1.5 text-[10px] font-black uppercase tracking-widest text-pink-600 dark:text-pink-400">
+      <span className="w-2 h-2 rounded-full bg-pink-500" /> SOLD OUT
+    </span>
+  );
+};
+
+/* ─── Theater Page ──────────────────────────────────────── */
+const Theater = () => {
+  const [activeFilter, setActiveFilter] = useState("Semua");
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
+  const filtered = upcomingShows.filter(show => {
+    if (activeFilter === "Semua") return true;
+    if (activeFilter === "Live Streaming") return show.tag === "LIVE STREAMING";
+    if (activeFilter === "Onsite") return false; // placeholder
+    if (activeFilter === "Concert") return show.type === "concert";
+    if (activeFilter === "Talkshow") return show.type === "talkshow";
+    return true;
+  });
+
+  return (
+    <div className="min-h-screen bg-[#fffdf0] dark:bg-[#0f0a1e] text-gray-900 dark:text-white font-inter transition-colors duration-300 pb-24">
+      <SEO title="The Theater | H5-Revolution" description="Jadwal pertunjukan dan live performance terbaru H5-Revolution di H5 Cyber Stage." />
+
+      {/* ─── Hero Banner ─────────────────────────────────── */}
+      <section className="relative h-56 sm:h-72 md:h-80 lg:h-[340px] overflow-hidden">
+        {/* Background concert image */}
+        <img
+          src="https://images.unsplash.com/photo-1514525253361-bee8a4874093?w=1600&q=80"
+          alt="Theater Stage"
+          className="absolute inset-0 w-full h-full object-cover scale-105"
+        />
+        {/* Dark overlay */}
+        <div className="absolute inset-0 bg-gradient-to-r from-black/80 via-black/60 to-black/40" />
+        <div className="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent" />
+
+        {/* Subtle pink glow */}
+        <div className="absolute inset-0 bg-gradient-to-br from-pink-900/30 to-transparent pointer-events-none" />
+
+        {/* Script / italic brand in top-right */}
+        <div className="absolute top-16 sm:top-20 right-6 sm:right-10 text-right hidden sm:block">
+          <p
+            className="text-2xl sm:text-3xl md:text-4xl text-white/80"
+            style={{ fontFamily: "'Dancing Script', cursive, serif", fontStyle: "italic", textShadow: "0 0 20px rgba(236,72,153,0.4)" }}
           >
-            <FaStar size={26} />
-          </motion.div>
+            H5-Revolution
+          </p>
+          <p
+            className="text-base sm:text-xl md:text-2xl text-pink-300/80 mt-1"
+            style={{ fontFamily: "'Dancing Script', cursive, serif", fontStyle: "italic" }}
+          >
+            Live Beyond Reality ✦
+          </p>
+        </div>
 
-          <div className="badge-idol mb-3 md:mb-4">
-            Official Live Stage
+        {/* Hero content left */}
+        <div className="absolute inset-0 flex flex-col justify-center px-6 sm:px-10 lg:px-16 pt-14 sm:pt-16">
+          {/* Badge */}
+          <div className="flex items-center gap-2 mb-3 sm:mb-4">
+            <span className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-pink-500/90 text-white text-[10px] font-black uppercase tracking-widest shadow-md">
+              <FaStar size={8} /> OFFICIAL LIVE STAGE
+            </span>
           </div>
 
-          <h1 className="text-3xl sm:text-5xl md:text-7xl font-black tracking-tighter uppercase mb-3 md:mb-4 font-outfit text-white">
-            THE <span className="text-idol">THEATER</span>
+          {/* Title */}
+          <h1 className="text-5xl sm:text-7xl md:text-8xl lg:text-9xl font-black tracking-tighter leading-none uppercase font-outfit mb-2">
+            <span className="text-white">THE </span>
+            <span
+              className="text-transparent"
+              style={{
+                WebkitTextStroke: "2px transparent",
+                background: "linear-gradient(135deg, #facc15 0%, #f97316 50%, #ec4899 100%)",
+                WebkitBackgroundClip: "text",
+                WebkitTextFillColor: "transparent",
+              }}
+            >
+              THEATER
+            </span>
           </h1>
-          <p className="text-pink-400/70 font-mono font-bold uppercase tracking-[0.3em] md:tracking-[0.4em] text-[10px] sm:text-xs px-2">
+
+          <p className="text-white/70 text-xs sm:text-sm font-bold uppercase tracking-[0.3em]">
             Our Home. Your Live Cyber-Stage Experience.
           </p>
         </div>
       </section>
 
-      {/* ─── Section: Theater Schedule (#schedule) ────────── */}
-      <section id="schedule" className="py-12 md:py-20 px-4 sm:px-6 lg:px-16 max-w-7xl mx-auto relative z-10">
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-8 md:mb-12 gap-4 md:gap-6">
-          <div className="text-left">
-            <h2 className="text-2xl sm:text-3xl md:text-4xl font-black text-white uppercase tracking-tight">
-              Theater <span className="text-idol">Schedule</span>
-            </h2>
-            <p className="text-white/40 font-bold text-sm mt-1">Weekly Performance Calendar</p>
-          </div>
-          {/* Legend: horizontal scroll on mobile */}
-          <div className="flex items-center gap-3 md:gap-4 text-xs font-mono font-bold uppercase tracking-widest text-white/50 overflow-x-auto pb-1 shrink-0 max-w-full">
-            <span className="flex items-center gap-1.5 whitespace-nowrap"><div className="w-2 h-2 rounded-full bg-emerald-400 shadow-[0_0_8px_rgba(52,211,153,0.8)] shrink-0" /> Available</span>
-            <span className="flex items-center gap-1.5 whitespace-nowrap"><div className="w-2 h-2 rounded-full bg-orange-400 shadow-[0_0_8px_rgba(251,146,60,0.8)] shrink-0" /> Limited</span>
-            <span className="flex items-center gap-1.5 whitespace-nowrap"><div className="w-2 h-2 rounded-full bg-red-400 shadow-[0_0_8px_rgba(248,113,113,0.8)] shrink-0" /> Sold Out</span>
-          </div>
-        </div>
+      {/* ─── Main Content: 2-col grid ─────────────────────── */}
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-14">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-start">
 
-        <div className="grid grid-cols-1 gap-3 md:gap-4">
-          {schedule.map((item, i) => (
-            <motion.div
-              key={i}
-              whileHover={{ x: 4 }}
-              className="bg-[#12082a]/80 backdrop-blur-md rounded-sm p-4 md:p-6 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 border border-white/10 hover:border-pink-500/50 hover:shadow-idol-pink transition-all group"
-            >
-              <div className="flex items-center gap-4 md:gap-6 w-full sm:w-auto">
-                <div className="flex flex-col items-center justify-center w-16 h-16 rounded-sm bg-white/[0.04] border border-white/10 text-white shrink-0 p-2 group-hover:border-pink-500/40 transition-colors">
-                  <span className="text-[10px] font-black uppercase text-pink-400 font-mono">{item.day}</span>
-                  <span className="text-lg font-black font-mono leading-none mt-1">{item.date.split(' ')[1]}</span>
-                </div>
-                <div className="flex-1 min-w-0">
-                  <div className="flex items-center gap-2 mb-1">
-                    <FaClock size={11} className="text-pink-400 shrink-0" />
-                    <span className="text-xs font-mono text-white/50">{item.time} JST</span>
-                  </div>
-                  <h3 className="text-base md:text-xl font-black text-white uppercase tracking-tight group-hover:text-pink-300 transition-colors truncate">
-                    {item.title}
-                  </h3>
-                </div>
-              </div>
+          {/* ── LEFT COLUMN: Upcoming Shows (8 cols) ── */}
+          <div className="lg:col-span-8 flex flex-col gap-6">
 
-              <div className="flex items-center gap-3 md:gap-6 w-full sm:w-auto justify-between sm:justify-end">
-                <span className={`px-3 py-1 rounded-sm text-[10px] font-black uppercase tracking-widest border whitespace-nowrap ${
-                  item.status === "Available" ? "bg-emerald-500/10 text-emerald-400 border-emerald-500/30" :
-                  item.status === "Limited" ? "bg-orange-500/10 text-orange-400 border-orange-500/30" : "bg-red-500/10 text-red-400 border-red-500/30"
-                }`}>
-                  {item.status}
-                </span>
-                <button className={`px-4 md:px-6 py-2.5 md:py-3 rounded-sm font-black text-xs uppercase tracking-[0.15em] transition-all whitespace-nowrap ${
-                  item.status === "Sold Out"
-                    ? "bg-white/5 text-white/30 border border-white/10 cursor-not-allowed"
-                    : "shimmer-btn bg-gradient-to-r from-pink-500 to-orange-500 text-white shadow-md hover:shadow-idol-pink"
-                }`}>
-                  {item.status === "Sold Out" ? "Full House" : "Apply Ticket"}
-                </button>
-              </div>
-            </motion.div>
-          ))}
-        </div>
-      </section>
-
-      {/* ─── Section: Theater Guide (#guide) ─────────────── */}
-      <section id="guide" className="py-12 md:py-20 bg-[#0b0616]/90 border-y border-pink-950/40 relative overflow-hidden">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-16 grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-start relative z-10">
-
-          {/* Guide Info */}
-          <div className="space-y-6 md:space-y-8">
+            {/* Section Header */}
             <div>
-              <div className="badge-idol mb-3">Guidelines</div>
-              <h2 className="text-2xl sm:text-3xl md:text-4xl font-black text-white uppercase tracking-tight mb-3 md:mb-4">
-                Theater <span className="text-idol">Guide</span>
+              <h2 className="text-2xl sm:text-3xl font-black text-gray-900 dark:text-white uppercase tracking-tight flex items-center gap-2">
+                <span className="w-1 h-7 bg-pink-500 rounded-full inline-block" />
+                UPCOMING THEATER
               </h2>
-              <p className="text-white/50 font-medium leading-relaxed text-sm">
-                To ensure everyone enjoys the live show experience, please read our visitor guidelines before entering. Our theater is an intimate sanctuary for idols and fans alike.
+              <p className="text-gray-500 dark:text-white/50 text-sm mt-1 ml-3">
+                Jadwal pertunjukan dan live performance terbaru.
               </p>
             </div>
 
-            <div className="space-y-3 md:space-y-4">
-              {[
-                { icon: <FaInfoCircle />, title: "ID Check", desc: "Please bring a valid photo ID matching your reservation. Tickets are strictly non-transferable." },
-                { icon: <FaTicketAlt />, title: "Ticket Exchange", desc: "Exchange your confirmation barcode for an entry pass 30 minutes before showtime." },
-                { icon: <FaStar />, title: "Stage Rules", desc: "Photography, audio recording, and video filming are strictly prohibited during the live show." }
-              ].map((guide, i) => (
-                <div key={i} className="flex gap-4 md:gap-5 p-4 md:p-5 bg-white/[0.03] rounded-sm border border-white/5 group hover:border-pink-500/40 hover:bg-pink-500/[0.04] transition-all">
-                  <div className="w-11 h-11 rounded-sm bg-pink-500/10 border border-pink-500/20 flex items-center justify-center text-pink-400 text-xl group-hover:scale-110 transition-transform shrink-0">
-                    {guide.icon}
+            {/* Show Cards */}
+            <div className="flex flex-col gap-4">
+              {filtered.map((show, idx) => (
+                <motion.div
+                  key={show.id}
+                  initial={{ opacity: 0, y: 16 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  transition={{ delay: idx * 0.05 }}
+                  className="bg-white dark:bg-[#130b24] rounded-2xl border border-amber-100/60 dark:border-pink-900/30 shadow-sm hover:shadow-md hover:border-pink-300/60 dark:hover:border-pink-500/40 transition-all overflow-hidden group"
+                >
+                  <div className="flex flex-col sm:flex-row gap-0">
+
+                    {/* Thumbnail with tag */}
+                    <div className="relative sm:w-52 md:w-64 h-44 sm:h-auto flex-shrink-0 overflow-hidden">
+                      <img
+                        src={show.image}
+                        alt={show.title}
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
+                      />
+                      {/* Gradient overlay */}
+                      <div className="absolute inset-0 bg-gradient-to-r from-black/20 to-transparent sm:bg-gradient-to-t sm:from-black/40 sm:to-transparent" />
+
+                      {/* LIVE tag */}
+                      <div className="absolute top-3 left-3 flex items-center gap-1.5 px-2.5 py-1 bg-pink-600/90 backdrop-blur-sm rounded-full text-white text-[9px] font-black uppercase tracking-wider shadow-md">
+                        <span className="w-1.5 h-1.5 rounded-full bg-white animate-ping inline-block" />
+                        {show.tag}
+                      </div>
+
+                      {/* Date badge bottom-left of image on mobile */}
+                      <div className="absolute bottom-3 left-3 sm:hidden bg-black/70 backdrop-blur-sm border border-white/20 text-white rounded-xl px-3 py-1.5 text-center">
+                        <div className="text-[9px] font-black text-pink-300 uppercase">{show.day}</div>
+                        <div className="text-xl font-black font-outfit leading-none">{show.date}</div>
+                        <div className="text-[9px] font-black text-white/60 uppercase">{show.month}</div>
+                      </div>
+                    </div>
+
+                    {/* Content */}
+                    <div className="flex-1 p-4 sm:p-5 flex flex-col justify-between">
+                      <div>
+                        {/* Status */}
+                        <div className="flex items-center justify-between mb-2">
+                          <StatusBadge status={show.status} />
+                          {/* Desktop date badge */}
+                          <div className="hidden sm:flex flex-col items-center justify-center bg-gray-50 dark:bg-white/5 border border-gray-200/80 dark:border-white/10 rounded-xl px-3 py-2 text-center min-w-[54px]">
+                            <span className="text-[9px] font-black text-pink-500 uppercase leading-none">{show.day}</span>
+                            <span className="text-2xl font-black font-outfit text-gray-900 dark:text-white leading-tight">{show.date}</span>
+                            <span className="text-[9px] font-black text-gray-500 dark:text-white/50 uppercase leading-none">{show.month}</span>
+                          </div>
+                        </div>
+
+                        {/* Title */}
+                        <h3 className="text-sm sm:text-base font-black text-gray-900 dark:text-white uppercase tracking-tight leading-tight mb-2 group-hover:text-pink-500 transition-colors">
+                          {show.title}
+                        </h3>
+
+                        {/* Meta: Time & Venue */}
+                        <div className="flex flex-col gap-1 mb-2">
+                          <div className="flex items-center gap-2 text-xs text-gray-500 dark:text-white/60">
+                            <FaClock className="text-pink-400 shrink-0" size={10} />
+                            <span>{show.time}</span>
+                          </div>
+                          <div className="flex items-center gap-2 text-xs text-gray-500 dark:text-white/60">
+                            <FaMapMarkerAlt className="text-cyan-500 shrink-0" size={10} />
+                            <span>{show.venue}</span>
+                          </div>
+                        </div>
+
+                        {/* Description */}
+                        <p className="text-xs text-gray-500 dark:text-white/50 leading-relaxed line-clamp-2 hidden sm:block">
+                          {show.desc}
+                        </p>
+                      </div>
+
+                      {/* CTA Button */}
+                      <div className="mt-4">
+                        {show.status === "soldout" ? (
+                          <button disabled className="w-full sm:w-auto px-6 py-2.5 rounded-xl bg-gray-200 dark:bg-white/10 text-gray-400 dark:text-white/40 text-[11px] font-black uppercase tracking-widest cursor-not-allowed">
+                            SOLD OUT
+                          </button>
+                        ) : (
+                          <Link
+                            to="/tickets"
+                            className="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl bg-gradient-to-r from-pink-500 to-orange-500 text-white text-[11px] font-black uppercase tracking-widest shadow-md shadow-pink-500/20 hover:scale-[1.02] hover:shadow-pink-500/40 active:scale-[0.98] transition-all"
+                          >
+                            VIEW DETAILS <FaArrowRight size={9} />
+                          </Link>
+                        )}
+                      </div>
+                    </div>
                   </div>
-                  <div>
-                    <h4 className="text-xs font-black text-white uppercase tracking-widest mb-1">{guide.title}</h4>
-                    <p className="text-xs text-white/50 leading-relaxed">{guide.desc}</p>
-                  </div>
-                </div>
+                </motion.div>
               ))}
+
+              {filtered.length === 0 && (
+                <div className="text-center py-16 text-gray-400 dark:text-white/40">
+                  <p className="text-sm font-bold uppercase tracking-widest">No shows found for this filter.</p>
+                </div>
+              )}
             </div>
           </div>
 
-          {/* Access/Map */}
-          <div className="bg-[#12082a]/90 rounded-sm p-5 md:p-8 border border-white/10 relative shadow-2xl">
-            <div className="mb-6 md:mb-8 flex items-center gap-3 md:gap-4">
-              <div className="w-11 h-11 bg-pink-500/10 border border-pink-500/20 rounded-sm flex items-center justify-center text-pink-400 shrink-0">
-                <FaMapMarkerAlt size={20} />
-              </div>
-              <div>
-                <h3 className="text-base md:text-lg font-black text-white uppercase tracking-tight">Access &amp; Location</h3>
-                <p className="text-xs font-mono text-pink-400/70">H5-R Theater, Akihabara District</p>
-              </div>
-            </div>
+          {/* ── RIGHT COLUMN: Sidebar (4 cols, sticky) ── */}
+          <div className="lg:col-span-4 flex flex-col gap-5 lg:sticky lg:top-[100px]">
 
-            <div className="space-y-4 md:space-y-6">
-              <div className="aspect-video w-full bg-[#1b0d36] rounded-sm overflow-hidden relative group border border-white/10">
-                <div className="absolute inset-0 bg-gradient-to-br from-[#240d46] to-[#0f0a1e] flex flex-col items-center justify-center group-hover:scale-105 transition-transform duration-700">
-                  <FaMapMarkerAlt className="text-pink-500 text-4xl drop-shadow-[0_0_15px_rgba(236,72,153,0.8)] animate-bounce" />
-                  <span className="mt-3 text-[10px] font-mono font-bold text-white uppercase tracking-[0.4em]">Akihabara Stage</span>
+            {/* Theater Calendar */}
+            <TheaterCalendar />
+
+            {/* Quick Filter */}
+            <div className="bg-white dark:bg-[#130b24] rounded-2xl border border-amber-100/60 dark:border-pink-900/30 shadow-sm p-5 sm:p-6">
+              <div className="flex items-center gap-2 mb-4">
+                <FaFilter className="text-pink-500" size={12} />
+                <div>
+                  <h3 className="text-xs font-black text-gray-900 dark:text-white uppercase tracking-wider">QUICK FILTER</h3>
+                  <p className="text-[10px] text-gray-500 dark:text-white/40">Cari event sesuai preferensimu.</p>
                 </div>
               </div>
 
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                <div className="p-3 md:p-4 bg-white/[0.03] rounded-sm border border-white/5 flex items-start gap-3">
-                  <FaTrain className="text-cyan-400 mt-0.5 shrink-0" />
-                  <div>
-                    <p className="text-[10px] font-black text-white uppercase mb-1">By Train</p>
-                    <p className="text-[10px] text-white/50 leading-normal">5 min walk from Akihabara St. (JR Yamanote Line)</p>
-                  </div>
-                </div>
-                <div className="p-3 md:p-4 bg-white/[0.03] rounded-sm border border-white/5 flex items-start gap-3">
-                  <FaBus className="text-pink-400 mt-0.5 shrink-0" />
-                  <div>
-                    <p className="text-[10px] font-black text-white uppercase mb-1">By Bus</p>
-                    <p className="text-[10px] text-white/50 leading-normal">Sudacho Bus Stop (Terminal 3)</p>
-                  </div>
-                </div>
+              <div className="grid grid-cols-2 gap-2">
+                {FILTER_TABS.map(tab => (
+                  <button
+                    key={tab}
+                    onClick={() => setActiveFilter(tab)}
+                    className={`py-2.5 rounded-xl text-[11px] font-black uppercase tracking-wider transition-all cursor-pointer ${
+                      activeFilter === tab
+                        ? "bg-gradient-to-r from-pink-500 to-orange-500 text-white shadow-md shadow-pink-500/20"
+                        : "bg-gray-100/80 dark:bg-white/5 text-gray-600 dark:text-white/60 border border-gray-200/80 dark:border-white/10 hover:border-pink-300 hover:text-pink-500 dark:hover:border-pink-500/40 dark:hover:text-pink-300"
+                    }`}
+                  >
+                    {tab}
+                  </button>
+                ))}
               </div>
             </div>
+
+            {/* Don't Miss Banner CTA */}
+            <div className="relative rounded-2xl overflow-hidden shadow-md">
+              <img
+                src="https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=600&q=80"
+                alt="Don't Miss"
+                className="w-full h-40 object-cover"
+              />
+              <div className="absolute inset-0 bg-gradient-to-r from-pink-800/80 via-pink-700/70 to-transparent" />
+              <div className="absolute inset-0 p-5 flex flex-col justify-between">
+                <div>
+                  <div className="flex items-center gap-1.5 text-amber-300 text-sm font-black mb-1">
+                    <FaStar size={12} /> Don't Miss
+                  </div>
+                  <h4 className="text-base sm:text-lg font-black text-white leading-tight">
+                    Our Next Show!
+                  </h4>
+                  <p className="text-white/80 text-[11px] mt-1 leading-relaxed max-w-[200px]">
+                    Tetap terhubung dan dapatkan informasi terbaru seputar theater H5-Revolution.
+                  </p>
+                </div>
+                <Link
+                  to="/fans"
+                  className="inline-flex items-center gap-2 px-4 py-2 rounded-xl bg-gradient-to-r from-pink-500 to-orange-500 text-white text-[11px] font-black uppercase tracking-wider w-fit shadow-md hover:scale-[1.02] transition-all"
+                >
+                  JOIN FAN CLUB <FaArrowRight size={9} />
+                </Link>
+              </div>
+            </div>
+
           </div>
-
         </div>
-      </section>
-
+      </div>
     </div>
   );
 };
