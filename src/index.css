@@ -473,7 +473,16 @@ html.light a.bg-gradient-to-r *,
 html.light .bg-pink-500,
 html.light .bg-pink-500 *,
 html.light .force-text-white,
-html.light .force-text-white * {
+html.light .force-text-white *,
+html.light .dark-stage .text-white,
+html.light .dark-stage h1.text-white,
+html.light .dark-stage h2.text-white,
+html.light .dark-stage h3.text-white,
+html.light .dark-stage h4.text-white,
+html.light [data-stage="dark"] .text-white,
+html.light [data-stage="dark"] h1,
+html.light [data-stage="dark"] h2,
+html.light [data-stage="dark"] h3 {
   color: #ffffff !important;
 }
 
