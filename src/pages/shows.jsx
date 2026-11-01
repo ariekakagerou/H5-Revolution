@@ -52,7 +52,7 @@ const Shows = () => {
            <motion.h1 
              initial={{ opacity: 0, y: 20 }}
              animate={{ opacity: 1, y: 0 }}
-             className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-black tracking-tighter uppercase mb-4 md:mb-6 drop-shadow-2xl font-outfit"
+             className="text-4xl sm:text-5xl md:text-7xl lg:text-8xl font-black tracking-tighter uppercase mb-4 md:mb-6 drop-shadow-2xl font-outfit text-white"
            >
               VIRTUAL <span className="text-idol">THEATER</span>
            </motion.h1>

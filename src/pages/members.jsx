@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import { useTheme } from "../contexts/ThemeContext";
 import SEO from "../components/SEO";
 
 const MemberCard = ({ member, isActive, onClick }) => {
@@ -145,6 +146,7 @@ const MemberCard = ({ member, isActive, onClick }) => {
 
 const MemberModal = ({ member, onClose }) => {
   if (!member) return null;
+  const { isDark } = useTheme();
 
   // Close on Escape key
   useEffect(() => {
@@ -159,7 +161,7 @@ const MemberModal = ({ member, onClose }) => {
   }, [onClose]);
   
   const accentColor = 
-    member.memberColor === 'Golden Yellow' ? '#fbbf24' :
+    member.memberColor === 'Golden Yellow' ? (isDark ? '#fbbf24' : '#d97706') :
     member.memberColor === 'Cherry Blossom Pink' ? '#ec4899' :
     member.memberColor === 'Sky Blue' ? '#06b6d4' :
     member.memberColor === 'Electric Purple' ? '#a855f7' :

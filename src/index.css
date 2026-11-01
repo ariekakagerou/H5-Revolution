@@ -421,17 +421,22 @@ html.light .glass {
   border: 1px solid rgba(251, 191, 36, 0.25) !important;
 }
 
-/* Text adaptations → black */
+/* Text adaptations → black & high contrast */
 html.light .text-white {
   color: #0f0f0f !important;
 }
-html.light .text-white\/80 { color: rgba(15, 15, 15, 0.85) !important; }
-html.light .text-white\/70 { color: rgba(15, 15, 15, 0.75) !important; }
-html.light .text-white\/60 { color: rgba(15, 15, 15, 0.65) !important; }
-html.light .text-white\/50 { color: rgba(15, 15, 15, 0.55) !important; }
-html.light .text-white\/40 { color: rgba(15, 15, 15, 0.45) !important; }
-html.light .text-white\/30 { color: rgba(15, 15, 15, 0.35) !important; }
-html.light .text-white\/20 { color: rgba(15, 15, 15, 0.25) !important; }
+html.light .text-white\/95,
+html.light .text-white\/90 { color: #0f0f0f !important; }
+html.light .text-white\/85,
+html.light .text-white\/80 { color: rgba(15, 15, 15, 0.9) !important; }
+html.light .text-white\/70 { color: rgba(15, 15, 15, 0.82) !important; }
+html.light .text-white\/60 { color: rgba(15, 15, 15, 0.75) !important; }
+html.light .text-white\/50 { color: rgba(15, 15, 15, 0.68) !important; }
+html.light .text-white\/40 { color: rgba(15, 15, 15, 0.6) !important; }
+html.light .text-white\/30 { color: rgba(15, 15, 15, 0.5) !important; }
+html.light .text-white\/25,
+html.light .text-white\/20 { color: rgba(15, 15, 15, 0.4) !important; }
+html.light .text-white\/10 { color: rgba(15, 15, 15, 0.3) !important; }
 
 /* Section headings & accent text → yellow gold */
 html.light .text-pink-400,
@@ -444,8 +449,21 @@ html.light .text-orange-300,
 html.light .text-orange-500 {
   color: #f59e0b !important;
 }
+html.light .text-pink-400\/70,
+html.light .text-pink-400\/80,
+html.light .text-pink-400\/60,
+html.light .text-pink-400\/50,
+html.light .text-pink-400\/40 {
+  color: #b45309 !important;
+}
 
-/* Keep White Text on Gradient Buttons & Badges (excluding text-clip gradients) */
+/* Golden yellow text readability on light backgrounds */
+html.light [style*="color: rgb(251, 191, 36)"],
+html.light [style*="color: #fbbf24"] {
+  color: #b45309 !important;
+}
+
+/* Keep White Text on Gradient Buttons, Badges & Overlays (excluding text-clip gradients) */
 html.light .shimmer-btn,
 html.light .shimmer-btn *,
 html.light button.bg-gradient-to-r,
@@ -454,8 +472,8 @@ html.light a.bg-gradient-to-r,
 html.light a.bg-gradient-to-r *,
 html.light .bg-pink-500,
 html.light .bg-pink-500 *,
-html.light .badge-idol,
-html.light .badge-idol * {
+html.light .force-text-white,
+html.light .force-text-white * {
   color: #ffffff !important;
 }
 
@@ -472,6 +490,18 @@ html.light button.bg-gradient-to-r.from-pink-500,
 html.light a.bg-gradient-to-r.from-pink-500 {
   background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 50%, #d97706 100%) !important;
   border-color: #f59e0b !important;
+}
+
+/* Hero section gradient overrides for light mode */
+html.light section[class*="from-[#160a2e]"],
+html.light .bg-gradient-to-b.from-\[\#160a2e\].to-\[\#0f0a1e\],
+html.light .from-\[\#160a2e\] {
+  background: linear-gradient(180deg, #fff7ed 0%, #fffdf0 100%) !important;
+  border-bottom-color: rgba(251, 191, 36, 0.35) !important;
+}
+
+html.light .from-\[\#0f0a1e\].via-\[\#0f0a1e\]\/60 {
+  background: linear-gradient(to top, #fffdf0 0%, rgba(255, 253, 240, 0.75) 60%, transparent 100%) !important;
 }
 
 /* Border adaptations → yellow */
@@ -494,7 +524,8 @@ html.light .bg-white\/5,
 html.light .bg-white\/\[0\.04\],
 html.light .bg-white\/\[0\.03\],
 html.light .bg-white\/\[0\.02\] {
-  background-color: rgba(251, 191, 36, 0.07) !important;
+  background-color: rgba(251, 191, 36, 0.08) !important;
+  border-color: rgba(251, 191, 36, 0.25) !important;
 }
 
 /* Badge idol in light → yellow style */
@@ -525,12 +556,27 @@ html.light header {
   box-shadow: 0 4px 25px rgba(245, 158, 11, 0.25) !important;
 }
 
-html.light header nav a {
+html.light header nav a:not(.nav-pill-btn) {
   color: #0f0f0f !important;
   font-weight: 800 !important;
 }
-html.light header nav a:hover {
+html.light header nav a:not(.nav-pill-btn):hover {
   color: #78350f !important;
+}
+
+/* Nav Fan Club pill button: crisp black background with vibrant yellow text */
+html.light header nav a.nav-pill-btn,
+html.light .nav-pill-btn {
+  background-color: #0f0f0f !important;
+  color: #fbbf24 !important;
+  border-color: rgba(0, 0, 0, 0.9) !important;
+  font-weight: 900 !important;
+}
+html.light header nav a.nav-pill-btn:hover,
+html.light .nav-pill-btn:hover {
+  background-color: #000000 !important;
+  color: #fef08a !important;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3) !important;
 }
 
 /* Footer in light mode → Yellow stage theme matching header */

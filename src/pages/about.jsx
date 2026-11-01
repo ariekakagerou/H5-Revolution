@@ -49,7 +49,7 @@ const About = () => {
           <motion.h1
             initial={{ opacity: 0, scale: 0.95 }}
             animate={{ opacity: 1, scale: 1 }}
-            className="text-3xl sm:text-5xl md:text-7xl lg:text-8xl font-black tracking-tighter uppercase mb-4 md:mb-6 font-outfit leading-none"
+            className="text-3xl sm:text-5xl md:text-7xl lg:text-8xl font-black tracking-tighter uppercase mb-4 md:mb-6 font-outfit leading-none text-white"
           >
              ABOUT THE <br/> <span className="text-idol">REVOLUTION</span>
           </motion.h1>
@@ -70,7 +70,7 @@ const About = () => {
                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700"
                        alt="H5-R Vision"
                      />
-                     <div className="absolute inset-0 bg-gradient-to-t from-[#0f0a1e] via-[#0f0a1e]/40 to-transparent flex flex-col justify-end p-4 sm:p-8 text-white">
+                     <div className="absolute inset-0 bg-gradient-to-t from-[#0f0a1e] via-[#0f0a1e]/40 to-transparent flex flex-col justify-end p-4 sm:p-8 text-white force-text-white">
                         <FaStar className="text-amber-400 text-3xl mb-3 animate-pulse" />
                         <h3 className="text-xl sm:text-3xl font-black mb-1 uppercase tracking-tight">THE REVOLUTION</h3>
                         <p className="text-pink-400/80 font-mono font-bold uppercase tracking-widest text-xs">A New Era of Entertainment</p>

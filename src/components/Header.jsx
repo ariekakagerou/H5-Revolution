@@ -116,7 +116,7 @@ const Header = () => {
                 {item.isPill ? (
                   <Link 
                     to={item.path}
-                    className={`px-5 py-2 rounded-sm text-[11px] font-black uppercase tracking-widest transition-all duration-300 flex items-center gap-2 shadow-md hover:scale-105 ${
+                    className={`nav-pill-btn px-5 py-2 rounded-sm text-[11px] font-black uppercase tracking-widest transition-all duration-300 flex items-center gap-2 shadow-md hover:scale-105 ${
                       isDark
                         ? "shimmer-btn bg-gradient-to-r from-pink-500 to-orange-500 text-white hover:shadow-idol-pink"
                         : "bg-[#0f0f0f] text-[#fbbf24] hover:bg-black hover:text-amber-300 border border-black/80"
@@ -368,7 +368,7 @@ const Header = () => {
                             onClick={() => setIsMobileMenuOpen(false)}
                             className={`flex items-center justify-between p-3.5 rounded-sm transition-all border ${
                               item.isPill 
-                                ? 'bg-[#0f0f0f] text-[#fbbf24] font-black border-black shadow-md' 
+                                ? 'nav-pill-btn bg-[#0f0f0f] text-[#fbbf24] font-black border-black shadow-md' 
                                 : location.pathname === item.path
                                   ? isDark 
                                     ? 'bg-pink-500/20 text-pink-300 border-pink-500/40 font-black' 
