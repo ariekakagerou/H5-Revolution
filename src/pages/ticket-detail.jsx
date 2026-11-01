@@ -5,8 +5,33 @@ import SEO from "../components/SEO";
 import { useCart } from "../contexts/CartContext";
 
 const ticketsDataDetailed = {
-  1: { id: 1, title: "H5-Revolution First Tour 2026: START LINE", date: "August 15, 2026 - 18:30 JST", location: "Tokyo Dome, Japan", price: "$120.00", desc: "The legendary debut tour kicks off at Tokyo Dome. Be part of history.", tiers: ["VIP Standing", "General Admission", "Balcony"] },
-  2: { id: 2, title: "Special Fan Meeting: Summer Vibes", date: "September 02, 2026 - 15:00 JST", location: "Osaka Arena, Japan", price: "$80.00", desc: "A cozy fan meeting with interactive games, special acoustic performances, and high-touch event.", tiers: ["Premium Tier", "Standard Tier"] }
+  1: {
+    id: 1,
+    title: "H5-Revolution First Tour 2026: START LINE",
+    date: "August 15, 2026 — 18:30 JST",
+    location: "Tokyo Dome, Tokyo, Japan",
+    price: "$120.00",
+    desc: "The legendary debut tour kicks off at Tokyo Dome. Be part of history as H5-Revolution takes the stage for the very first time in front of 55,000 fans.",
+    tiers: ["VIP Standing", "General Admission", "Balcony"]
+  },
+  2: {
+    id: 2,
+    title: "Special Fan Meeting: Summer Vibes",
+    date: "September 02, 2026 — 15:00 JST",
+    location: "Osaka Arena, Japan",
+    price: "$80.00",
+    desc: "A cozy fan meeting with interactive games, special acoustic performances, and a high-touch handshake event with all H5-Revolution members.",
+    tiers: ["Premium Tier", "Standard Tier"]
+  },
+  3: {
+    id: 3,
+    title: "Cyber Horizon World Tour 2026",
+    date: "October 10, 2026 — 19:00 JST",
+    location: "Akihabara Hall, Tokyo, Japan",
+    price: "$150.00",
+    desc: "Experience the next level of idol entertainment. Cyber Horizon combines cutting-edge holographic stage production with live idol performances across multiple cities worldwide.",
+    tiers: ["Front Row Stage", "VIP Pit", "Standard Arena", "Balcony B"]
+  }
 };
 
 const TicketDetail = () => {

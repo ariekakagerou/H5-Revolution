@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { Link } from "react-router-dom";
 import { motion } from "framer-motion";
 import { FaSearch, FaChevronRight, FaStar, FaTicketAlt, FaShieldAlt, FaUnlockAlt, FaTshirt, FaCalendarAlt, FaMapMarkerAlt } from "react-icons/fa";
 import SEO from "../components/SEO";
@@ -14,29 +15,29 @@ const Tickets = () => {
   const events = [
     {
       id: 1,
-      title: "Summer Live Concert 2026",
-      date: "May 21, 2026",
+      title: "H5-Revolution First Tour 2026: START LINE",
+      date: "August 15, 2026",
       location: "Tokyo Dome, Tokyo, Japan",
-      type: "Standard Pass",
-      price: "¥5,500",
+      type: "VIP Standing",
+      price: "$120.00",
       image: "https://images.unsplash.com/photo-1540039155733-5bb30b53aa14?w=400&q=80",
     },
     {
       id: 2,
-      title: "Exclusive Fan Meet & Greet",
-      date: "June 05, 2026",
-      location: "Akihabara Hall, Tokyo, Japan",
-      type: "VIP Early Entry",
-      price: "¥12,000",
+      title: "Special Fan Meeting: Summer Vibes",
+      date: "September 02, 2026",
+      location: "Osaka Arena, Japan",
+      type: "Premium Tier",
+      price: "$80.00",
       image: "https://images.unsplash.com/photo-1514525253361-bee8a4874093?w=400&q=80",
     },
     {
       id: 3,
-      title: "Special Mini Live Stage",
-      date: "June 25, 2026",
-      location: "Osaka Arena, Japan",
+      title: "Cyber Horizon World Tour 2026",
+      date: "October 10, 2026",
+      location: "Akihabara Hall, Tokyo, Japan",
       type: "Front Row Stage",
-      price: "¥18,000",
+      price: "$150.00",
       image: "https://images.unsplash.com/photo-1470225620780-dba8ba36b745?w=400&q=80",
     }
   ];
@@ -122,16 +123,18 @@ const Tickets = () => {
                 className="bg-[#12082a]/80 backdrop-blur-md rounded-sm border border-white/10 hover:border-pink-500/50 transition-all group relative overflow-hidden shadow-lg"
               >
                 <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-0 sm:gap-6 p-4 sm:p-5">
-                  {/* Event Image */}
-                  <div className="w-full sm:w-44 h-44 sm:h-28 rounded-sm overflow-hidden flex-shrink-0 border border-white/10">
+                  {/* Event Image — clicking image navigates to detail */}
+                  <Link to={`/tickets/${event.id}`} className="w-full sm:w-44 h-44 sm:h-28 rounded-sm overflow-hidden flex-shrink-0 border border-white/10 block">
                     <img src={event.image} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500" alt={event.title} />
-                  </div>
+                  </Link>
 
                   {/* Event Info */}
                   <div className="flex-1 pt-3 sm:pt-0">
-                    <h3 className="text-sm sm:text-base font-black text-white mb-1.5 group-hover:text-pink-300 transition-colors uppercase tracking-tight line-clamp-2">
-                      {event.title}
-                    </h3>
+                    <Link to={`/tickets/${event.id}`} className="block">
+                      <h3 className="text-sm sm:text-base font-black text-white mb-1.5 group-hover:text-pink-300 transition-colors uppercase tracking-tight line-clamp-2">
+                        {event.title}
+                      </h3>
+                    </Link>
                     <div className="flex flex-col gap-1 text-white/50 text-xs font-mono mb-3">
                       <span className="flex items-center gap-1.5"><FaCalendarAlt className="text-pink-400 shrink-0" size={10} /> {event.date}</span>
                       <span className="flex items-center gap-1.5"><FaMapMarkerAlt className="text-cyan-400 shrink-0" size={10} /> {event.location}</span>
@@ -149,9 +152,12 @@ const Tickets = () => {
 
                   {/* CTA — full width on mobile */}
                   <div className="w-full sm:w-auto pt-3 sm:pt-0 shrink-0">
-                    <button className="shimmer-btn w-full sm:w-auto px-6 py-3 bg-gradient-to-r from-pink-500 to-orange-500 text-white font-black rounded-sm flex items-center justify-center gap-2 shadow-idol-pink uppercase tracking-widest text-xs">
+                    <Link 
+                      to={`/tickets/${event.id}`}
+                      className="shimmer-btn w-full sm:w-auto px-6 py-3 bg-gradient-to-r from-pink-500 to-orange-500 text-white font-black rounded-sm flex items-center justify-center gap-2 shadow-idol-pink uppercase tracking-widest text-xs"
+                    >
                       Buy Pass <FaChevronRight size={9} />
-                    </button>
+                    </Link>
                   </div>
                 </div>
               </motion.div>
