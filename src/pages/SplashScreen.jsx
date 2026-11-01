@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { FaMusic, FaStar, FaBolt, FaChevronRight } from "react-icons/fa";
+import { FaMusic, FaStar, FaBolt } from "react-icons/fa";
 
 /**
  * SplashScreen Component
@@ -86,16 +86,6 @@ const SplashScreen = ({ onComplete }) => {
         <div className="absolute inset-0 bg-[radial-gradient(rgba(236,72,153,0.08)_1px,transparent_1px)] [background-size:24px_24px] opacity-70" />
       </div>
 
-      {/* ── Skip Button ── */}
-      <motion.button
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 0.8 }}
-        onClick={onComplete}
-        className="absolute top-8 right-8 z-30 flex items-center gap-2 px-4 py-2 rounded-sm bg-white/5 border border-white/10 hover:border-pink-500/50 hover:bg-pink-500/10 text-white/50 hover:text-pink-300 text-[10px] font-mono font-bold uppercase tracking-widest transition-all"
-      >
-        Skip Intro <FaChevronRight size={8} />
-      </motion.button>
 
       {/* ── Main Center Content ── */}
       <div className="relative z-20 flex flex-col items-center max-w-xl w-full px-6">
