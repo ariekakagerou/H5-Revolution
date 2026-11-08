@@ -80,9 +80,29 @@ const Header = () => {
     { icon: <FaYoutube />, href: "https://youtube.com", label: "YouTube" },
   ];
 
-  const toggleMobileSubmenu = (menuName) => {
-    setExpandedMobileMenu(expandedMobileMenu === menuName ? null : menuName);
-  };
+  // Mobile Menu 2-Column Grid Items (Identical to idol official site design)
+  const mobileGridItems = [
+    { title: "SCHEDULE", subtitle: "", path: "/events" },
+    { title: "TICKET", subtitle: "", path: "/tickets" },
+    { title: "NEWS", subtitle: "", path: "/shows" },
+    { title: "DISCOGRAPHY", subtitle: "", path: "/showcase" },
+    { title: "LIVE PHOTO", subtitle: "", path: "/fans" },
+    { title: "歌詞カード", subtitle: "", path: "/theater" },
+    { title: "GOODS", subtitle: "", path: "/shop" },
+    { title: "PROFILE", subtitle: "", path: "/members" },
+    { 
+      title: "出演依頼などのお問い合わせはこちら", 
+      isSmallText: true, 
+      path: "/about" 
+    },
+    { 
+      title: "ライブ,イベント参加についての心得", 
+      isSmallText: true, 
+      path: "/legal" 
+    },
+    { title: "オーディション", subtitle: "", path: "/fans" },
+    { title: "FAN CLUB", subtitle: "", path: "/fans" }
+  ];
 
   return (
     <>
@@ -90,23 +110,41 @@ const Header = () => {
         className={`fixed top-0 left-0 right-0 z-[100] transition-all duration-300 ${
           isScrolled 
             ? isDark
-              ? "py-3 bg-[#0f0a1e]/95 backdrop-blur-xl border-b border-pink-900/30 shadow-[0_4px_30px_rgba(0,0,0,0.5)]" 
-              : "py-2.5 bg-[#fbbf24]/95 backdrop-blur-xl border-b border-amber-500/40 shadow-[0_4px_30px_rgba(245,158,11,0.25)]"
+              ? "py-2 sm:py-3 bg-[#d6e31e] lg:bg-[#0f0a1e]/95 lg:backdrop-blur-xl border-b border-black/10 lg:border-pink-900/30 shadow-[0_4px_30px_rgba(0,0,0,0.5)]" 
+              : "py-2 sm:py-2.5 bg-[#d6e31e] lg:bg-[#fbbf24]/95 lg:backdrop-blur-xl border-b border-black/10 lg:border-amber-500/40 shadow-[0_4px_30px_rgba(245,158,11,0.25)]"
             : isDark
-              ? "py-4 sm:py-5 bg-[#0f0a1e]/80 backdrop-blur-md border-b border-white/5"
-              : "py-3 sm:py-4 bg-[#fbbf24] border-b border-amber-500/40 shadow-sm"
+              ? "py-2.5 sm:py-4 lg:py-5 bg-[#d6e31e] lg:bg-[#0f0a1e]/80 lg:backdrop-blur-md border-b border-black/10 lg:border-white/5"
+              : "py-2.5 sm:py-3 lg:py-4 bg-[#d6e31e] lg:bg-[#fbbf24] border-b border-black/10 lg:border-amber-500/40 shadow-sm"
         }`}
         style={{
-          backgroundColor: isDark 
-            ? (isScrolled ? "rgba(15, 10, 30, 0.95)" : "rgba(15, 10, 30, 0.8)")
-            : "#fbbf24"
+          backgroundColor: undefined
         }}
       >
         <div className="max-w-[1500px] mx-auto px-4 sm:px-6 lg:px-12 flex items-center justify-between">
           
-          {/* Logo Section */}
-          <Link to="/" className="flex items-center flex-shrink-0" aria-label="H5-Revolution Home">
+          {/* Logo Section - Desktop */}
+          <Link to="/" className="hidden lg:flex items-center flex-shrink-0" aria-label="H5-Revolution Home">
             <Logo size="md" />
+          </Link>
+
+          {/* Logo Section - Mobile (White Logo + OFFICIAL SITE Text matching reference) */}
+          <Link 
+            to="/" 
+            onClick={() => setIsMobileMenuOpen(false)} 
+            className="flex lg:hidden flex-col items-start select-none py-1 group"
+            aria-label="H5-Revolution Home"
+          >
+            <div className="flex items-center">
+              <img 
+                src="/images/h5-logo-transparent.png" 
+                alt="H5-Revolution" 
+                className="h-7 w-auto object-contain filter brightness-0 invert transition-transform group-hover:scale-105"
+                style={{ filter: "brightness(0) invert(1) drop-shadow(0 1px 2px rgba(0,0,0,0.2))" }}
+              />
+            </div>
+            <span className="text-[9px] font-black tracking-[0.25em] text-white uppercase -mt-0.5 leading-none drop-shadow-sm">
+              OFFICIAL SITE
+            </span>
           </Link>
 
           {/* Desktop Navigation */}
@@ -177,12 +215,12 @@ const Header = () => {
           {/* Right Actions / Theme Toggle / Socials */}
           <div className="flex items-center gap-2 sm:gap-3 flex-shrink-0">
             
-            {/* Theme Switcher Button */}
+            {/* Theme Switcher Button (Desktop) */}
             <button
               onClick={toggleTheme}
               aria-label="Toggle Theme Mode"
               title={isDark ? "Beralih ke Mode Terang" : "Beralih ke Mode Gelap"}
-              className={`w-9 h-9 flex items-center justify-center rounded-sm transition-all duration-300 border ${
+              className={`hidden lg:flex w-9 h-9 items-center justify-center rounded-sm transition-all duration-300 border ${
                 isDark 
                   ? "bg-white/5 border-white/10 hover:border-pink-500/50 hover:bg-pink-500/10 text-amber-400 shadow-sm"
                   : "bg-black/10 border-black/20 hover:bg-black/20 text-[#0f0f0f] shadow-sm"
@@ -211,211 +249,158 @@ const Header = () => {
               ))}
             </div>
             
-            {/* Mobile Menu Toggle (Hamburger / X) */}
+            {/* Mobile Menu Toggle (White Hamburger 3 Lines / White Close X) */}
             <button 
               onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
               aria-label="Toggle Mobile Menu"
               aria-expanded={isMobileMenuOpen}
-              className={`lg:hidden w-10 h-10 flex items-center justify-center rounded-sm transition-all border ${
-                isDark
-                  ? "text-white/80 bg-white/5 border-white/10 hover:border-pink-500/40 hover:bg-pink-500/10 hover:text-pink-300"
-                  : "text-[#0f0f0f] bg-black/10 border-black/20 hover:bg-black/20 shadow-sm"
-              }`}
+              className="lg:hidden w-10 h-10 flex items-center justify-center rounded focus:outline-none transition-transform active:scale-95"
             >
-              {isMobileMenuOpen ? <FaTimes size={18} /> : <FaBars size={18} />}
+              {isMobileMenuOpen ? (
+                <FaTimes size={24} className="text-white drop-shadow-sm" />
+              ) : (
+                <div className="flex flex-col justify-between w-6 h-[17px]">
+                  <span className="w-full h-[2.5px] bg-white rounded-full drop-shadow-sm" />
+                  <span className="w-full h-[2.5px] bg-white rounded-full drop-shadow-sm" />
+                  <span className="w-full h-[2.5px] bg-white rounded-full drop-shadow-sm" />
+                </div>
+              )}
             </button>
           </div>
         </div>
       </header>
 
-      {/* ─── Mobile Menu Drawer Rendered Via React Portal ──────────────── */}
+      {/* ─── Mobile Menu Overlay Rendered Via React Portal ──────────────── */}
       {typeof document !== "undefined" && createPortal(
         <AnimatePresence>
           {isMobileMenuOpen && (
             <div className="fixed inset-0 z-[99998] lg:hidden">
               
-              {/* Darkened Backdrop Overlay */}
+              {/* Dark Translucent Backdrop Overlay with Yellow Tint */}
               <motion.div 
                 initial={{ opacity: 0 }} 
                 animate={{ opacity: 1 }} 
                 exit={{ opacity: 0 }}
                 transition={{ duration: 0.25 }}
-                className="fixed inset-0 bg-black/85 backdrop-blur-md"
+                className="fixed inset-0 bg-black/75 backdrop-blur-md"
                 onClick={() => setIsMobileMenuOpen(false)}
               />
 
-              {/* Slide-out Drawer Panel */}
+              {/* Fullscreen Mobile Menu Container */}
               <motion.div
-                initial={{ x: "100%" }}
-                animate={{ x: 0 }}
-                exit={{ x: "100%" }}
-                transition={{ type: "spring", damping: 28, stiffness: 260 }}
-                className={`fixed inset-y-0 right-0 w-[88%] sm:w-[380px] max-w-full z-[99999] flex flex-col border-l shadow-[-15px_0_50px_rgba(0,0,0,0.85)] ${
-                  isDark 
-                    ? 'border-pink-500/30 text-white' 
-                    : 'border-amber-400/60 text-[#0f0f0f]'
-                }`}
-                style={{
-                  backgroundColor: isDark ? "#0f0a1e" : "#fffdf0"
-                }}
+                initial={{ opacity: 0, y: -8 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -8 }}
+                transition={{ duration: 0.22, ease: "easeOut" }}
+                className="fixed inset-0 z-[99999] flex flex-col overflow-y-auto no-scrollbar pointer-events-auto"
               >
-                {/* Drawer Header */}
-                <div className={`flex items-center justify-between p-4 sm:p-5 border-b ${
-                  isDark ? 'border-pink-500/20 bg-[#160a2c]/80' : 'border-amber-400/60 bg-[#fbbf24]'
-                }`}>
+                {/* Fixed Top Bar Inside Modal (Yellow Neon Header + X Close Button) */}
+                <div className="sticky top-0 z-50 w-full bg-[#d6e31e] px-4 py-2.5 sm:py-3 flex items-center justify-between border-b border-black/10 shadow-sm flex-shrink-0">
                   <Link 
                     to="/" 
                     onClick={() => setIsMobileMenuOpen(false)} 
-                    className="flex items-center"
+                    className="flex flex-col items-start select-none"
                     aria-label="H5-Revolution Home"
                   >
-                    <Logo size="sm" />
+                    <div className="flex items-center">
+                      <img 
+                        src="/images/h5-logo-transparent.png" 
+                        alt="H5-Revolution" 
+                        className="h-7 w-auto object-contain filter brightness-0 invert"
+                        style={{ filter: "brightness(0) invert(1) drop-shadow(0 1px 2px rgba(0,0,0,0.2))" }}
+                      />
+                    </div>
+                    <span className="text-[9px] font-black tracking-[0.25em] text-white uppercase -mt-0.5 leading-none drop-shadow-sm">
+                      OFFICIAL SITE
+                    </span>
                   </Link>
                   
-                  <div className="flex items-center gap-2">
+                  <button 
+                    onClick={() => setIsMobileMenuOpen(false)} 
+                    aria-label="Close Mobile Menu"
+                    className="w-10 h-10 flex items-center justify-center rounded focus:outline-none transition-transform active:scale-90"
+                  >
+                    <FaTimes size={24} className="text-white drop-shadow-sm" />
+                  </button>
+                </div>
+
+                {/* Menu Body */}
+                <div className="flex-1 flex flex-col justify-start">
+                  
+                  {/* Top Branding Section (Large White Logo + Model Number RGB + Official Site) */}
+                  <div className="pt-6 pb-6 px-4 flex flex-col items-center justify-center text-center select-none">
+                    <img 
+                      src="/images/h5-logo-transparent.png" 
+                      alt="H5-Revolution" 
+                      className="h-16 sm:h-20 w-auto object-contain filter brightness-0 invert drop-shadow-[0_4px_16px_rgba(0,0,0,0.9)]"
+                      style={{ filter: "brightness(0) invert(1) drop-shadow(0 2px 14px rgba(0,0,0,0.8))" }}
+                    />
+                    <div className="text-white text-[11px] font-mono font-bold tracking-[0.25em] uppercase mt-2 drop-shadow-md">
+                      MODEL NUMBER &quot;RGB&quot;
+                    </div>
+                    <div className="text-white text-base sm:text-lg font-black tracking-[0.25em] uppercase drop-shadow-md">
+                      OFFICIAL SITE
+                    </div>
+                  </div>
+
+                  {/* 2-Column Mobile Menu Grid (Identical to idol screenshot) */}
+                  <div className="w-full border-t border-b border-black grid grid-cols-2 divide-x divide-y divide-black bg-black">
+                    {mobileGridItems.map((item, idx) => (
+                      <Link
+                        key={idx}
+                        to={item.path}
+                        onClick={() => setIsMobileMenuOpen(false)}
+                        className="min-h-[64px] sm:min-h-[72px] px-2 py-3 flex flex-col items-center justify-center text-center transition-colors duration-150 bg-[#d6e31e]/90 hover:bg-[#c5d117] active:bg-[#b0bd12] text-black select-none"
+                      >
+                        <span className={`text-black font-black uppercase text-center ${
+                          item.isSmallText 
+                            ? "text-[11px] sm:text-xs font-bold leading-tight px-1" 
+                            : "text-sm sm:text-base tracking-wider leading-snug"
+                        }`}>
+                          {item.title}
+                        </span>
+                        {item.subtitle && (
+                          <span className="text-[10px] font-mono font-bold text-black/80 tracking-widest mt-0.5">
+                            {item.subtitle}
+                          </span>
+                        )}
+                      </Link>
+                    ))}
+                  </div>
+
+                  {/* Bottom Controls / Quick Actions */}
+                  <div className="py-6 px-4 flex flex-col items-center justify-center gap-4">
+                    
+                    {/* Theme Toggle Button */}
                     <button
                       onClick={toggleTheme}
-                      aria-label="Toggle Theme Mode"
-                      className={`w-9 h-9 flex items-center justify-center rounded-sm border transition-all ${
-                        isDark 
-                          ? "bg-white/5 border-white/10 text-amber-400 hover:border-pink-500/50" 
-                          : "bg-black/10 border-black/20 text-[#0f0f0f] hover:bg-black/20"
-                      }`}
+                      className="px-4 py-2 rounded border border-white/20 bg-white/10 hover:bg-white/20 text-white text-xs font-bold uppercase tracking-widest flex items-center gap-2 transition-all"
                     >
-                      {isDark ? <FaSun size={13} /> : <FaMoon size={12} />}
+                      {isDark ? <FaSun size={13} className="text-amber-400" /> : <FaMoon size={12} className="text-amber-200" />}
+                      <span>{isDark ? "Light Mode" : "Dark Mode"}</span>
                     </button>
-                    <button 
-                      onClick={() => setIsMobileMenuOpen(false)} 
-                      aria-label="Close Mobile Menu"
-                      className={`w-9 h-9 flex items-center justify-center rounded-sm border transition-all ${
-                        isDark 
-                          ? 'text-white/80 border-white/15 bg-white/5 hover:text-pink-300 hover:border-pink-500/40' 
-                          : 'text-black border-black/20 bg-black/10 hover:bg-black/20'
-                      }`}
-                    >
-                      <FaTimes size={16} />
-                    </button>
+
+                    {/* Social Media Links */}
+                    <div className="flex items-center gap-3">
+                      {socialLinks.map((social, i) => (
+                        <a 
+                          key={i} 
+                          href={social.href} 
+                          target="_blank" 
+                          rel="noopener noreferrer" 
+                          aria-label={social.label}
+                          className="w-9 h-9 rounded-full flex items-center justify-center text-white/90 hover:text-white bg-white/10 hover:bg-white/20 border border-white/15 text-sm transition-all"
+                        >
+                          {social.icon}
+                        </a>
+                      ))}
+                    </div>
+
+                    <p className="text-white/60 text-[10px] font-mono tracking-widest uppercase">
+                      H5-REVOLUTION © 2026 OFFICIAL SITE
+                    </p>
                   </div>
-                </div>
 
-                {/* Nav Links Scrollable Area */}
-                <div className="flex-1 overflow-y-auto py-5 px-4 sm:px-5 no-scrollbar">
-                  <nav className="space-y-2">
-                    {navItems.map((item) => (
-                      <div key={item.name} className="space-y-1">
-                        {item.dropdown ? (
-                          <div>
-                            <button
-                              type="button"
-                              onClick={() => toggleMobileSubmenu(item.name)}
-                              className={`w-full flex items-center justify-between p-3.5 rounded-sm transition-all border ${
-                                isDark
-                                  ? 'bg-white/[0.04] text-white/90 border-white/10 hover:bg-pink-500/10 hover:border-pink-500/30'
-                                  : 'bg-white text-gray-900 border-amber-300/80 hover:bg-amber-100 hover:border-amber-400 font-extrabold'
-                              }`}
-                            >
-                              <span className="text-xs font-black uppercase tracking-widest">{item.name}</span>
-                              <FaChevronDown className={`transition-transform duration-300 text-xs ${
-                                expandedMobileMenu === item.name 
-                                  ? 'rotate-180 text-pink-400' 
-                                  : isDark ? 'text-white/40' : 'text-gray-500'
-                              }`} />
-                            </button>
-
-                            <AnimatePresence>
-                              {expandedMobileMenu === item.name && (
-                                <motion.div 
-                                  initial={{ height: 0, opacity: 0 }} 
-                                  animate={{ height: "auto", opacity: 1 }} 
-                                  exit={{ height: 0, opacity: 0 }}
-                                  transition={{ duration: 0.2 }}
-                                  className="pl-3 pt-1 space-y-1 overflow-hidden"
-                                >
-                                  <Link
-                                    to={item.path}
-                                    onClick={() => setIsMobileMenuOpen(false)}
-                                    className={`flex items-center gap-3 p-2.5 rounded-sm text-[11px] font-black uppercase tracking-wider transition-all border ${
-                                      isDark 
-                                        ? 'bg-pink-500/10 border-pink-500/30 text-pink-300' 
-                                        : 'bg-amber-200 border-amber-400 text-black'
-                                    }`}
-                                  >
-                                    <span className="text-pink-400">✦</span>
-                                    Overview {item.name}
-                                  </Link>
-                                  {item.dropdown.map((sub, idx) => (
-                                    <Link 
-                                      key={idx} 
-                                      to={sub.path} 
-                                      onClick={() => setIsMobileMenuOpen(false)} 
-                                      className={`flex items-center gap-3 p-2.5 rounded-sm text-[11px] font-bold uppercase tracking-wider transition-all border ${
-                                        isDark 
-                                          ? 'bg-white/[0.02] border-white/5 text-white/70 hover:text-pink-300 hover:border-pink-500/20' 
-                                          : 'bg-white border-amber-200 text-gray-700 hover:text-black hover:bg-amber-50'
-                                      }`}
-                                    >
-                                      <span className={isDark ? "text-pink-400" : "text-amber-600"}>{sub.icon}</span>
-                                      {sub.name}
-                                    </Link>
-                                  ))}
-                                </motion.div>
-                              )}
-                            </AnimatePresence>
-                          </div>
-                        ) : (
-                          <Link
-                            to={item.path}
-                            onClick={() => setIsMobileMenuOpen(false)}
-                            className={`flex items-center justify-between p-3.5 rounded-sm transition-all border ${
-                              item.isPill 
-                                ? 'nav-pill-btn bg-[#0f0f0f] text-[#fbbf24] font-black border-black shadow-md' 
-                                : location.pathname === item.path
-                                  ? isDark 
-                                    ? 'bg-pink-500/20 text-pink-300 border-pink-500/40 font-black' 
-                                    : 'bg-amber-300 text-black border-amber-500 font-black'
-                                  : isDark
-                                    ? 'bg-white/[0.04] text-white/80 border-white/10 hover:bg-pink-500/10 hover:text-pink-300 hover:border-pink-500/30 font-bold'
-                                    : 'bg-white text-gray-900 border-amber-200/80 hover:bg-amber-100 hover:text-black font-extrabold'
-                            }`}
-                          >
-                            <span className="text-xs uppercase tracking-widest">{item.name}</span>
-                            {location.pathname === item.path && (
-                              <span className={`w-2 h-2 rounded-full ${isDark ? 'bg-pink-400' : 'bg-black'}`} />
-                            )}
-                          </Link>
-                        )}
-                      </div>
-                    ))}
-                  </nav>
-                </div>
-
-                {/* Social Footer in Drawer */}
-                <div className={`p-4 sm:p-5 border-t ${
-                  isDark ? 'border-white/10 bg-black/40' : 'border-amber-400/60 bg-[#fbbf24]'
-                }`}>
-                  <div className="flex items-center justify-center gap-4">
-                    {socialLinks.map((social, i) => (
-                      <a 
-                        key={i} 
-                        href={social.href} 
-                        target="_blank" 
-                        rel="noopener noreferrer" 
-                        aria-label={social.label}
-                        className={`w-10 h-10 rounded-sm flex items-center justify-center text-base transition-all border ${
-                          isDark 
-                            ? 'text-white/60 hover:text-pink-400 border-white/10 hover:border-pink-500/40 hover:bg-pink-500/10 bg-white/5' 
-                            : 'text-black hover:text-black border-black/20 hover:border-black bg-black/10'
-                        }`}
-                      >
-                        {social.icon}
-                      </a>
-                    ))}
-                  </div>
-                  <p className={`text-center text-[10px] font-mono font-bold uppercase tracking-widest mt-3 ${
-                    isDark ? 'text-pink-400/60' : 'text-neutral-900 font-extrabold'
-                  }`}>
-                    H5-Revolution © 2026
-                  </p>
                 </div>
               </motion.div>
             </div>
