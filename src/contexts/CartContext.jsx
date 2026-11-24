@@ -49,6 +49,11 @@ export const CartProvider = ({ children }) => {
     setCartItems(prev => prev.filter(item => item.id !== id));
   };
 
+  const clearCart = () => {
+    setCartItems([]);
+    localStorage.removeItem("h5-cart");
+  };
+
   const updateQuantity = (id, delta) => {
     setCartItems(prevItems => 
       prevItems.map(item => {
@@ -79,6 +84,7 @@ export const CartProvider = ({ children }) => {
       setIsCartOpen,
       addToCart,
       removeFromCart,
+      clearCart,
       updateQuantity,
       cartTotal,
       cartCount

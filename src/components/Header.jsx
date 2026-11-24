@@ -7,7 +7,8 @@ import {
   FaTicketAlt, FaStar, 
   FaInfoCircle, FaHistory, FaCalendarAlt,
   FaTwitter, FaInstagram, FaYoutube,
-  FaSun, FaMoon
+  FaSun, FaMoon, FaShoppingBag, FaBoxOpen, FaHeart, FaQrcode, FaUser,
+  FaBell, FaBolt, FaMicrophone, FaVideo
 } from "react-icons/fa";
 import { motion, AnimatePresence } from "framer-motion";
 import { useTheme } from "../contexts/ThemeContext";
@@ -66,11 +67,36 @@ const Header = () => {
         { name: "Theater Guide", path: "/theater#guide", icon: <FaTicketAlt /> }
       ]
     },
-    { name: "Virtual Shows", path: "/shows" },
+    { 
+      name: "Shows & Live", 
+      path: "/shows",
+      dropdown: [
+        { name: "Virtual Shows", path: "/shows", icon: <FaCalendarAlt /> },
+        { name: "Lightstick Controller", path: "/lightstick", icon: <FaBolt /> },
+        { name: "Fan Chant Guide", path: "/fanchant", icon: <FaMicrophone /> },
+        { name: "1-on-1 Meet & Greet", path: "/meet-greet", icon: <FaVideo /> }
+      ]
+    },
     { name: "Events", path: "/events" },
     { name: "Members", path: "/members" },
-    { name: "Goods", path: "/shop" },
-    { name: "Tickets", path: "/tickets" },
+    { 
+      name: "Goods", 
+      path: "/shop",
+      dropdown: [
+        { name: "Merch Store", path: "/shop", icon: <FaShoppingBag /> },
+        { name: "Pesanan Saya", path: "/orders", icon: <FaBoxOpen /> },
+        { name: "Photocard Binder", path: "/binder", icon: <FaStar /> },
+        { name: "Wishlist Favorit", path: "/wishlist", icon: <FaHeart /> }
+      ]
+    },
+    { 
+      name: "Tickets", 
+      path: "/tickets",
+      dropdown: [
+        { name: "Beli Tiket", path: "/tickets", icon: <FaTicketAlt /> },
+        { name: "E-Ticket Digital Pass", path: "/my-tickets", icon: <FaQrcode /> }
+      ]
+    },
     { name: "Fan Club", path: "/fans", isPill: true }
   ];
 
@@ -84,12 +110,14 @@ const Header = () => {
   const mobileGridItems = [
     { title: "SCHEDULE", subtitle: "", path: "/events" },
     { title: "TICKET", subtitle: "", path: "/tickets" },
+    { title: "MY PASS", subtitle: "", path: "/my-tickets" },
+    { title: "MY ORDERS", subtitle: "", path: "/orders" },
     { title: "NEWS", subtitle: "", path: "/shows" },
     { title: "DISCOGRAPHY", subtitle: "", path: "/showcase" },
     { title: "LIVE PHOTO", subtitle: "", path: "/fans" },
-    { title: "歌詞カード", subtitle: "", path: "/theater" },
+    { title: "WISHLIST", subtitle: "", path: "/wishlist" },
     { title: "GOODS", subtitle: "", path: "/shop" },
-    { title: "PROFILE", subtitle: "", path: "/members" },
+    { title: "PROFILE", subtitle: "", path: "/profile" },
     { 
       title: "出演依頼などのお問い合わせはこちら", 
       isSmallText: true, 
@@ -215,6 +243,35 @@ const Header = () => {
           {/* Right Actions / Theme Toggle / Socials */}
           <div className="flex items-center gap-2 sm:gap-3 flex-shrink-0">
             
+            {/* Notifications Alert Button (Desktop) */}
+            <Link
+              to="/notifications"
+              aria-label="Notifikasi"
+              title="Pemberitahuan & Ticket War"
+              className={`hidden lg:flex w-9 h-9 items-center justify-center rounded-sm transition-all duration-300 border relative ${
+                isDark 
+                  ? "bg-white/5 border-white/10 hover:border-pink-500/50 hover:bg-pink-500/10 text-pink-400 shadow-sm"
+                  : "bg-black/10 border-black/20 hover:bg-black/20 text-[#0f0f0f] shadow-sm"
+              }`}
+            >
+              <FaBell size={13} />
+              <span className="absolute top-1.5 right-1.5 w-2 h-2 rounded-full bg-pink-500 animate-pulse" />
+            </Link>
+
+            {/* User Profile Button (Desktop) */}
+            <Link
+              to="/profile"
+              aria-label="Member Profile"
+              title="Profil Fan Member H5"
+              className={`hidden lg:flex w-9 h-9 items-center justify-center rounded-sm transition-all duration-300 border ${
+                isDark 
+                  ? "bg-white/5 border-white/10 hover:border-pink-500/50 hover:bg-pink-500/10 text-pink-400 shadow-sm"
+                  : "bg-black/10 border-black/20 hover:bg-black/20 text-[#0f0f0f] shadow-sm"
+              }`}
+            >
+              <FaUser size={13} />
+            </Link>
+
             {/* Theme Switcher Button (Desktop) */}
             <button
               onClick={toggleTheme}

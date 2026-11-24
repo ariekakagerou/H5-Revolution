@@ -1,8 +1,10 @@
 import React from "react";
-import { FaTimes, FaTrash, FaCheckCircle, FaMinus, FaPlus } from "react-icons/fa";
+import { useNavigate } from "react-router-dom";
+import { FaTimes, FaTrash, FaCheckCircle, FaMinus, FaPlus, FaBoxOpen, FaHeart } from "react-icons/fa";
 import { useCart } from "../contexts/CartContext";
 
 const CartDrawer = () => {
+  const navigate = useNavigate();
   const { 
     isCartOpen, 
     setIsCartOpen, 
@@ -54,7 +56,30 @@ const CartDrawer = () => {
                 🛍️
               </div>
               <p className="text-white font-bold mb-1 uppercase tracking-wider text-sm">Keranjang Kosong</p>
-              <p className="text-xs text-white/40">Dapatkan merchandise resmi H5-Revolution sekarang!</p>
+              <p className="text-xs text-white/40 mb-4">Dapatkan merchandise resmi H5-Revolution sekarang!</p>
+              
+              <div className="flex gap-2">
+                <button
+                  onClick={() => {
+                    setIsCartOpen(false);
+                    navigate("/orders");
+                  }}
+                  className="px-3 py-1.5 rounded bg-white/5 hover:bg-white/10 text-white/70 hover:text-white text-[11px] font-mono flex items-center gap-1 border border-white/10 transition-colors"
+                >
+                  <FaBoxOpen size={10} className="text-pink-400" />
+                  <span>Riwayat Pesanan</span>
+                </button>
+                <button
+                  onClick={() => {
+                    setIsCartOpen(false);
+                    navigate("/wishlist");
+                  }}
+                  className="px-3 py-1.5 rounded bg-white/5 hover:bg-white/10 text-white/70 hover:text-white text-[11px] font-mono flex items-center gap-1 border border-white/10 transition-colors"
+                >
+                  <FaHeart size={10} className="text-rose-400" />
+                  <span>Wishlist</span>
+                </button>
+              </div>
             </div>
           ) : (
             cartItems.map((item) => (
@@ -108,7 +133,13 @@ const CartDrawer = () => {
               <span className="text-xl font-mono font-black text-pink-400">${cartTotal.toFixed(2)}</span>
             </div>
             
-            <button className="shimmer-btn w-full py-3.5 bg-gradient-to-r from-pink-500 to-orange-500 text-white rounded-sm font-black text-xs tracking-[0.2em] uppercase flex items-center justify-center gap-2 hover:shadow-idol-pink transition-all duration-300">
+            <button 
+              onClick={() => {
+                setIsCartOpen(false);
+                navigate("/checkout");
+              }}
+              className="shimmer-btn w-full py-3.5 bg-gradient-to-r from-pink-500 to-orange-500 text-white rounded-sm font-black text-xs tracking-[0.2em] uppercase flex items-center justify-center gap-2 hover:shadow-idol-pink transition-all duration-300 cursor-pointer"
+            >
               <FaCheckCircle size={14} />
               Checkout Now
             </button>

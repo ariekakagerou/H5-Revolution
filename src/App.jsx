@@ -29,6 +29,20 @@ import Theater from "./pages/theater";
 import Shows from "./pages/shows";
 import NotFound from "./pages/not-found";
 import Legal from "./pages/legal";
+import Checkout from "./pages/checkout";
+import OrderPayment from "./pages/order-payment";
+import OrderShipping from "./pages/order-shipping";
+import Orders from "./pages/orders";
+import MyTickets from "./pages/my-tickets";
+import Wishlist from "./pages/wishlist";
+import Invoice from "./pages/invoice";
+import Profile from "./pages/profile";
+import LightstickController from "./pages/lightstick-controller";
+import PhotocardBinder from "./pages/photocard-binder";
+import FanChant from "./pages/fanchant";
+import MeetGreet from "./pages/meet-greet";
+import Notifications from "./pages/notifications";
+import HelpCenter from "./pages/help-center";
 
 
 // Page transition variants
@@ -64,6 +78,23 @@ function AnimatedRoutes() {
         <Route path="/showcase" element={<PageWrapper><Showcase /></PageWrapper>} />
         <Route path="/shop" element={<PageWrapper><Shop /></PageWrapper>} />
         <Route path="/shop/:id" element={<PageWrapper><ProductDetail /></PageWrapper>} />
+        <Route path="/checkout" element={<PageWrapper><Checkout /></PageWrapper>} />
+        <Route path="/order-payment" element={<PageWrapper><OrderPayment /></PageWrapper>} />
+        <Route path="/order-payment/:orderId" element={<PageWrapper><OrderPayment /></PageWrapper>} />
+        <Route path="/order-shipping" element={<PageWrapper><OrderShipping /></PageWrapper>} />
+        <Route path="/order-shipping/:orderId" element={<PageWrapper><OrderShipping /></PageWrapper>} />
+        <Route path="/orders" element={<PageWrapper><Orders /></PageWrapper>} />
+        <Route path="/my-tickets" element={<PageWrapper><MyTickets /></PageWrapper>} />
+        <Route path="/wishlist" element={<PageWrapper><Wishlist /></PageWrapper>} />
+        <Route path="/invoice" element={<PageWrapper><Invoice /></PageWrapper>} />
+        <Route path="/invoice/:orderId" element={<PageWrapper><Invoice /></PageWrapper>} />
+        <Route path="/profile" element={<PageWrapper><Profile /></PageWrapper>} />
+        <Route path="/lightstick" element={<PageWrapper><LightstickController /></PageWrapper>} />
+        <Route path="/binder" element={<PageWrapper><PhotocardBinder /></PageWrapper>} />
+        <Route path="/fanchant" element={<PageWrapper><FanChant /></PageWrapper>} />
+        <Route path="/meet-greet" element={<PageWrapper><MeetGreet /></PageWrapper>} />
+        <Route path="/notifications" element={<PageWrapper><Notifications /></PageWrapper>} />
+        <Route path="/help" element={<PageWrapper><HelpCenter /></PageWrapper>} />
         <Route path="/tickets" element={<PageWrapper><Tickets /></PageWrapper>} />
         <Route path="/tickets/:id" element={<PageWrapper><TicketDetail /></PageWrapper>} />
         <Route path="/login" element={<PageWrapper><Auth /></PageWrapper>} />
